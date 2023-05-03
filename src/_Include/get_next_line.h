@@ -6,7 +6,7 @@
 /*   By: ngriveau <ngriveau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 12:33:19 by ngriveau          #+#    #+#             */
-/*   Updated: 2023/05/03 19:54:24 by ngriveau         ###   ########.fr       */
+/*   Updated: 2023/05/03 20:11:38 by ngriveau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@
 int		ft_s(char *str, int verif);
 char	*ft_my_malloc(char *buffer, char *ligne, int size);
 char	*ft_new_line(char *buffer, int size, int fd);
-char	*get_next_line_count(int fd, int *nbr);
+char	*get_next_line(int fd);
 char	*ft_dup_upligne(char *upligne, char *buffer, int i, int j);
 
 #endif

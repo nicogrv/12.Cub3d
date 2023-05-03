@@ -6,7 +6,7 @@
 /*   By: ngriveau <ngriveau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 14:23:20 by ngriveau          #+#    #+#             */
-/*   Updated: 2023/05/03 20:05:56 by ngriveau         ###   ########.fr       */
+/*   Updated: 2023/05/03 20:12:51 by ngriveau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,14 +116,16 @@ int	ft_init_id_verif_path(char **path_for_data, int *id, char *line, int i)
 }
 
 
-int	ft_init_id(t_data *data)
+int	ft_init_id(t_data *data, char **returnline)
 {
 	char	*line;
 	int		id;
 	int		i;
 
 	id = 0;
-	line = get_next_line_count(data->fdfile, &data->ystartmap);
+	line = get_next_line(data->fdfile);
+	data->ystartmap++;
+	*returnline = line;
 	while(line)
 	{
 		i = 0;
@@ -163,31 +165,30 @@ int	ft_init_id(t_data *data)
 		}
 		else
 		{
-			printf("line = %s\n", line);
 			if (!data->patheast || !data->pathwest || !data->pathsouth || !data->pathnorth)
 				return (1);
 			else
 				return (0);
 		}
 		free(line);
-		line = get_next_line_count(data->fdfile, &data->ystartmap);
+		line = get_next_line(data->fdfile);
+		data->ystartmap++;
+		*returnline = line;
 	}
 	return (0);
 }
 
 
 
-void	ft_size_map(t_data *data)
+void	ft_size_map(t_data *data, char *line)
 {
 	int		start;
 	int		end;
 	int		y;
-	char	*line;
 	
 	y = 0;
 	start = -1;
 	end = 0;
-	line = get_next_line_count(data->fdfile, &data->ystartmap);
 	while (line)
 	{
 		if (ft_is_wc_or_new_line(line) == 0)
@@ -201,11 +202,10 @@ void	ft_size_map(t_data *data)
 		else
 			end++;
 		free(line);
-		line = get_next_line_count(data->fdfile, &data->ystartmap);
+		line = get_next_line(data->fdfile);
 		y++;
 	}
 	free(line);
-	data->ystartmap = data->ystartmap - end - start - y;
 	data->mapy = y - end - start;
 }
 
@@ -223,19 +223,22 @@ int ft_map(t_data *data)
 
 int ft_init(int c, char **av, t_data *data)
 {
+	char *line;
+
+	line = NULL;
+	data->ystartmap  = 0;
     if (c != 2)
 		return (printf(RED"Error number of arg1\n"NC));	
 	data->fdfile = open(av[1], O_RDONLY);
 	if (data->fdfile == -1)
 		return (printf(RED"Error path of arg2\n"NC));
 	data->pathfile = av[1];
-	if (ft_init_id(data))
+	if (ft_init_id(data, &line))
 		return (printf(RED"Error in file3\n"NC));
-	data->ystartmap  = 0;
+	ft_size_map(data, line);
 	printf(ORANGE"\nn = %s\ns = %s\no = %s\ne = %s\n"NC, data->pathnorth, data->pathsouth, data->pathwest, data->patheast);
 	printf(ORANGE"\ncolor = %d\nr = %d\ng = %d\nb = %d\n"NC, data->floor.color, data->floor.r, data->floor.g, data->floor.b);
 	printf(ORANGE"\ncolor = %d\nr = %d\ng = %d\nb = %d\n"NC, data->sky.color, data->sky.r, data->sky.g, data->sky.b);
-	ft_size_map(data);
 	printf(ORANGE"\nx = %d\ty = %d start %d\n"NC, data->mapx, data->mapy, data->ystartmap);
 	close(data->fdfile);
 	ft_map(data);

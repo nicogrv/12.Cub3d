@@ -6,7 +6,7 @@
 /*   By: ngriveau <ngriveau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 17:56:26 by ngriveau          #+#    #+#             */
-/*   Updated: 2023/05/03 19:54:08 by ngriveau         ###   ########.fr       */
+/*   Updated: 2023/05/03 20:11:48 by ngriveau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,12 +78,11 @@ char	*ft_new_line(char *buffer, int size, int fd)
 	return (ligne);
 }
 
-char	*get_next_line_count(int fd, int *nbr)
+char	*get_next_line(int fd)
 {
 	int			size;
 	static char	buffer[BUFFER_SIZE + 1] = {0};
 
-	*nbr = *nbr + 1;
 	size = -5;
 	buffer[BUFFER_SIZE] = '\0';
 	if (buffer[0] == '\0')
