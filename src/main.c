@@ -6,7 +6,7 @@
 /*   By: ngriveau <ngriveau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 14:23:20 by ngriveau          #+#    #+#             */
-/*   Updated: 2023/05/03 20:12:51 by ngriveau         ###   ########.fr       */
+/*   Updated: 2023/05/04 14:22:29 by ngriveau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,13 @@
 int is_ws(char c)
 {
 	if (c == ' ' || c == '\t')
+		return (1);
+	return (0);
+}
+
+int is_player(int c)
+{
+	if (c == 2 || c == 3 || c == 4 || c == 5)
 		return (1);
 	return (0);
 }
@@ -209,15 +216,94 @@ void	ft_size_map(t_data *data, char *line)
 	data->mapy = y - end - start;
 }
 
+
+
 int ft_map(t_data *data)
 {
 	int fd;
+	int x;
+	int y;
+	char *line;
 	
 	data->map = malloc(sizeof(int *) * data->mapy);
 	if (!data->map)
 		return (printf(RED"MALLOC\n"NC));
 	fd = open(data->pathfile, O_RDONLY);
+	x = 0;
+	y = 0;
+	while(++x < data->ystartmap)
+		free(get_next_line(fd));
+	while (y < data->mapy)
+	{
+		data->map[y] = malloc(sizeof(int) * data->mapx);
+		x = -1;
+		while (++x < data->mapx)
+			data->map[y][x] = 7;
+		x = 0;
+		line = get_next_line(fd);
+		while (line[x])
+		{
+			if (line[x] == ' ')
+				data->map[y][x] = 7;
+			else if (line[x] == '0')
+				data->map[y][x] = 0;
+			else if (line[x] == '1')
+				data->map[y][x] = 1;
+			else if (line[x] == 'N')
+				data->map[y][x] = 2;
+			else if (line[x] == 'E')
+				data->map[y][x] = 3;
+			else if (line[x] == 'S')
+				data->map[y][x] = 4;
+			else if (line[x] == 'O')
+				data->map[y][x] = 5;
+			else if (line[x] == '\n')
+				break ;
+			else 
+				return (printf(RED"Error in map\n"NC));
+			x++;
+		}
+		y++;
+		
+	}
+	x = -1;
+	y = -1;
+	while (++y < data->mapy)
+	{
+		while (++x < data->mapx)
+			printf("%d", data->map[y][x]);
+		x = -1;
+		printf("\n");
+	}
+	return (0);
 	
+}
+
+int ft_verif_ok_map(t_data *data)
+{
+	int x;
+	int y;
+	int player;
+
+	x = -1;
+	y = -1;
+	player = 0;
+	while (++y < data->mapy)
+	{
+		while (++x < data->mapx)
+		{
+			if (is_player(data->map[y][x]))
+				player++;
+			if ((y == 0 || x == 0 || y == data->mapy - 1 || x == data->mapx - 1) && (data->map[y][x] == 0 || is_player(data->map[y][x])) )
+				return (1);
+			if ((data->map[y][x] == 0 || is_player(data->map[y][x]))&& (data->map[y-1][x] == 7 || data->map[y+1][x] == 7 || data->map[y][x-1] == 7 || data->map[y][x+1] == 7 ))
+				return (1);
+				
+		}
+		x = -1;
+	}
+	if (player != 1)
+		return (1);
 	return (0);
 }
 
@@ -237,11 +323,14 @@ int ft_init(int c, char **av, t_data *data)
 		return (printf(RED"Error in file3\n"NC));
 	ft_size_map(data, line);
 	printf(ORANGE"\nn = %s\ns = %s\no = %s\ne = %s\n"NC, data->pathnorth, data->pathsouth, data->pathwest, data->patheast);
-	printf(ORANGE"\ncolor = %d\nr = %d\ng = %d\nb = %d\n"NC, data->floor.color, data->floor.r, data->floor.g, data->floor.b);
-	printf(ORANGE"\ncolor = %d\nr = %d\ng = %d\nb = %d\n"NC, data->sky.color, data->sky.r, data->sky.g, data->sky.b);
-	printf(ORANGE"\nx = %d\ty = %d start %d\n"NC, data->mapx, data->mapy, data->ystartmap);
+	printf(ORANGE"\ncolor floor = %d\nr = %d\ng = %d\nb = %d\n"NC, data->floor.color, data->floor.r, data->floor.g, data->floor.b);
+	printf(ORANGE"\ncolor sky = %d\nr = %d\ng = %d\nb = %d\n"NC, data->sky.color, data->sky.r, data->sky.g, data->sky.b);
+	printf(ORANGE"\nSize mapx = %d\ty = %d start %d\n"NC, data->mapx, data->mapy, data->ystartmap);
 	close(data->fdfile);
-	ft_map(data);
+	if (ft_map(data))
+		return (1);
+	if (ft_verif_ok_map(data))
+		return (printf(RED"Error 2\n"NC));
 	
 	return (0);
 }
