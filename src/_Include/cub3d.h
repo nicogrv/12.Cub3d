@@ -13,11 +13,31 @@
 # include "get_next_line.h"
 # include "SuperLibft.h"
 # include <math.h>
+# include "../../lib/minilibx-linux/mlx.h"
 
 
-
-
-
+#  define TOUCH_LEFTARROW 65361
+#  define TOUCH_RIGHTARROW 65363
+#  define TOUCH_UPARROW 65362
+#  define TOUCH_DOWNARROW 65364
+#  define TOUCH_MOINS 45
+#  define TOUCH_PLUS 61
+#  define TOUCH_ONE 49
+#  define TOUCH_TOW 50
+#  define TOUCH_THREE 51
+#  define TOUCH_FOUR 52
+#  define TOUCH_FIVE 53
+#  define TOUCH_W 119
+#  define TOUCH_A 100
+#  define TOUCH_S 115
+#  define TOUCH_D 97
+#  define ESC 65307
+#  define TOUCH_C 99
+#  define TOUCH_X 120
+#  define TOUCH_M 109
+#  define TOUCH_N 110
+#  define TOUCH_I 105
+#  define TOUCH_P 112
 
 typedef struct s_color 
 {
@@ -27,9 +47,27 @@ typedef struct s_color
 	int color;
 }				t_color;
 
+typedef struct s_mlx
+{
+	int		winx;
+	int		winy;
+	void	*mlx;
+	void	*mlx_win;
+	void	*i;
+	int		size;
+	int		p;
+	int		e;
+	char	*data;
+	int		r;
+	int		g;
+	int		b;
+
+}				t_mlx;
+
 
 typedef struct s_data 
 {
+	t_mlx	mlx;
 	int		**map;
 	int		fdfile;
 	char	*pathfile;
@@ -39,8 +77,10 @@ typedef struct s_data
     char	*patheast;
 	t_color	sky;
 	t_color	floor;
-	int		mapy;
 	int		mapx;
+	int		mapy;
+	float	playerx;
+	float	playery;
 	int		ystartmap;
 
 } 				t_data;

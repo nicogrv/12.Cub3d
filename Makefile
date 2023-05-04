@@ -58,7 +58,8 @@ ${OBJS}: ${OBJS_PATH}/%.o: %.c Makefile
 	@	${CC} ${CFLAGS} -c $< -o $@ ${HEAD_PATH}
 
 ${NAME}:  ${OBJS}
-	@	${CC} ${CFLAGS_EXE} -o ${NAME} ${OBJS} ${LIB} ${HEAD_PATH}
+	@	$(MAKE) --no-print-directory -s -C ./lib/minilibx-linux/
+	@	${CC}  -o ${NAME} ${OBJS} ${LIB} ${HEAD_PATH} ${CFLAGS_EXE}
 	@	echo -ne "\r\033[2K" $(LIGHTGREEN) "\t$(NAME) OK" "\033[0m" "\n"
 
 

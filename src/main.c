@@ -6,7 +6,7 @@
 /*   By: ngriveau <ngriveau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 14:23:20 by ngriveau          #+#    #+#             */
-/*   Updated: 2023/05/04 14:22:29 by ngriveau         ###   ########.fr       */
+/*   Updated: 2023/05/04 15:14:18 by ngriveau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,6 @@ int	ft_init_id_verif_path(char **path_for_data, int *id, char *line, int i)
 		return (printf(RED"Error input path2\n"NC));	
 	}
 	*path_for_data = path;
-	// printf("path = |%s|\n", *path_for_data);
 	return (0);
 	
 }
@@ -266,17 +265,7 @@ int ft_map(t_data *data)
 		y++;
 		
 	}
-	x = -1;
-	y = -1;
-	while (++y < data->mapy)
-	{
-		while (++x < data->mapx)
-			printf("%d", data->map[y][x]);
-		x = -1;
-		printf("\n");
-	}
 	return (0);
-	
 }
 
 int ft_verif_ok_map(t_data *data)
@@ -292,18 +281,24 @@ int ft_verif_ok_map(t_data *data)
 	{
 		while (++x < data->mapx)
 		{
-			if (is_player(data->map[y][x]))
-				player++;
 			if ((y == 0 || x == 0 || y == data->mapy - 1 || x == data->mapx - 1) && (data->map[y][x] == 0 || is_player(data->map[y][x])) )
-				return (1);
+				return (printf(RED"Incorrect Map 1\n"NC));
 			if ((data->map[y][x] == 0 || is_player(data->map[y][x]))&& (data->map[y-1][x] == 7 || data->map[y+1][x] == 7 || data->map[y][x-1] == 7 || data->map[y][x+1] == 7 ))
-				return (1);
-				
+				return (printf(RED"Incorrect Map 1\n"NC));
+			if (is_player(data->map[y][x]))
+			{
+				// data->map[y][x] = 0;
+				data->playerx = x + 0.5;
+				data->playery = y + 0.5;
+				player++;
+			}
+			printf("%d", data->map[y][x]);
 		}
+		printf("\n");
 		x = -1;
 	}
 	if (player != 1)
-		return (1);
+		return (printf(RED"Incorrect Number Player\n"NC));
 	return (0);
 }
 
@@ -330,9 +325,63 @@ int ft_init(int c, char **av, t_data *data)
 	if (ft_map(data))
 		return (1);
 	if (ft_verif_ok_map(data))
-		return (printf(RED"Error 2\n"NC));
-	
+		return (1);
+	printf(ORANGE"\nPlayer pos\tx = %.2f y %.2f\n"NC, data->playerx, data->playery);
+	data->mlx.winx = 1000;
+	data->mlx.winy = 1000;
 	return (0);
+}
+
+
+
+void	ft_color(int nbr, t_data *data)
+{
+	int	tmp;
+
+	tmp = nbr / 1048576;
+	nbr = nbr - 1048576 * tmp;
+	data->mlx.r = tmp * 16;
+	tmp = nbr / 65536;
+	nbr = nbr - 65536 * tmp;
+	data->mlx.r += tmp;
+	tmp = nbr / 4096;
+	nbr = nbr - 4096 * tmp;
+	data->mlx.g = tmp * 16;
+	tmp = nbr / 256;
+	nbr = nbr - 256 * tmp;
+	data->mlx.g += tmp;
+	tmp = nbr / 16;
+	nbr = nbr - 16 * tmp;
+	data->mlx.b = tmp * 16;
+	data->mlx.b += nbr;
+}
+
+
+void	ft_draw(t_data *data, float x, float y, int color)
+{
+	unsigned long	pixel;
+
+	x = roundf(x);
+	y = roundf(y);
+	ft_color(color, data);
+	pixel = (y * data->mlx.size) + (x * 4);
+	// if (((unsigned long)(data->mlx.size) * data->mlx.winy) < pixel - 5 || x <= 0
+	// 	|| y <= 0 || y > data->mlx.y * data->mlx.winy || x > data->mlx.winx)		// a refaire
+	// 	return ;
+	if (data->mlx.e == 1)
+	{
+		data->mlx.data[pixel + 0] = 0;
+		data->mlx.data[pixel + 1] = data->mlx.r;
+		data->mlx.data[pixel + 2] = data->mlx.g;
+		data->mlx.data[pixel + 3] = data->mlx.b;
+	}
+	else if (data->mlx.e == 0)
+	{
+		data->mlx.data[pixel + 0] = data->mlx.b;
+		data->mlx.data[pixel + 1] = data->mlx.g;
+		data->mlx.data[pixel + 2] = data->mlx.r;
+		data->mlx.data[pixel + 3] = 0;
+	}
 }
 
 int main(int c, char **av)
@@ -340,5 +389,13 @@ int main(int c, char **av)
     t_data data;
     if (ft_init(c, av, &data))
 		return (1);
+	data.mlx.mlx = mlx_init();
+	data.mlx.mlx_win = mlx_new_window(data.mlx.mlx, data.mlx.winx, data.mlx.winy, "Cub3d");
+	data.mlx.i = mlx_new_image(data.mlx.mlx, data.mlx.winx, data.mlx.winy);
+	data.mlx.data = mlx_get_data_addr(data.mlx.i, &data.mlx.p, &data.mlx.size, &data.mlx.e);
+	
+	ft_draw(&data, 100, 100, 0xffff00);
+	mlx_put_image_to_window(data.mlx.mlx, data.mlx.mlx_win, data.mlx.i, 0, 0);
+	// mlx_loop(data.mlx.mlx);
     return (0);
 }
