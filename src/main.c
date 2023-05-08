@@ -289,8 +289,9 @@ int ft_verif_ok_map(t_data *data)
 			if (is_player(data->map[y][x]))
 			{
 				// data->map[y][x] = 0;
-				data->playerx = x + 0.999;
+				data->playerx = x + 0.5;
 				data->playery = y + 0.5;
+				data->playerr = 359;
 				player++;
 			}
 			printf("%d", data->map[y][x]);
@@ -389,7 +390,7 @@ int ft_ray(t_data *data)
 {
 	float angle;
 	float ax;
-	float i;
+	float i = 0;
 	float hyv;
 	float hyr;
 
@@ -397,16 +398,25 @@ int ft_ray(t_data *data)
 	printf("angle = %f y = %f x = %f\n", angle, data->playery - (int)data->playery, data->playerx - (int)data->playerx);
 	while (i < (float)data->mlx.winx)
 	{
-		ax =  angle * i;
-		hyv = (data->playery - (int)data->playery) / cos((ax / RAD));
-		hyr = (data->playerx - (int)data->playerx) / cos(((90-ax) / RAD));
-		if (hyr < hyv)
+		ax =  angle * i + data->playerr - 45;
+		if (360 < ax)
+			ax = ax - 360;
+		if (ax < 0)
+			ax = ax + 360;
+		if (ax < 180)
+			hyv = (data->playery - (int)data->playery) / cos(((abs((int)ax) - 90) / RAD));
+		else
+			hyv = (1 - (data->playery - (int)data->playery)) / cos(((ax - 270) / RAD));
+		if (ax < 90 || 270 < ax)
+			hyr = (data->playerx - (int)data->playerx) / cos(((ax - 0) / RAD));
+		else
+			hyr = (1 - (data->playerx - (int)data->playerx)) / cos(((ax - 180) / RAD));
+		if (hyr <= hyv)
 			printf(LIGHTRED" %f"LIGHTGREEN" %f\t%f\n"NC, hyr, hyv, ax);
 		else
 			printf(LIGHTGREEN" %f "LIGHTRED"%f\t%f\n"NC, hyv, hyr, ax);
 		i++;
 	}
-
 	return (0);
 }
 
