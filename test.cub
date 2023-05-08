@@ -1,15 +1,11 @@
-			       NO		./test1      
-
+NO      ./test1      
 SO      ./test2
-WE ./test3
-EA ./test4
+WE      ./test3
+EA      ./test4
 
 
 
-F               		+220,255,42  
-
-
-
+F 220,255,42  
 C 225,30,10         
 
 

@@ -38,6 +38,7 @@
 #  define TOUCH_N 110
 #  define TOUCH_I 105
 #  define TOUCH_P 112
+#  define RAD 57.2958
 
 typedef struct s_color 
 {

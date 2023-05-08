@@ -195,6 +195,7 @@ void	ft_size_map(t_data *data, char *line)
 	y = 0;
 	start = -1;
 	end = 0;
+	data->mapx = 0;
 	while (line)
 	{
 		if (ft_is_wc_or_new_line(line) == 0)
@@ -283,12 +284,12 @@ int ft_verif_ok_map(t_data *data)
 		{
 			if ((y == 0 || x == 0 || y == data->mapy - 1 || x == data->mapx - 1) && (data->map[y][x] == 0 || is_player(data->map[y][x])) )
 				return (printf(RED"Incorrect Map 1\n"NC));
-			if ((data->map[y][x] == 0 || is_player(data->map[y][x]))&& (data->map[y-1][x] == 7 || data->map[y+1][x] == 7 || data->map[y][x-1] == 7 || data->map[y][x+1] == 7 ))
+			if ((data->map[y][x] == 0 || is_player(data->map[y][x])) && (data->map[y-1][x] == 7 || data->map[y+1][x] == 7 || data->map[y][x-1] == 7 || data->map[y][x+1] == 7 ))
 				return (printf(RED"Incorrect Map 1\n"NC));
 			if (is_player(data->map[y][x]))
 			{
 				// data->map[y][x] = 0;
-				data->playerx = x + 0.5;
+				data->playerx = x + 0.999;
 				data->playery = y + 0.5;
 				player++;
 			}
@@ -327,8 +328,8 @@ int ft_init(int c, char **av, t_data *data)
 	if (ft_verif_ok_map(data))
 		return (1);
 	printf(ORANGE"\nPlayer pos\tx = %.2f y %.2f\n"NC, data->playerx, data->playery);
-	data->mlx.winx = 1000;
-	data->mlx.winy = 1000;
+	data->mlx.winx = 90;
+	data->mlx.winy = 90;
 	return (0);
 }
 
@@ -384,10 +385,37 @@ void	ft_draw(t_data *data, float x, float y, int color)
 	}
 }
 
+int ft_ray(t_data *data)
+{
+	float angle;
+	float ax;
+	float i;
+	float hyv;
+	float hyr;
+
+	angle = 90 / (float)data->mlx.winx;
+	printf("angle = %f y = %f x = %f\n", angle, data->playery - (int)data->playery, data->playerx - (int)data->playerx);
+	while (i < (float)data->mlx.winx)
+	{
+		ax =  angle * i;
+		hyv = (data->playery - (int)data->playery) / cos((ax / RAD));
+		hyr = (data->playerx - (int)data->playerx) / cos(((90-ax) / RAD));
+		if (hyr < hyv)
+			printf(LIGHTRED" %f"LIGHTGREEN" %f\t%f\n"NC, hyr, hyv, ax);
+		else
+			printf(LIGHTGREEN" %f "LIGHTRED"%f\t%f\n"NC, hyv, hyr, ax);
+		i++;
+	}
+
+	return (0);
+}
+
 int main(int c, char **av)
 {
     t_data data;
     if (ft_init(c, av, &data))
+		return (1);
+	if (ft_ray(&data))
 		return (1);
 	data.mlx.mlx = mlx_init();
 	data.mlx.mlx_win = mlx_new_window(data.mlx.mlx, data.mlx.winx, data.mlx.winy, "Cub3d");
@@ -395,6 +423,7 @@ int main(int c, char **av)
 	data.mlx.data = mlx_get_data_addr(data.mlx.i, &data.mlx.p, &data.mlx.size, &data.mlx.e);
 	
 	ft_draw(&data, 100, 100, 0xffff00);
+	ft_draw(&data, 100, 101, 0xffff00);
 	mlx_put_image_to_window(data.mlx.mlx, data.mlx.mlx_win, data.mlx.i, 0, 0);
 	// mlx_loop(data.mlx.mlx);
     return (0);
