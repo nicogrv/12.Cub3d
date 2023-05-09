@@ -6,7 +6,7 @@
 /*   By: ngriveau <ngriveau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 14:23:20 by ngriveau          #+#    #+#             */
-/*   Updated: 2023/05/09 16:24:44 by ngriveau         ###   ########.fr       */
+/*   Updated: 2023/05/09 18:23:31 by ngriveau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -402,8 +402,8 @@ void ft_color_colone(t_data *data, int x, float len, int color)
 	int y;
 
 	y = 0;
-	// printf("x = %d\n", x);
 	// len = floor(len);
+		printf("x = %d\n", x);
 	while (y < (data->mlx.winy / 2) - (10 / len)*15)
 	{
 		ft_draw(data, x, y, data->sky.color);
@@ -431,123 +431,110 @@ int ft_ray(t_data *data)
 	float	posx;
 	float	posy;
 	float	decalx;
-	float	decalxify;
 	float	decaly;
-	float	decalyifx;
 	float	length;
 	int		face;
 	
 
 	angle = data->playerfov / (float)data->mlx.winx;
-	// data->playerr += 45;
+	data->playerr = 90;
 	// printf("angle = %.2f y = %.2f x = %.2f\n\n", angle, data->playery - (int)data->playery, data->playerx - (int)data->playerx);
-	// while (i < 250)
 	while (i < (float)data->mlx.winx)
 	{
 		posx = data->playerx;
 		posy = data->playery;
 		length = 0;
-		// printf("----NEW RAY----\n\n\n");
+		printf("\n\n\n----NEW RAY----\n\n\n");
 		while (1)
 		{
-			// printf("Start pos Ray x = %.2f y = %.2f\n",posx, posy);
+
+			printf("Start pos Ray x = %.2f y = %.2f len = %.2f\n",posx, posy, length);
 			ax =  angle * i + data->playerr - 45;
 			if (360 < ax)
 				ax = ax - 360;
-			if (ax < 0)
+			else if (ax < 0)
 				ax = ax + 360;
-			if (ax < 180)
+
+			if (0 <= ax && ax < 90)
 			{
-				// printf("1\n");
-				hyv = (posy - (int)posy) / cos(((abs((int)ax) - 90) / RAD));
-				decaly = -1 * (posy - (int)posy);
-				decalxify = decaly * tan(((abs((int)ax) - 90) / RAD));
-				
+				hyv = (posy - (int)posy) / cos((90 - ax) / RAD);
+				hyr = (posx - (int)posx) / cos(ax / RAD);
+				printf("ax = %fhyv = %f|%f", ax, hyv, hyr);
+				if (hyv < hyr)
+				{
+					decaly = (posy - (int)posy) * -1 - 0.001;
+					decalx = ((posy - (int)posy) * -1) * tan((90 - ax) / RAD) - 0.001 ;
+					length += hyv;
+				}
+				else
+				{
+					decaly = ((posx - (int)posx) * -1) * tan((ax) / RAD) - 0.001 ;
+					decalx = (posx - (int)posx) * -1 - 0.001;
+					length += hyr;
+					
+				}
 			}
-			else
+			else if (90 <= ax && ax < 180)
 			{
-				// printf("2\n");
-				hyv = (1 - (posy - (int)posy)) / cos(((ax - 270) / RAD));
-				decaly = 1 - (posy - (int)posy);
-				decalxify = decaly * tan(((ax - 270) / RAD));
+				hyv = (posy - (int)posy) / cos((((90 - (int)ax)) / RAD));
+				hyr = (1 - (posx - (int)posx)) / cos((((180 - (int)ax)) / RAD));
+				if (hyv < hyr)
+				{
+					decaly = (posy - (int)posy) * -1 - 0.001;
+					decalx = (1 - (posx - (int)posx)) * tan(((180 - ((int)ax)) / RAD));
+					length += hyv;
 
+				}
+				else
+				{
+					decaly = ((posy - (int)posy) * -1) * tan(((180 - ((int)ax)) / RAD));
+					decalx = (1 - (posx - (int)posx));
+					length += hyr;
+				}	
 			}
-			if (ax < 90 || 270 < ax)
+			else 
 			{
-				// printf("3\n");
-				hyr = (posx - (int)posx) / cos(((ax - 0) / RAD));
-				decalx = -1 * (posx - (int)posx);
-				decalyifx = decalx * tan(((ax - 0) / RAD));
-			
-			}	
-			else
-			{
-				// printf("4\n");
-				hyr = (1 - (posx - (int)posx)) / cos(((ax - 180) / RAD));
-				decalx = 1 - (posx - (int)posx);
-				decalyifx = decalx * tan(((ax - 180) / RAD));
-
+				printf("ERRORR\n");
+				exit(0);
 			}
-
-
-
-			
-			// printf("x = %d\ty = %d\n", (int)(posx*100), (int)(posy*100));
+			if (length < 0)
+				length *= -1;
 			if (hyr <= hyv)
 			{
-				printf(LIGHTRED" %.3f"LIGHTGREEN" %.3f\t%.2f\n"NC, hyr, hyv, ax);
-				posx = posx + decalx;
-				if (ax < 90 || 270 < ax)
-					posy = posy - decalyifx;
-				else 
-					posy = posy + decalyifx;
-				length += hyr;
 				face = 1;
+				printf(LIGHTRED" %.3f"LIGHTGREEN" %.3f\t%.2f\n"NC, hyr, hyv, ax);
 
 			}
 			else
 			{
-				posy = posy + decaly;
-				if (ax < 180)
-					posx = posx - decalxify;
-				else
-					posx = posx + decalxify;
-				length += hyv;
 				face = 2;
 				printf(LIGHTGREEN" %.3f "LIGHTRED"%.3f\t%.2f\n"NC, hyv, hyr, ax);
-
 			}
-			ft_draw(data, (int)(posx*30), (int)(posy*30),0xff0000 + i * 3 );
-			// printf("coucouuuuuuuuuuuuuuu %f\t%f\n", posx - floor(posx), posy - floor(posy));
-			if (posx - floor(posx) == 0)
-			{
-				if (90 < ax && ax < 270)
-					posx += 0.001;
-				else
-					posx -= 0.001;
-			}
-			if (posy - floor(posy) == 0)
-			{
-				if (ax < 180)
-					posy -= 0.001;
-				else
-					posy += 0.001;
-			}
-				
+			if (5 < decalx)
+				decalx = 0;
+			if (5 < decaly)
+				decaly = 0;
+			posx += decalx;
+			posy += decaly;
+			ft_draw(data, (int)(posx*5), (int)(posy*5),0xff0000 + i * 3 );
+			// if ((int)posx < 0 || (int)posy < 0 || 3 < (int)posx || 3 < (int)posy)
+			// {
+			// 	printf("ERRORR2\n");
+			// 	break ;
+			// }
 			if (data->map[((int)floor(posy))][((int)floor(posx))] == 1)
 			{
-				printf("BREAK x = %d(%f) y = %d(%f)\n\n", (int)floor(posx), posx, (int)floor(posy), posy);
+				printf("BREAK x = %d(%f) y = %d(%f) len = %.2f\n\n", (int)floor(posx), posx, (int)floor(posy), posy, length);
 				break;
 			}
-			// printf("\n\n");
 		}
+		printf("length = %.5f\n\n\n\n", length);
 		if (face == 2)
 		{
 			if (0 < decaly)
 				ft_color_colone(data, i, length, 0x0000ff);
 			else
 				ft_color_colone(data, i, length, 0x00ff00);
-			
 		}
 		else
 		{
@@ -557,41 +544,11 @@ int ft_ray(t_data *data)
 				ft_color_colone(data, i, length, 0xfff000);
 		}
 		i++;
-
-
-
-
-		
-	}
-	// ft_draw(data, 100, 1, 0xff00ff);
-	// ft_draw(data, 200, 1, 0xff00ff);
-	// ft_draw(data, 300, 1, 0xff00ff);
-	// ft_draw(data, 400, 1, 0xff00ff);
-	// ft_draw(data, 500, 1, 0xff00ff);
-	// ft_draw(data, 600, 1, 0xff00ff);
-	// ft_draw(data, 700, 1, 0xff00ff);
-	// ft_draw(data, 800, 1, 0xff00ff);
-	// ft_draw(data, 100, 2, 0xff00ff);
-	// ft_draw(data, 200, 2, 0xff00ff);
-	// ft_draw(data, 300, 2, 0xff00ff);
-	// ft_draw(data, 400, 2, 0xff00ff);
-	// ft_draw(data, 500, 2, 0xff00ff);
-	// ft_draw(data, 600, 2, 0xff00ff);
-	// ft_draw(data, 700, 2, 0xff00ff);
-	// ft_draw(data, 800, 2, 0xff00ff);
-	// ft_draw(data, 100, 3, 0xff00ff);
-	// ft_draw(data, 200, 3, 0xff00ff);
-	// ft_draw(data, 300, 3, 0xff00ff);
-	// ft_draw(data, 400, 3, 0xff00ff);
-	// ft_draw(data, 500, 3, 0xff00ff);
-	// ft_draw(data, 600, 3, 0xff00ff);
-	// ft_draw(data, 700, 3, 0xff00ff);
-	// ft_draw(data, 800, 3, 0xff00ff);
 	mlx_put_image_to_window(data->mlx.mlx, data->mlx.mlx_win, data->mlx.i, 0, 0);
 	printf("x = %.3fy = %.3f rota = %.3f fov = %d\n", data->playerx, data->playery, data->playerr,data->playerfov);
+	}
 	return (0);
 }
-
 int	ft_key(int keycode, t_data *data)
 {
 	if (keycode == TOUCH_LEFTARROW)
