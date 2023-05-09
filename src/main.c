@@ -6,7 +6,7 @@
 /*   By: ngriveau <ngriveau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 14:23:20 by ngriveau          #+#    #+#             */
-/*   Updated: 2023/05/09 14:08:23 by ngriveau         ###   ########.fr       */
+/*   Updated: 2023/05/09 15:17:57 by ngriveau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -337,8 +337,8 @@ int ft_init(int c, char **av, t_data *data)
 	if (ft_verif_ok_map(data))
 		return (1);
 	printf(ORANGE"\nPlayer pos\tx = %.2f y %.2f\n"NC, data->playerx, data->playery);
-	data->mlx.winx = 300;
-	data->mlx.winy = 300;
+	data->mlx.winx = 1000;
+	data->mlx.winy = 1000;
 	data->playerfov = 90;
 	return (0);
 }
@@ -376,9 +376,9 @@ void	ft_draw(t_data *data, float x, float y, int color)
 	y = roundf(y);
 	ft_color(color, data);
 	pixel = (y * data->mlx.size) + (x * 4);
-	// if (((unsigned long)(data->mlx.size) * data->mlx.winy) < pixel - 5 || x <= 0
-	// 	|| y <= 0 || y > data->mlx.y * data->mlx.winy || x > data->mlx.winx)		// a refaire
-	// 	return ;
+	if (((unsigned long)(data->mlx.size) * data->mlx.winy) < pixel - 5 || x <= 0
+		|| y <= 0 || y > data->mlx.winy || x > data->mlx.winx)		// a refaire
+		return ;
 	// printf("x = %.0f\ty = %.0f\tcolor = %d\n", x, y, color);
 	if (data->mlx.e == 1)
 	{
@@ -405,12 +405,12 @@ void ft_color_colone(t_data *data, int x, float len, int color)
 	y = 0;
 	// printf("x = %d\n", x);
 	// len = floor(len);
-	while (y < (data->mlx.winy / 2) - (10 / len)*10)
+	while (y < (data->mlx.winy / 2) - (10 / len)*15)
 	{
 		ft_draw(data, x, y, data->sky.color);
 		y++;
 	}
-	while (y < (data->mlx.winy / 2) + (10 / len)*10)
+	while (y < (data->mlx.winy / 2) + (10 / len)*15)
 	{
 		ft_draw(data, x, y, color);
 		y++;
@@ -432,7 +432,9 @@ int ft_ray(t_data *data)
 	float	posx;
 	float	posy;
 	float	decalx;
+	float	decalxify;
 	float	decaly;
+	float	decalyifx;
 	float	length;
 	int		face;
 	
@@ -440,13 +442,16 @@ int ft_ray(t_data *data)
 	angle = data->playerfov / (float)data->mlx.winx;
 	// data->playerr += 45;
 	// printf("angle = %.2f y = %.2f x = %.2f\n\n", angle, data->playery - (int)data->playery, data->playerx - (int)data->playerx);
+	// while (i < 250)
 	while (i < (float)data->mlx.winx)
 	{
 		posx = data->playerx;
 		posy = data->playery;
 		length = 0;
+		// printf("----NEW RAY----\n\n\n");
 		while (1)
 		{
+			// printf("pos Ray x = %.2f y = %.2f\n",posx, posy);
 			ax =  angle * i + data->playerr - 45;
 			if (360 < ax)
 				ax = ax - 360;
@@ -454,52 +459,70 @@ int ft_ray(t_data *data)
 				ax = ax + 360;
 			if (ax < 180)
 			{
+				// printf("1\n");
 				hyv = (posy - (int)posy) / cos(((abs((int)ax) - 90) / RAD));
-				decaly = -1 * (posy - (int)posy + 0.001);
+				decaly = -1 * (posy - (int)posy + 0.0001);
+				decalxify = decaly * tan(((abs((int)ax) - 90) / RAD));
+				
 			}
 			else
 			{
-				decaly = 1 - (posy - (int)posy);
+				// printf("2\n");
 				hyv = (1 - (posy - (int)posy)) / cos(((ax - 270) / RAD));
+				decaly = 1 - (posy - (int)posy);
+				decalxify = decaly * tan(((ax - 270) / RAD));
+
 			}
 			if (ax < 90 || 270 < ax)
 			{
-				decalx = -1 * (posx - (int)posx + 0.001);
+				// printf("3\n");
 				hyr = (posx - (int)posx) / cos(((ax - 0) / RAD));
+				decalx = -1 * (posx - (int)posx + 0.0001);
+				decalyifx = decalx * tan(((ax - 0) / RAD));
+			
 			}	
 			else
 			{
-				decalx = 1 - (posx - (int)posx);
+				// printf("4\n");
 				hyr = (1 - (posx - (int)posx)) / cos(((ax - 180) / RAD));
+				decalx = 1 - (posx - (int)posx);
+				decalyifx = decalx * tan(((ax - 180) / RAD));
+
 			}
-			// printf("posX = %f\tpoxY = %f\n", posx ,posy);
-			// printf("decalX = %f\tdecalY = %f\n", decalx, decaly);
+
+
+
+			
 			if (hyr <= hyv)
 			{
-				// printf(LIGHTRED" %f"LIGHTGREEN" %f\t%f\n"NC, hyr, hyv, ax);
+				// printf(LIGHTRED" %.3f"LIGHTGREEN" %.3f\t%.2f\n"NC, hyr, hyv, ax);
 				posx = posx + decalx;
+				if (ax < 90 || 270 < ax)
+					posy = posy - decalyifx;
+				else 
+					posy = posy + decalyifx;
 				length += hyr;
 				face = 1;
 			}
 			else
 			{
 				posy = posy + decaly;
+				if (ax < 180)
+					posx = posx - decalxify;
+				else
+					posx = posx + decalxify;
 				length += hyv;
 				face = 2;
-				// printf(LIGHTGREEN" %f "LIGHTRED"%f\t%f\n"NC, hyv, hyr, ax);
+				// printf(LIGHTGREEN" %.3f "LIGHTRED"%.3f\t%.2f\n"NC, hyv, hyr, ax);
 
 			}
-			// printf("posX = %f\tpoxY = %f (%d)\n\n", posx ,posy,data->map[((int)floor(posy))][((int)floor(posx))]);
-			if (ax < 90 && data->map[((int)floor(posy))][((int)floor(posx))] == 1)
+			if (data->map[((int)floor(posy))][((int)floor(posx))] == 1)
+			{
+				// printf("BREAK x = %d(%f) y = %d(%f)\n\n", (int)floor(posx), posx, (int)floor(posy), posy);
 				break;
-			if (90 < ax && ax < 180 && data->map[((int)floor(posy))][((int)ceil(posx))] == 1)
-				break;
-			if (180 < ax && ax < 270 && data->map[((int)ceil(posy))][((int)floor(posx))] == 1)
-				break;
-			if (270 < ax && data->map[((int)ceil(posy))][((int)ceil(posx))] == 1)
-				break;
+			}
+			// printf("\n\n");
 		}
-		// printf("x = %f\tflen = %f, decaly = %.02f\tdecalx = %.02f\n", i, length, decaly, decalx);
 		if (face == 2)
 		{
 			if (0 < decaly)
@@ -558,13 +581,13 @@ int	ft_key(int keycode, t_data *data)
 	else if (keycode == TOUCH_RIGHTARROW)
 			data->playerr += 5;
 	else if (keycode == TOUCH_W)
-			data->playery -= 0.01;
+			data->playery -= 1;
 	else if (keycode == TOUCH_S)
-			data->playery += 0.01;
+			data->playery += 1;
 	else if (keycode == TOUCH_A)
-			data->playerx -= 0.01;
+			data->playerx -= 1;
 	else if (keycode == TOUCH_D)
-			data->playerx += 0.01;
+			data->playerx += 1;
 	else if (keycode == TOUCH_PLUS)
 			data->playerfov -= 10;
 	else if (keycode == TOUCH_MOINS)
