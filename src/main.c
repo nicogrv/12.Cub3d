@@ -6,7 +6,7 @@
 /*   By: ngriveau <ngriveau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 14:23:20 by ngriveau          #+#    #+#             */
-/*   Updated: 2023/05/09 11:59:55 by ngriveau         ###   ########.fr       */
+/*   Updated: 2023/05/09 14:08:23 by ngriveau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -490,7 +490,13 @@ int ft_ray(t_data *data)
 
 			}
 			// printf("posX = %f\tpoxY = %f (%d)\n\n", posx ,posy,data->map[((int)floor(posy))][((int)floor(posx))]);
-			if (data->map[((int)floor(posy))][((int)floor(posx))] == 1)
+			if (ax < 90 && data->map[((int)floor(posy))][((int)floor(posx))] == 1)
+				break;
+			if (90 < ax && ax < 180 && data->map[((int)floor(posy))][((int)ceil(posx))] == 1)
+				break;
+			if (180 < ax && ax < 270 && data->map[((int)ceil(posy))][((int)floor(posx))] == 1)
+				break;
+			if (270 < ax && data->map[((int)ceil(posy))][((int)ceil(posx))] == 1)
 				break;
 		}
 		// printf("x = %f\tflen = %f, decaly = %.02f\tdecalx = %.02f\n", i, length, decaly, decalx);
