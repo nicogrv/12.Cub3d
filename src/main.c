@@ -6,7 +6,7 @@
 /*   By: ngriveau <ngriveau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 14:23:20 by ngriveau          #+#    #+#             */
-/*   Updated: 2023/05/09 11:53:53 by ngriveau         ###   ########.fr       */
+/*   Updated: 2023/05/09 11:59:55 by ngriveau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -337,8 +337,8 @@ int ft_init(int c, char **av, t_data *data)
 	if (ft_verif_ok_map(data))
 		return (1);
 	printf(ORANGE"\nPlayer pos\tx = %.2f y %.2f\n"NC, data->playerx, data->playery);
-	data->mlx.winx = 900;
-	data->mlx.winy = 900;
+	data->mlx.winx = 300;
+	data->mlx.winy = 300;
 	data->playerfov = 90;
 	return (0);
 }
@@ -541,7 +541,7 @@ int ft_ray(t_data *data)
 	ft_draw(data, 700, 3, 0xff00ff);
 	ft_draw(data, 800, 3, 0xff00ff);
 	mlx_put_image_to_window(data->mlx.mlx, data->mlx.mlx_win, data->mlx.i, 0, 0);
-	printf("fov = %f\n\n", data->playerr);
+	printf("x = %.3fy = %.3f rota = %.3f fov = %d\n", data->playerx, data->playery, data->playerr,data->playerfov);
 	return (0);
 }
 
