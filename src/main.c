@@ -6,7 +6,7 @@
 /*   By: ngriveau <ngriveau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 14:23:20 by ngriveau          #+#    #+#             */
-/*   Updated: 2023/05/09 16:03:52 by ngriveau         ###   ########.fr       */
+/*   Updated: 2023/05/09 16:24:44 by ngriveau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -447,10 +447,10 @@ int ft_ray(t_data *data)
 		posx = data->playerx;
 		posy = data->playery;
 		length = 0;
-		printf("----NEW RAY----\n\n\n");
+		// printf("----NEW RAY----\n\n\n");
 		while (1)
 		{
-			printf("Start pos Ray x = %.2f y = %.2f\n",posx, posy);
+			// printf("Start pos Ray x = %.2f y = %.2f\n",posx, posy);
 			ax =  angle * i + data->playerr - 45;
 			if (360 < ax)
 				ax = ax - 360;
@@ -460,7 +460,7 @@ int ft_ray(t_data *data)
 			{
 				// printf("1\n");
 				hyv = (posy - (int)posy) / cos(((abs((int)ax) - 90) / RAD));
-				decaly = -1 * (posy - (int)posy + 0.0001);
+				decaly = -1 * (posy - (int)posy);
 				decalxify = decaly * tan(((abs((int)ax) - 90) / RAD));
 				
 			}
@@ -476,7 +476,7 @@ int ft_ray(t_data *data)
 			{
 				// printf("3\n");
 				hyr = (posx - (int)posx) / cos(((ax - 0) / RAD));
-				decalx = -1 * (posx - (int)posx + 0.0001);
+				decalx = -1 * (posx - (int)posx);
 				decalyifx = decalx * tan(((ax - 0) / RAD));
 			
 			}	
@@ -492,7 +492,7 @@ int ft_ray(t_data *data)
 
 
 			
-			printf("x = %d\ty = %d\n", (int)(posx*100), (int)(posy*100));
+			// printf("x = %d\ty = %d\n", (int)(posx*100), (int)(posy*100));
 			if (hyr <= hyv)
 			{
 				printf(LIGHTRED" %.3f"LIGHTGREEN" %.3f\t%.2f\n"NC, hyr, hyv, ax);
@@ -503,7 +503,6 @@ int ft_ray(t_data *data)
 					posy = posy + decalyifx;
 				length += hyr;
 				face = 1;
-					ft_draw(data, (int)(posx*150), (int)(posy*150),0xff0000 + i * 3);
 
 			}
 			else
@@ -516,9 +515,25 @@ int ft_ray(t_data *data)
 				length += hyv;
 				face = 2;
 				printf(LIGHTGREEN" %.3f "LIGHTRED"%.3f\t%.2f\n"NC, hyv, hyr, ax);
-				ft_draw(data, (int)(posx*150), (int)(posy*150),0xff0000 + i * 3 );
 
 			}
+			ft_draw(data, (int)(posx*30), (int)(posy*30),0xff0000 + i * 3 );
+			// printf("coucouuuuuuuuuuuuuuu %f\t%f\n", posx - floor(posx), posy - floor(posy));
+			if (posx - floor(posx) == 0)
+			{
+				if (90 < ax && ax < 270)
+					posx += 0.001;
+				else
+					posx -= 0.001;
+			}
+			if (posy - floor(posy) == 0)
+			{
+				if (ax < 180)
+					posy -= 0.001;
+				else
+					posy += 0.001;
+			}
+				
 			if (data->map[((int)floor(posy))][((int)floor(posx))] == 1)
 			{
 				printf("BREAK x = %d(%f) y = %d(%f)\n\n", (int)floor(posx), posx, (int)floor(posy), posy);
@@ -526,21 +541,21 @@ int ft_ray(t_data *data)
 			}
 			// printf("\n\n");
 		}
-		// if (face == 2)
-		// {
-		// 	if (0 < decaly)
-		// 		ft_color_colone(data, i, length, 0x0000ff);
-		// 	else
-		// 		ft_color_colone(data, i, length, 0x00ff00);
+		if (face == 2)
+		{
+			if (0 < decaly)
+				ft_color_colone(data, i, length, 0x0000ff);
+			else
+				ft_color_colone(data, i, length, 0x00ff00);
 			
-		// }
-		// else
-		// {
-		// 	if (0 < decalx)
-		// 		ft_color_colone(data, i, length, 0xff0000);
-		// 	else
-		// 		ft_color_colone(data, i, length, 0xfff000);
-		// }
+		}
+		else
+		{
+			if (0 < decalx)
+				ft_color_colone(data, i, length, 0xff0000);
+			else
+				ft_color_colone(data, i, length, 0xfff000);
+		}
 		i++;
 
 
