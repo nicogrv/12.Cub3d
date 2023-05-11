@@ -6,7 +6,7 @@
 /*   By: ngriveau <ngriveau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 14:23:20 by ngriveau          #+#    #+#             */
-/*   Updated: 2023/05/11 16:56:33 by ngriveau         ###   ########.fr       */
+/*   Updated: 2023/05/11 17:04:30 by ngriveau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -398,7 +398,7 @@ void	ft_draw(t_data *data, float x, float y, int color)
 
 
 
-void ft_color_colone(t_data *data, int x, float len, int color)
+void ft_color_colone(t_data *data, int x, float len, int pcofwall, int face)
 {
 	int y;
 
@@ -466,7 +466,7 @@ int ft_ray(t_data *data)
 	float	decaly = 0;
 	float	length = 0;
 	int		face = 0;
-	// float	pcofwall;
+	int		pcofwall;
 	
 
 	angle = data->playerfov / (float)data->mlx.winx;
@@ -500,7 +500,7 @@ int ft_ray(t_data *data)
 					decalx = ((posy - (int)posy) * -1) * tan((90 - ax) / RAD) - 0.001 ;
 					length += hyv;
 					face = 1;
-
+					pcofwall = (int)((posx + decalx - (int)(posx + decalx))*100);
 				}
 				else
 				{
@@ -508,6 +508,7 @@ int ft_ray(t_data *data)
 					decalx = ((posx - (int)posx) * -1) - 0.001;
 					length += hyr;
 					face = 4;
+					pcofwall = (int)((posy + decaly - (int)(posy + decaly))*100);
 					
 				}
 			}
@@ -525,7 +526,8 @@ int ft_ray(t_data *data)
 					decalx = (posy - (int)posy) * tan((ax) / RAD) - 0.001 ;
 					length += hyv;
 					face = 1;
-					printf("coucou\n");
+					pcofwall = (int)((posx + decalx - (int)(posx + decalx))*100);
+					
 				}
 				else
 				{
@@ -533,7 +535,7 @@ int ft_ray(t_data *data)
 					decalx = (1 - (posx - (int)posx)) + 0.001;
 					length += hyr;
 					face = 2;
-					
+					pcofwall = (int)((posy + decaly - (int)(posy + decaly))*100);
 				}
 				ax += 90;
 			}
@@ -552,7 +554,7 @@ int ft_ray(t_data *data)
 					decalx = (1 - (posy - (int)posy)) * tan((90 - ax) / RAD) + 0.001 ;
 					length += hyv;
 					face = 3;
-
+					pcofwall = (int)((posx + decalx - (int)(posx + decalx))*100);
 				}
 				else
 				{
@@ -560,7 +562,7 @@ int ft_ray(t_data *data)
 					decalx = (1 - (posx - (int)posx)) + 0.001;
 					length += hyr;
 					face = 2;
-					
+					pcofwall = (int)((posy + decaly - (int)(posy + decaly))*100);
 				}
 				ax += 180;
 			}
@@ -578,6 +580,7 @@ int ft_ray(t_data *data)
 					decalx = ((1 - (posy - (int)posy)) * -1 )* tan((ax) / RAD) + 0.001 ;
 					length += hyv;
 					face = 3;
+					pcofwall = (int)((posx + decalx - (int)(posx + decalx))*100);
 				}
 				else
 				{
@@ -585,7 +588,7 @@ int ft_ray(t_data *data)
 					decalx = ((posx - (int)posx) * -1) - 0.001;
 					length += hyr;
 					face = 4;
-					
+					pcofwall = (int)((posy + decaly - (int)(posy + decaly))*100);
 				}
 				ax += 270;
 			}
@@ -598,7 +601,7 @@ int ft_ray(t_data *data)
 			posy += decaly;
 			ft_draw(data, (int)((data->playerx + 1)*5), (int)((data->playery+1)*5),0xffff00);
 			ft_draw(data, (int)((posx+1)*5), (int)((posy+1)*5),0xff0000);
-			printf(NC"y = %d(%.2f) x = %d(%.2f)\n", (int)floor(posy), posy,  (int)floor(posx), posx);
+			printf(NC"y = %d(%.2f) x = %d(%.2f) pcdecal = %d\n", (int)floor(posy), posy,  (int)floor(posx), posx, pcofwall);
 			if (data->map[((int)floor(posy))][((int)floor(posx))] == 1)
 			{
 				ft_draw(data, (int)((posx+1)*5), (int)((posy+1)*5),0x0000ff);
@@ -607,14 +610,8 @@ int ft_ray(t_data *data)
 			}
 		}
 		// printf("length = %.5f\n\n\n\n", length);
-		if (face == 1)
-				ft_color_colone(data, i, length, 0x00ff00);
-		if (face == 2)
-				ft_color_colone(data, i, length, 0xff0000);
-		if (face == 3)
-				ft_color_colone(data, i, length, 0x0000ff);
-		if (face == 4)
-				ft_color_colone(data, i, length, 0xfff000);
+		ft_color_colone(data, i, length, pcofwall, face);
+
 		i++;
 	// printf("x = %.3fy = %.3f rota = %.3f fov = %d\n", data->playerx, data->playery, data->playerr,data->playerfov);
 	}
