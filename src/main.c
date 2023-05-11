@@ -6,7 +6,7 @@
 /*   By: ngriveau <ngriveau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 14:23:20 by ngriveau          #+#    #+#             */
-/*   Updated: 2023/05/11 17:04:30 by ngriveau         ###   ########.fr       */
+/*   Updated: 2023/05/11 20:02:58 by ngriveau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -397,20 +397,77 @@ void	ft_draw(t_data *data, float x, float y, int color)
 }
 
 
+int ft_pixel_of_img(t_data *data, int face, int pcofwall, int y)
+{
+	int r;
+	int g;
+	int b;
+	int	pixel;
+	int x;
+
+	// printf("pc = %d, y = %d\n", pcofwall, y);
+	// printf(" %d %d %d %d\n", data->north.img.e, data->east.img.e, data->south.img.e, data->west.img.e);
+	if (face == 1)
+	{
+		x = floor(data->north.width * ((float)pcofwall/100));
+		y =  floor(data->north.height * ((float)y / 100));
+		pixel = (y * data->north.img.size) + (x * 4);
+		r = data->north.img.data[pixel + 2];
+		g = data->north.img.data[pixel + 1];
+		b = data->north.img.data[pixel + 0];
+	}
+	if (face == 2)
+	{
+		x = data->east.width * ((float)pcofwall/100);
+		y =  data->east.height * ((float)y / 100);
+		pixel = (y * data->east.img.size) + (x * 4);
+		r = data->east.img.data[pixel + 2];
+		g = data->east.img.data[pixel + 1];
+		b = data->east.img.data[pixel + 0];
+	}
+	if (face == 3)
+	{
+		x = data->south.width * ((float)pcofwall/100);
+		y =  data->south.height * ((float)y / 100);
+		pixel = (y * data->south.img.size) + (x * 4);
+		r = data->south.img.data[pixel + 2];
+		g = data->south.img.data[pixel + 1];
+		b = data->south.img.data[pixel + 0];
+	}
+	if (face == 4)
+	{
+		x = data->west.width * ((float)pcofwall/100);
+		y =  data->west.height * ((float)y / 100);
+		pixel = (y * data->west.img.size) + (x * 4);
+		r = data->west.img.data[pixel + 2];
+		g = data->west.img.data[pixel + 1];
+		b = data->west.img.data[pixel + 0];
+	}
+	// printf("x = %d(%f) y = %d(%f)\n", data->east.width , (float)(pcofwall/100),  data->north.height , (float)(y / 10));
+	// printf("x= %d\ty = %d\n", x, y);
+	// printf("r = %d\tg = %d, b = %d\n\n", r, g, b);
+	return ((r * 65536) + (g * 256) + b);
+}
+
 
 void ft_color_colone(t_data *data, int x, float len, int pcofwall, int face)
 {
 	int y;
+	int wall;
+	int start;
 
 	y = 0;
+	wall = (data->mlx.winy / 2) + (10 / len)*data->lenwall - ((data->mlx.winy / 2) - (10 / len)*data->lenwall);
 	while (y < (data->mlx.winy / 2) - (10 / len)*data->lenwall)
 	{
 		ft_draw(data, x, y, data->sky.color);
 		y++;
 	}
+	start = y;
 	while (y < (data->mlx.winy / 2) + (10 / len)*data->lenwall)
 	{
-		ft_draw(data, x, y, color);
+		// printf("coucou = %d\n",;
+		ft_draw(data, x, y, ft_pixel_of_img(data, face, pcofwall, ((y - start) * 100 / wall)));
 		y++;
 	}
 	while (y < data->mlx.winy)
@@ -483,7 +540,7 @@ int ft_ray(t_data *data)
 			ax -= 360;
 		else if (ax < 0)
 			ax += 360;
-		printf("\n\n\n\t\t----NEW RAY----\n\n\n");
+		// printf("\n\n\n\t\t----NEW RAY----\n\n\n");
 		while (1)
 		{
 			// printf("Start pos Ray x = %.2f y = %.2f len = %.2f\n",posx, posy, length);
@@ -592,19 +649,23 @@ int ft_ray(t_data *data)
 				}
 				ax += 270;
 			}
-			if (hyr < hyv)
-				printf(LIGHTRED" %.3f"LIGHTGREEN" %.3f\t%.2f\n"NC, hyr, hyv, ax);
-			else
-				printf(LIGHTGREEN" %.3f "LIGHTRED"%.3f\t%.2f\n"NC, hyv, hyr, ax);
+			// if (hyr < hyv)
+			// 	printf(LIGHTRED" %.3f"LIGHTGREEN" %.3f\t%.2f\n"NC, hyr, hyv, ax);
+			// else
+			// 	printf(LIGHTGREEN" %.3f "LIGHTRED"%.3f\t%.2f\n"NC, hyv, hyr, ax);
 			// printf("Decalx = %.3f Decaly = %.3f\n", decalx, decaly);
 			posx += decalx;
 			posy += decaly;
 			ft_draw(data, (int)((data->playerx + 1)*5), (int)((data->playery+1)*5),0xffff00);
-			ft_draw(data, (int)((posx+1)*5), (int)((posy+1)*5),0xff0000);
-			printf(NC"y = %d(%.2f) x = %d(%.2f) pcdecal = %d\n", (int)floor(posy), posy,  (int)floor(posx), posx, pcofwall);
+			ft_draw(data, (int)((data->playerx + 1)*5)-1, (int)((data->playery+1)*5),0xffff00);
+			ft_draw(data, (int)((data->playerx + 1)*5)+1, (int)((data->playery+1)*5),0xffff00);
+			ft_draw(data, (int)((data->playerx + 1)*5), (int)((data->playery+1)*5)-1,0xffff00);
+			ft_draw(data, (int)((data->playerx + 1)*5), (int)((data->playery+1)*5)+1,0xffff00);
+			ft_draw(data, (int)((posx+1)*5), (int)((posy+1)*5),0x990000);
+			// printf(NC"y = %d(%.2f) x = %d(%.2f) pcdecal = %d\n", (int)floor(posy), posy,  (int)floor(posx), posx, pcofwall);
 			if (data->map[((int)floor(posy))][((int)floor(posx))] == 1)
 			{
-				ft_draw(data, (int)((posx+1)*5), (int)((posy+1)*5),0x0000ff);
+				ft_draw(data, (int)((posx+1)*5), (int)((posy+1)*5),0xffffff);
 				// printf("BREAK x = %d(%f) y = %d(%f) len = %.2f\n\n", (int)floor(posx), posx, (int)floor(posy), posy, length);
 				break;
 			}
@@ -621,17 +682,17 @@ int ft_ray(t_data *data)
 int	ft_key(int keycode, t_data *data)
 {
 	if (keycode == TOUCH_LEFTARROW)
-			data->playerr -= 5;
+			data->playerr -= 20;
 	else if (keycode == TOUCH_RIGHTARROW)
-			data->playerr += 5;
+			data->playerr += 20;
 	else if (keycode == TOUCH_W)
-			data->playery -= 1;
+			data->playery -= 0.2;
 	else if (keycode == TOUCH_S)
-			data->playery += 1;
+			data->playery += 0.2;
 	else if (keycode == TOUCH_A)
-			data->playerx += 1;
+			data->playerx += 0.2;
 	else if (keycode == TOUCH_D)
-			data->playerx -= 1;
+			data->playerx -= 0.2;
 	else if (keycode == TOUCH_PLUS)
 			data->playerfov -= 10;
 	else if (keycode == TOUCH_MOINS)
@@ -676,7 +737,6 @@ int main(int c, char **av)
 
 	data.west.tex = mlx_xpm_file_to_image(data.mlx.mlx, data.west.path, &data.west.width, &data.west.height);
 	data.west.img.data = mlx_get_data_addr(data.west.tex, &data.west.img.p, &data.west.img.size, &data.west.img.e);
-	
 	
 	
 	if (ft_ray(&data))
