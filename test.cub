@@ -1,7 +1,7 @@
-NO      ./redwall.xpm
-SO      ./orangewall.xpm
-WE      ./greenwall.xpm
-EA      ./purpelwall.xpm
+NO      ./assets/redwall.xpm
+SO      ./assets/orangewall.xpm
+WE      ./assets/greenwall.xpm
+EA      ./assets/purpelwall.xpm
 
 
 
@@ -9,9 +9,12 @@ F 142,142,142
 C 35,35,35    
 
 
-
-        1111111
-        1111111111111111111111111
+                        1111111
+                        1000001
+                        1010101
+                        1000001
+        1111111         1000001
+        1111111111111111111011111
         1000000000110000000000001
         1011000001110000000000001
         1001000000000000N00000001
