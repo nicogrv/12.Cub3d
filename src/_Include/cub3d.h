@@ -93,6 +93,7 @@ typedef struct s_data
 	float		playery;
 	float		playerr;
 	int			playerfov;
+	int 		lenwall;
 	int			ystartmap;
 
 } 				t_data;

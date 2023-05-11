@@ -6,7 +6,7 @@
 /*   By: ngriveau <ngriveau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 14:23:20 by ngriveau          #+#    #+#             */
-/*   Updated: 2023/05/11 15:03:27 by ngriveau         ###   ########.fr       */
+/*   Updated: 2023/05/11 15:19:09 by ngriveau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -339,6 +339,7 @@ int ft_init(int c, char **av, t_data *data)
 	data->mlx.winx = 1000;
 	data->mlx.winy = 1000;
 	data->playerfov = 90;
+	data->lenwall = 12;
 	return (0);
 }
 
@@ -402,12 +403,12 @@ void ft_color_colone(t_data *data, int x, float len, int color)
 	int y;
 
 	y = 0;
-	while (y < (data->mlx.winy / 2) - (10 / len)*15)
+	while (y < (data->mlx.winy / 2) - (10 / len)*data->lenwall)
 	{
 		ft_draw(data, x, y, data->sky.color);
 		y++;
 	}
-	while (y < (data->mlx.winy / 2) + (10 / len)*15)
+	while (y < (data->mlx.winy / 2) + (10 / len)*data->lenwall)
 	{
 		ft_draw(data, x, y, color);
 		y++;
@@ -645,6 +646,10 @@ int	ft_key(int keycode, t_data *data)
 			data->playerfov -= 10;
 	else if (keycode == TOUCH_MOINS)
 			data->playerfov += 10;
+	else if (keycode == TOUCH_N)
+			data->lenwall -= 1;
+	else if (keycode == TOUCH_M)
+			data->lenwall += 1;
 	if (data->playerr < 0)
 		data->playerr += 360;
 	if (360 < data->playerr)
@@ -653,6 +658,7 @@ int	ft_key(int keycode, t_data *data)
 		data->playerfov = 30;
 	if (180 < data->playerfov)
 		data->playerfov = 180;
+
 	mlx_destroy_image(data->mlx.mlx, data->mlx.i);
 	data->mlx.i = mlx_new_image(data->mlx.mlx, data->mlx.winx, data->mlx.winy);
 	ft_ray(data);
