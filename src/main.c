@@ -6,7 +6,7 @@
 /*   By: ngriveau <ngriveau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 14:23:20 by ngriveau          #+#    #+#             */
-/*   Updated: 2023/05/11 16:28:57 by ngriveau         ###   ########.fr       */
+/*   Updated: 2023/05/11 16:56:33 by ngriveau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -466,6 +466,7 @@ int ft_ray(t_data *data)
 	float	decaly = 0;
 	float	length = 0;
 	int		face = 0;
+	// float	pcofwall;
 	
 
 	angle = data->playerfov / (float)data->mlx.winx;
@@ -482,8 +483,7 @@ int ft_ray(t_data *data)
 			ax -= 360;
 		else if (ax < 0)
 			ax += 360;
-		// ft_calcul_trigo(data, ax);
-		// printf("\n\n\n\t\t----NEW RAY----\n\n\n");
+		printf("\n\n\n\t\t----NEW RAY----\n\n\n");
 		while (1)
 		{
 			// printf("Start pos Ray x = %.2f y = %.2f len = %.2f\n",posx, posy, length);
@@ -499,7 +499,7 @@ int ft_ray(t_data *data)
 					decaly = ((posy - (int)posy) * -1) - 0.001;
 					decalx = ((posy - (int)posy) * -1) * tan((90 - ax) / RAD) - 0.001 ;
 					length += hyv;
-					face = 2;
+					face = 1;
 
 				}
 				else
@@ -507,7 +507,7 @@ int ft_ray(t_data *data)
 					decaly = ((posx - (int)posx) * -1) * tan((ax) / RAD) - 0.001 ;
 					decalx = ((posx - (int)posx) * -1) - 0.001;
 					length += hyr;
-					face = 1;
+					face = 4;
 					
 				}
 			}
@@ -524,15 +524,15 @@ int ft_ray(t_data *data)
 					decaly = ((posy - (int)posy) * -1) - 0.001;
 					decalx = (posy - (int)posy) * tan((ax) / RAD) - 0.001 ;
 					length += hyv;
-					face = 2;
-
+					face = 1;
+					printf("coucou\n");
 				}
 				else
 				{
 					decaly = ((1 - (posx - (int)posx)) * -1) * tan((90 - ax) / RAD) + 0.001;
 					decalx = (1 - (posx - (int)posx)) + 0.001;
 					length += hyr;
-					face = 1;
+					face = 2;
 					
 				}
 				ax += 90;
@@ -551,7 +551,7 @@ int ft_ray(t_data *data)
 					decaly = (1 - (posy - (int)posy)) + 0.001;
 					decalx = (1 - (posy - (int)posy)) * tan((90 - ax) / RAD) + 0.001 ;
 					length += hyv;
-					face = 2;
+					face = 3;
 
 				}
 				else
@@ -559,7 +559,7 @@ int ft_ray(t_data *data)
 					decaly = (1 - (posx - (int)posx)) * tan((ax) / RAD) + 0.001 ;
 					decalx = (1 - (posx - (int)posx)) + 0.001;
 					length += hyr;
-					face = 1;
+					face = 2;
 					
 				}
 				ax += 180;
@@ -577,29 +577,28 @@ int ft_ray(t_data *data)
 					decaly = (1 - (posy - (int)posy)) + 0.001;
 					decalx = ((1 - (posy - (int)posy)) * -1 )* tan((ax) / RAD) + 0.001 ;
 					length += hyv;
-					face = 2;
-
+					face = 3;
 				}
 				else
 				{
 					decaly = (posx - (int)posx) * tan((90 - ax) / RAD) - 0.001;
 					decalx = ((posx - (int)posx) * -1) - 0.001;
 					length += hyr;
-					face = 1;
+					face = 4;
 					
 				}
 				ax += 270;
 			}
-			// if (hyr < hyv)
-				// printf(LIGHTRED" %.3f"LIGHTGREEN" %.3f\t%.2f\n"NC, hyr, hyv, ax);
-			// else
-				// printf(LIGHTGREEN" %.3f "LIGHTRED"%.3f\t%.2f\n"NC, hyv, hyr, ax);
+			if (hyr < hyv)
+				printf(LIGHTRED" %.3f"LIGHTGREEN" %.3f\t%.2f\n"NC, hyr, hyv, ax);
+			else
+				printf(LIGHTGREEN" %.3f "LIGHTRED"%.3f\t%.2f\n"NC, hyv, hyr, ax);
 			// printf("Decalx = %.3f Decaly = %.3f\n", decalx, decaly);
 			posx += decalx;
 			posy += decaly;
 			ft_draw(data, (int)((data->playerx + 1)*5), (int)((data->playery+1)*5),0xffff00);
 			ft_draw(data, (int)((posx+1)*5), (int)((posy+1)*5),0xff0000);
-			// printf(NC"y = %d(%.2f) x = %d(%.2f)\n", (int)floor(posy), posy,  (int)floor(posx), posx);
+			printf(NC"y = %d(%.2f) x = %d(%.2f)\n", (int)floor(posy), posy,  (int)floor(posx), posx);
 			if (data->map[((int)floor(posy))][((int)floor(posx))] == 1)
 			{
 				ft_draw(data, (int)((posx+1)*5), (int)((posy+1)*5),0x0000ff);
@@ -608,20 +607,14 @@ int ft_ray(t_data *data)
 			}
 		}
 		// printf("length = %.5f\n\n\n\n", length);
-		if (face == 2)
-		{
-			if (0 < decaly)
-				ft_color_colone(data, i, length, 0x0000ff);
-			else
+		if (face == 1)
 				ft_color_colone(data, i, length, 0x00ff00);
-		}
-		else
-		{
-			if (0 < decalx)
+		if (face == 2)
 				ft_color_colone(data, i, length, 0xff0000);
-			else
+		if (face == 3)
+				ft_color_colone(data, i, length, 0x0000ff);
+		if (face == 4)
 				ft_color_colone(data, i, length, 0xfff000);
-		}
 		i++;
 	// printf("x = %.3fy = %.3f rota = %.3f fov = %d\n", data->playerx, data->playery, data->playerr,data->playerfov);
 	}
@@ -675,14 +668,22 @@ int main(int c, char **av)
 	data.mlx.i = mlx_new_image(data.mlx.mlx, data.mlx.winx, data.mlx.winy);
 	data.mlx.data = mlx_get_data_addr(data.mlx.i, &data.mlx.p, &data.mlx.size, &data.mlx.e);
 
-	data.north.img = mlx_xpm_file_to_image(data.mlx.mlx, data.north.path, &data.north.width, &data.north.height);
-	data.east.img = mlx_xpm_file_to_image(data.mlx.mlx, data.east.path, &data.east.width, &data.east.height);
-	data.south.img = mlx_xpm_file_to_image(data.mlx.mlx, data.south.path, &data.south.width, &data.south.height);
-	data.west.img = mlx_xpm_file_to_image(data.mlx.mlx, data.west.path, &data.west.width, &data.west.height);
+	data.north.tex = mlx_xpm_file_to_image(data.mlx.mlx, data.north.path, &data.north.width, &data.north.height);
+	data.north.img.data = mlx_get_data_addr(data.north.tex, &data.north.img.p, &data.north.img.size, &data.north.img.e);
+
+	data.east.tex = mlx_xpm_file_to_image(data.mlx.mlx, data.east.path, &data.east.width, &data.east.height);
+	data.east.img.data = mlx_get_data_addr(data.east.tex, &data.east.img.p, &data.east.img.size, &data.east.img.e);
+
+	data.south.tex = mlx_xpm_file_to_image(data.mlx.mlx, data.south.path, &data.south.width, &data.south.height);
+	data.south.img.data = mlx_get_data_addr(data.south.tex, &data.south.img.p, &data.south.img.size, &data.south.img.e);
+
+	data.west.tex = mlx_xpm_file_to_image(data.mlx.mlx, data.west.path, &data.west.width, &data.west.height);
+	data.west.img.data = mlx_get_data_addr(data.west.tex, &data.west.img.p, &data.west.img.size, &data.west.img.e);
 	
-	int pos = (0 * data.north.width) + (0 * 8);
-	// if (ft_ray(&data))
-	// 	return (1);
+	
+	
+	if (ft_ray(&data))
+		return (1);
 
 	mlx_hook(data.mlx.mlx_win, 2, 1L << 0, &ft_key, &data);
 	// mlx_hook(m.mlx_win, 17, 1L << 0, &ft_cross_close, &data);
