@@ -6,7 +6,7 @@
 /*   By: ngriveau <ngriveau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 14:23:20 by ngriveau          #+#    #+#             */
-/*   Updated: 2023/05/10 12:02:51 by ngriveau         ###   ########.fr       */
+/*   Updated: 2023/05/11 13:43:25 by ngriveau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -451,21 +451,25 @@ int ft_ray(t_data *data)
 		printf("\n\n\n\t\t----NEW RAY----\n\n\n");
 		while (1)
 		{
-
 			printf("Start pos Ray x = %.2f y = %.2f len = %.2f\n",posx, posy, length);
 
+
 			ax =  angle * i + data->playerr - 45;
+			if (ax == 90)
+				ax = 89.9;
 			if (360 < ax)
-				ax = ax - 360;
+				ax -= 360;
 			else if (ax < 0)
-				ax = ax + 360;
-			if (0 <= ax && ax <= 90)
+				ax += 360;
+			if (0 <= ax && ax < 90)
 			{
+				// if ((int)ax % 10 == 0)
+				// 	ft_draw(data, i-1, 500, 0xff00ff);
 				hyv = (posy - (int)posy) / cos((90 - ax) / RAD);
 				hyr = (posx - (int)posx) / cos(ax / RAD);
 				if (hyv < hyr)
 				{
-					decaly = (posy - (int)posy) * -1 - 0.001;
+					decaly = ((posy - (int)posy) * -1) - 0.001;
 					decalx = ((posy - (int)posy) * -1) * tan((90 - ax) / RAD) - 0.001 ;
 					length += hyv;
 				}
@@ -477,26 +481,26 @@ int ft_ray(t_data *data)
 					
 				}
 			}
-			else if (90 < ax && ax < 180)
+			else if (90 <= ax && ax < 180)
 			{
-				hyv = (posy - (int)posy) / cos((90 - ax) / RAD);
-				hyr = 1 - (posx - (int)posx) / -cos((180 - ax)  / RAD);
+				ax -= 90;
+				hyv = (posy - (int)posy) / cos(ax / RAD);
+				hyr = (1-(posx - (int)posx)) / cos((90 - ax) / RAD);
 				if (hyv < hyr)
 				{
-					decaly = ((posy - (int)posy + 0.001) * -1);
-					decalx = ((posy - (int)posy)) * tan((90 - ax) / RAD);
+					decaly = ((posy - (int)posy) * -1) - 0.001;
+					decalx = (posy - (int)posy) * tan((ax) / RAD) - 0.001 ;
 					length += hyv;
-
 				}
 				else
 				{
-					decaly = 1 - (posx - (int)posx) * tan((180 - ax)  / RAD);
-					decalx = 1 - (posx - (int)posx + 0.001);
-					length += hyr;		
+					decaly = ((1 - (posx - (int)posx)) * -1) * tan((90 - ax) / RAD) + 0.001;
+					decalx = (1 - (posx - (int)posx)) + 0.001;
+					length += hyr;
+					
 				}
-
-				
 			}
+			printf("\t\t%f\t%f\n", (1 -(posx - (int)posx) * -1),  tan((90 - ax) / RAD) + 0.001);
 			// else 
 			// {
 			// 	printf("ERRORR\n");
@@ -504,7 +508,7 @@ int ft_ray(t_data *data)
 			// }
 			if (length < 0)
 				length *= -1;
-			if (hyr <= hyv)
+			if (hyr < hyv)
 			{
 				face = 1;
 				printf(LIGHTRED" %.3f"LIGHTGREEN" %.3f\t%.2f\n"NC, hyr, hyv, ax);
@@ -515,10 +519,11 @@ int ft_ray(t_data *data)
 				face = 2;
 				printf(LIGHTGREEN" %.3f "LIGHTRED"%.3f\t%.2f\n"NC, hyv, hyr, ax);
 			}
-			if (5 < decalx)
-				decalx = 0;
-			if (5 < decaly)
-				decaly = 0;
+			// if (5 < decalx)
+			// 	decalx /= 100;
+			// if (5 < decaly)
+			// 	decaly /= 100;
+			printf("Decalx = %.3f Decaly = %.3f\n", decalx, decaly);
 			posx += decalx;
 			posy += decaly;
 			ft_draw(data, (int)((data->playerx + 1)*20), (int)((data->playery+1)*20),0xffff00);
