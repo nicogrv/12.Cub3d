@@ -6,7 +6,7 @@
 /*   By: ngriveau <ngriveau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 14:23:20 by ngriveau          #+#    #+#             */
-/*   Updated: 2023/05/11 15:19:09 by ngriveau         ###   ########.fr       */
+/*   Updated: 2023/05/11 16:28:57 by ngriveau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,22 +141,22 @@ int	ft_init_id(t_data *data, char **returnline)
 			(void) i;
 		else if (line && id == 0 && line[i] && line[i+1] && is_ws(line[i+2]) && line[i] == 'N' && line[i+1] == 'O')
 		{
-			if (ft_init_id_verif_path(&data->pathnorth, &id, line, i))
+			if (ft_init_id_verif_path(&data->north.path, &id, line, i))
 				return (1);
 		}
 		else if (line && id == 1 && line[i] && line[i+1] && is_ws(line[i+2]) && line[i] == 'S' && line[i+1] == 'O')
 		{
-			if (ft_init_id_verif_path(&data->pathsouth, &id, line, i))
+			if (ft_init_id_verif_path(&data->south.path, &id, line, i))
 				return (1);
 		}
 		else if (line && id == 2 && line[i] && line[i+1] && is_ws(line[i+2]) && line[i] == 'W' && line[i+1] == 'E')
 		{
-			if (ft_init_id_verif_path(&data->pathwest, &id, line, i))
+			if (ft_init_id_verif_path(&data->west.path, &id, line, i))
 				return (1);
 		}
 		else if (line && id == 3 && line[i] && line[i+1] && is_ws(line[i+2]) && line[i] == 'E' && line[i+1] == 'A')
 		{
-			if (ft_init_id_verif_path(&data->patheast, &id, line, i))
+			if (ft_init_id_verif_path(&data->east.path, &id, line, i))
 				return (1);
 		}
 		else if (line && id == 4 && line[i] && is_ws(line[i+1]) && line[i] == 'F')
@@ -171,7 +171,7 @@ int	ft_init_id(t_data *data, char **returnline)
 		}
 		else
 		{
-			if (!data->patheast || !data->pathwest || !data->pathsouth || !data->pathnorth)
+			if (!data->east.path || !data->west.path || !data->south.path || !data->north.path)
 				return (1);
 			else
 				return (0);
@@ -326,7 +326,7 @@ int ft_init(int c, char **av, t_data *data)
 	if (ft_init_id(data, &line))
 		return (printf(RED"Error in file3\n"NC));
 	ft_size_map(data, line);
-	printf(ORANGE"\nn = %s\ns = %s\no = %s\ne = %s\n"NC, data->pathnorth, data->pathsouth, data->pathwest, data->patheast);
+	printf(ORANGE"\nn = %s\ns = %s\no = %s\ne = %s\n"NC, data->north.path, data->south.path, data->west.path, data->east.path);
 	printf(ORANGE"\ncolor floor = %d\nr = %d\ng = %d\nb = %d\n"NC, data->floor.color, data->floor.r, data->floor.g, data->floor.b);
 	printf(ORANGE"\ncolor sky = %d\nr = %d\ng = %d\nb = %d\n"NC, data->sky.color, data->sky.r, data->sky.g, data->sky.b);
 	printf(ORANGE"\nSize mapx = %d\ty = %d start %d\n"NC, data->mapx, data->mapy, data->ystartmap);
@@ -597,12 +597,12 @@ int ft_ray(t_data *data)
 			// printf("Decalx = %.3f Decaly = %.3f\n", decalx, decaly);
 			posx += decalx;
 			posy += decaly;
-			ft_draw(data, (int)((data->playerx + 1)*20), (int)((data->playery+1)*20),0xffff00);
-			ft_draw(data, (int)((posx+1)*20), (int)((posy+1)*20),0xff0000);
+			ft_draw(data, (int)((data->playerx + 1)*5), (int)((data->playery+1)*5),0xffff00);
+			ft_draw(data, (int)((posx+1)*5), (int)((posy+1)*5),0xff0000);
 			// printf(NC"y = %d(%.2f) x = %d(%.2f)\n", (int)floor(posy), posy,  (int)floor(posx), posx);
 			if (data->map[((int)floor(posy))][((int)floor(posx))] == 1)
 			{
-				ft_draw(data, (int)((posx+1)*20), (int)((posy+1)*20),0x0000ff);
+				ft_draw(data, (int)((posx+1)*5), (int)((posy+1)*5),0x0000ff);
 				// printf("BREAK x = %d(%f) y = %d(%f) len = %.2f\n\n", (int)floor(posx), posx, (int)floor(posy), posy, length);
 				break;
 			}
@@ -674,8 +674,15 @@ int main(int c, char **av)
 	data.mlx.mlx_win = mlx_new_window(data.mlx.mlx, data.mlx.winx, data.mlx.winy, "Cub3d");
 	data.mlx.i = mlx_new_image(data.mlx.mlx, data.mlx.winx, data.mlx.winy);
 	data.mlx.data = mlx_get_data_addr(data.mlx.i, &data.mlx.p, &data.mlx.size, &data.mlx.e);
-	if (ft_ray(&data))
-		return (1);
+
+	data.north.img = mlx_xpm_file_to_image(data.mlx.mlx, data.north.path, &data.north.width, &data.north.height);
+	data.east.img = mlx_xpm_file_to_image(data.mlx.mlx, data.east.path, &data.east.width, &data.east.height);
+	data.south.img = mlx_xpm_file_to_image(data.mlx.mlx, data.south.path, &data.south.width, &data.south.height);
+	data.west.img = mlx_xpm_file_to_image(data.mlx.mlx, data.west.path, &data.west.width, &data.west.height);
+	
+	int pos = (0 * data.north.width) + (0 * 8);
+	// if (ft_ray(&data))
+	// 	return (1);
 
 	mlx_hook(data.mlx.mlx_win, 2, 1L << 0, &ft_key, &data);
 	// mlx_hook(m.mlx_win, 17, 1L << 0, &ft_cross_close, &data);

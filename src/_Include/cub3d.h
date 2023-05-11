@@ -56,6 +56,15 @@ typedef struct s_raycast
 	float tany;
 }				t_raycast;
 
+
+typedef struct s_img
+{
+	void	*img;
+	char	*path;
+	int		width;
+	int		height;
+}				t_img;
+
 typedef struct s_mlx
 {
 	int		winx;
@@ -80,10 +89,10 @@ typedef struct s_data
 	int			**map;
 	int			fdfile;
 	char		*pathfile;
-    char		*pathnorth;
-    char		*pathsouth;
-    char		*pathwest;
-    char		*patheast;
+	t_img	north;
+	t_img	east;
+	t_img	south;
+	t_img	west;
 	t_raycast	trigo;
 	t_color		sky;
 	t_color		floor;
