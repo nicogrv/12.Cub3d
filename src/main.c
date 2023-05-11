@@ -6,7 +6,7 @@
 /*   By: ngriveau <ngriveau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 14:23:20 by ngriveau          #+#    #+#             */
-/*   Updated: 2023/05/11 14:38:51 by ngriveau         ###   ########.fr       */
+/*   Updated: 2023/05/11 14:47:50 by ngriveau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -419,37 +419,37 @@ void ft_color_colone(t_data *data, int x, float len, int color)
 	}
 }
 
-void ft_calcul_trigo(t_data *data, float ax)
-{
-	if (0 <= ax && ax < 90)
-	{
-		data->trigo.cosy = cos((90 - ax) / RAD);
-		data->trigo.cosx = cos(ax / RAD);
-		data->trigo.tany = tan((90 - ax) / RAD);
-		data->trigo.tanx = tan((ax) / RAD);
-	}
-	else if (90 <= ax && ax < 180)
-	{
-		data->trigo.cosy = cos(ax / RAD);
-		data->trigo.cosx = cos((90 - ax) / RAD);
-		data->trigo.tany = tan((ax) / RAD);
-		data->trigo.tanx = tan((90 - ax) / RAD);
-	}
-	else if (180 <= ax && ax < 270)
-	{
-		data->trigo.cosy = cos((90 - ax) / RAD);
-		data->trigo.cosx = cos(ax / RAD);
-		data->trigo.tany = tan((90 - ax) / RAD);
-		data->trigo.tanx = tan((ax) / RAD);
-	}
-	else if (270 <= ax && ax < 360)
-	{
-		data->trigo.cosy = cos(ax / RAD);
-		data->trigo.cosx = cos((90 - ax) / RAD);
-		data->trigo.tany = tan((ax) / RAD);
-		data->trigo.tanx = tan((90 - ax) / RAD);
-	}
-}
+// void ft_calcul_trigo(t_data *data, float ax)
+// {
+// 	if (0 <= ax && ax < 90)
+// 	{
+// 		data->trigo.cosy = cos((90 - ax) / RAD);
+// 		data->trigo.cosx = cos(ax / RAD);
+// 		data->trigo.tany = tan((90 - ax) / RAD);
+// 		data->trigo.tanx = tan((ax) / RAD);
+// 	}
+// 	else if (90 <= ax && ax < 180)
+// 	{
+// 		data->trigo.cosy = cos(ax / RAD);
+// 		data->trigo.cosx = cos((90 - ax) / RAD);
+// 		data->trigo.tany = tan((ax) / RAD);
+// 		data->trigo.tanx = tan((90 - ax) / RAD);
+// 	}
+// 	else if (180 <= ax && ax < 270)
+// 	{
+// 		data->trigo.cosy = cos((90 - ax) / RAD);
+// 		data->trigo.cosx = cos(ax / RAD);
+// 		data->trigo.tany = tan((90 - ax) / RAD);
+// 		data->trigo.tanx = tan((ax) / RAD);
+// 	}
+// 	else if (270 <= ax && ax < 360)
+// 	{
+// 		data->trigo.cosy = cos(ax / RAD);
+// 		data->trigo.cosx = cos((90 - ax) / RAD);
+// 		data->trigo.tany = tan((ax) / RAD)
+// 		data->trigo.tanx = tan((90 - ax) / RAD)
+// 	}
+// }
 
 
 int ft_ray(t_data *data)
@@ -465,6 +465,11 @@ int ft_ray(t_data *data)
 	float	decaly = 0;
 	float	length = 0;
 	int		face = 0;
+
+	float aa;
+	float bb;
+	float cc;
+	float dd;
 	
 
 	angle = data->playerfov / (float)data->mlx.winx;
@@ -481,45 +486,55 @@ int ft_ray(t_data *data)
 			ax -= 360;
 		else if (ax < 0)
 			ax += 360;
-		ft_calcul_trigo(data, ax);
-		printf("\n\n\n\t\t----NEW RAY----\n\n\n");
+		// ft_calcul_trigo(data, ax);
+		aa = cos((90 - ax) / RAD);
+		bb = cos(ax / RAD);
+		cc = tan((90 - ax) / RAD);
+		dd = tan((ax) / RAD);
+		// printf("\n\n\n\t\t----NEW RAY----\n\n\n");
 		while (1)
 		{
-			printf("Start pos Ray x = %.2f y = %.2f len = %.2f\n",posx, posy, length);
+			// printf("Start pos Ray x = %.2f y = %.2f len = %.2f\n",posx, posy, length);
 			if (0 <= ax && ax < 90)
 			{
-				hyv = (posy - (int)posy) / data->trigo.cosy;
-				hyr = (posx - (int)posx) / data->trigo.cosx;
+				hyv = (posy - (int)posy) / aa;
+				hyr = (posx - (int)posx) / bb;
 				if (hyv < hyr)
 				{
 					decaly = ((posy - (int)posy) * -1) - 0.001;
-					decalx = ((posy - (int)posy) * -1) * data->trigo.tany - 0.001 ;
+					decalx = ((posy - (int)posy) * -1) * cc - 0.001 ;
 					length += hyv;
+					face = 2;
+
 				}
 				else
 				{
-					decaly = ((posx - (int)posx) * -1) * data->trigo.tanx - 0.001 ;
+					decaly = ((posx - (int)posx) * -1) * dd - 0.001 ;
 					decalx = ((posx - (int)posx) * -1) - 0.001;
 					length += hyr;
+					face = 1;
 					
 				}
 			}
 			else if (90 <= ax && ax < 180)
 			{
 				ax -= 90;
-				hyv = (posy - (int)posy) / data->trigo.cosy;
-				hyr = (1-(posx - (int)posx)) / data->trigo.cosx;
+				hyv = (posy - (int)posy) / cos(ax / RAD);
+				hyr = (1-(posx - (int)posx)) / cos((90 - ax) / RAD);
 				if (hyv < hyr)
 				{
 					decaly = ((posy - (int)posy) * -1) - 0.001;
-					decalx = (posy - (int)posy) * data->trigo.tany - 0.001 ;
+					decalx = (posy - (int)posy) * tan((ax) / RAD) - 0.001 ;
 					length += hyv;
+					face = 2;
+
 				}
 				else
 				{
-					decaly = ((1 - (posx - (int)posx)) * -1) * data->trigo.tanx + 0.001;
+					decaly = ((1 - (posx - (int)posx)) * -1) * tan((90 - ax) / RAD) + 0.001;
 					decalx = (1 - (posx - (int)posx)) + 0.001;
 					length += hyr;
+					face = 1;
 					
 				}
 				ax += 90;
@@ -529,19 +544,22 @@ int ft_ray(t_data *data)
 				ax -= 180;
 				if (ax == 0)
 					ax = 0.1;
-				hyv = (1 - (posy - (int)posy)) / data->trigo.cosy;
-				hyr = (1 - (posx - (int)posx)) / data->trigo.cosx;
+				hyv = (1 - (posy - (int)posy)) / cos((90 - ax) / RAD);
+				hyr = (1 - (posx - (int)posx)) / cos(ax / RAD);
 				if (hyv < hyr)
 				{
 					decaly = (1 - (posy - (int)posy)) + 0.001;
-					decalx = (1 - (posy - (int)posy)) * data->trigo.tany + 0.001 ;
+					decalx = (1 - (posy - (int)posy)) * tan((90 - ax) / RAD) + 0.001 ;
 					length += hyv;
+					face = 2;
+
 				}
 				else
 				{
-					decaly = (1 - (posx - (int)posx)) * data->trigo.tanx + 0.001 ;
+					decaly = (1 - (posx - (int)posx)) * tan((ax) / RAD) + 0.001 ;
 					decalx = (1 - (posx - (int)posx)) + 0.001;
 					length += hyr;
+					face = 1;
 					
 				}
 				ax += 180;
@@ -551,76 +569,52 @@ int ft_ray(t_data *data)
 				ax -= 270;
 				if (ax == 0)
 					ax = 0.1;
-				hyv = (1 - (posy - (int)posy)) / data->trigo.cosy;
-				hyr = ((posx - (int)posx)) / data->trigo.cosx;
+				hyv = (1 - (posy - (int)posy)) / cos(ax / RAD);
+				hyr = ((posx - (int)posx)) / cos((90 - ax) / RAD);
 				if (hyv < hyr)
 				{
 					decaly = (1 - (posy - (int)posy)) + 0.001;
-					decalx = ((1 - (posy - (int)posy)) * -1 ) * data->trigo.tany + 0.001 ;
+					decalx = ((1 - (posy - (int)posy)) * -1 )* tan((ax) / RAD) + 0.001 ;
 					length += hyv;
+					face = 2;
+
 				}
 				else
 				{
-					decaly = (posx - (int)posx) * data->trigo.tanx - 0.001;
+					decaly = (posx - (int)posx) * tan((90 - ax) / RAD) - 0.001;
 					decalx = ((posx - (int)posx) * -1) - 0.001;
 					length += hyr;
+					face = 1;
 					
 				}
 				ax += 270;
 			}
-			printf("\t\t\t\t %f\t%f\n", 1 - (posy - (int)posy) , cos((90 - ax) / RAD));
-			// }
-			// else if (270 <= ax && ax < 360)
+			// if (length < 0)
+				// length *= -1;
+			// if (hyr < hyv)
 			// {
-			// 	ax -= 90;
-			// 	hyv = (posy - (int)posy) / cos(ax / RAD);
-			// 	hyr = (1-(posx - (int)posx)) / cos((90 - ax) / RAD);
-			// 	if (hyv < hyr)
-			// 	{
-			// 		decaly = ((posy - (int)posy) * -1) - 0.001;
-			// 		decalx = (posy - (int)posy) * tan((ax) / RAD) - 0.001 ;
-			// 		length += hyv;
-			// 	}
-			// 	else
-			// 	{
-			// 		decaly = ((1 - (posx - (int)posx)) * -1) * tan((90 - ax) / RAD) + 0.001;
-			// 		decalx = (1 - (posx - (int)posx)) + 0.001;
-			// 		length += hyr;
-					
-			// 	}
-			// 	ax += 90
-			// }
-			// else 
-			// {
-			// 	exit(0);
-			// }
-			if (length < 0)
-				length *= -1;
-			if (hyr < hyv)
-			{
-				face = 1;
-				printf(LIGHTRED" %.3f"LIGHTGREEN" %.3f\t%.2f\n"NC, hyr, hyv, ax);
+			// 	printf(LIGHTRED" %.3f"LIGHTGREEN" %.3f\t%.2f\n"NC, hyr, hyv, ax);
 
-			}
-			else
-			{
-				face = 2;
-				printf(LIGHTGREEN" %.3f "LIGHTRED"%.3f\t%.2f\n"NC, hyv, hyr, ax);
-			}
+			// }
+			// else
+			// {
+			// 	face = 1;
+			// 	printf(LIGHTGREEN" %.3f "LIGHTRED"%.3f\t%.2f\n"NC, hyv, hyr, ax);
+			// }
 			// if (5 < decalx)
 			// 	decalx /= 100;
 			// if (5 < decaly)
 			// 	decaly /= 100;
-			printf("Decalx = %.3f Decaly = %.3f\n", decalx, decaly);
+			// printf("Decalx = %.3f Decaly = %.3f\n", decalx, decaly);
 			posx += decalx;
 			posy += decaly;
 			ft_draw(data, (int)((data->playerx + 1)*20), (int)((data->playery+1)*20),0xffff00);
 			ft_draw(data, (int)((posx+1)*20), (int)((posy+1)*20),0xff0000);
-			fprintf(stderr, NC"y = %d(%.2f) x = %d(%.2f)\n", (int)floor(posy), posy,  (int)floor(posx), posx);
+			// fprintf(stderr, NC"y = %d(%.2f) x = %d(%.2f)\n", (int)floor(posy), posy,  (int)floor(posx), posx);
 			if (data->map[((int)floor(posy))][((int)floor(posx))] == 1)
 			{
 				ft_draw(data, (int)((posx+1)*20), (int)((posy+1)*20),0x0000ff);
-				printf("BREAK x = %d(%f) y = %d(%f) len = %.2f\n\n", (int)floor(posx), posx, (int)floor(posy), posy, length);
+				// printf("BREAK x = %d(%f) y = %d(%f) len = %.2f\n\n", (int)floor(posx), posx, (int)floor(posy), posy, length);
 				break;
 			}
 		}
