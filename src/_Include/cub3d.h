@@ -48,6 +48,14 @@ typedef struct s_color
 	int color;
 }				t_color;
 
+typedef struct s_raycast
+{
+	float cosx;
+	float cosy;
+	float tanx;
+	float tany;
+}				t_raycast;
+
 typedef struct s_mlx
 {
 	int		winx;
@@ -68,23 +76,24 @@ typedef struct s_mlx
 
 typedef struct s_data 
 {
-	t_mlx	mlx;
-	int		**map;
-	int		fdfile;
-	char	*pathfile;
-    char	*pathnorth;
-    char	*pathsouth;
-    char	*pathwest;
-    char	*patheast;
-	t_color	sky;
-	t_color	floor;
-	int		mapx;
-	int		mapy;
-	float	playerx;
-	float	playery;
-	float	playerr;
-	int		playerfov;
-	int		ystartmap;
+	t_mlx		mlx;
+	int			**map;
+	int			fdfile;
+	char		*pathfile;
+    char		*pathnorth;
+    char		*pathsouth;
+    char		*pathwest;
+    char		*patheast;
+	t_raycast	trigo;
+	t_color		sky;
+	t_color		floor;
+	int			mapx;
+	int			mapy;
+	float		playerx;
+	float		playery;
+	float		playerr;
+	int			playerfov;
+	int			ystartmap;
 
 } 				t_data;
 

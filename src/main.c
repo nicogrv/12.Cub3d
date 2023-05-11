@@ -6,7 +6,7 @@
 /*   By: ngriveau <ngriveau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 14:23:20 by ngriveau          #+#    #+#             */
-/*   Updated: 2023/05/11 13:43:25 by ngriveau         ###   ########.fr       */
+/*   Updated: 2023/05/11 14:38:51 by ngriveau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -419,12 +419,38 @@ void ft_color_colone(t_data *data, int x, float len, int color)
 	}
 }
 
-float	ft_absfloat(float nbr)
+void ft_calcul_trigo(t_data *data, float ax)
 {
-	if (nbr < 0)
-		nbr *= -1;
-	return (nbr); 
+	if (0 <= ax && ax < 90)
+	{
+		data->trigo.cosy = cos((90 - ax) / RAD);
+		data->trigo.cosx = cos(ax / RAD);
+		data->trigo.tany = tan((90 - ax) / RAD);
+		data->trigo.tanx = tan((ax) / RAD);
+	}
+	else if (90 <= ax && ax < 180)
+	{
+		data->trigo.cosy = cos(ax / RAD);
+		data->trigo.cosx = cos((90 - ax) / RAD);
+		data->trigo.tany = tan((ax) / RAD);
+		data->trigo.tanx = tan((90 - ax) / RAD);
+	}
+	else if (180 <= ax && ax < 270)
+	{
+		data->trigo.cosy = cos((90 - ax) / RAD);
+		data->trigo.cosx = cos(ax / RAD);
+		data->trigo.tany = tan((90 - ax) / RAD);
+		data->trigo.tanx = tan((ax) / RAD);
+	}
+	else if (270 <= ax && ax < 360)
+	{
+		data->trigo.cosy = cos(ax / RAD);
+		data->trigo.cosx = cos((90 - ax) / RAD);
+		data->trigo.tany = tan((ax) / RAD);
+		data->trigo.tanx = tan((90 - ax) / RAD);
+	}
 }
+
 
 int ft_ray(t_data *data)
 {
@@ -448,35 +474,32 @@ int ft_ray(t_data *data)
 		posx = data->playerx;
 		posy = data->playery;
 		length = 0;
+		ax =  angle * i + data->playerr - 45;
+		if (ax == 90)
+			ax = 89.9;
+		if (360 < ax)
+			ax -= 360;
+		else if (ax < 0)
+			ax += 360;
+		ft_calcul_trigo(data, ax);
 		printf("\n\n\n\t\t----NEW RAY----\n\n\n");
 		while (1)
 		{
 			printf("Start pos Ray x = %.2f y = %.2f len = %.2f\n",posx, posy, length);
-
-
-			ax =  angle * i + data->playerr - 45;
-			if (ax == 90)
-				ax = 89.9;
-			if (360 < ax)
-				ax -= 360;
-			else if (ax < 0)
-				ax += 360;
 			if (0 <= ax && ax < 90)
 			{
-				// if ((int)ax % 10 == 0)
-				// 	ft_draw(data, i-1, 500, 0xff00ff);
-				hyv = (posy - (int)posy) / cos((90 - ax) / RAD);
-				hyr = (posx - (int)posx) / cos(ax / RAD);
+				hyv = (posy - (int)posy) / data->trigo.cosy;
+				hyr = (posx - (int)posx) / data->trigo.cosx;
 				if (hyv < hyr)
 				{
 					decaly = ((posy - (int)posy) * -1) - 0.001;
-					decalx = ((posy - (int)posy) * -1) * tan((90 - ax) / RAD) - 0.001 ;
+					decalx = ((posy - (int)posy) * -1) * data->trigo.tany - 0.001 ;
 					length += hyv;
 				}
 				else
 				{
-					decaly = ((posx - (int)posx) * -1) * tan((ax) / RAD) - 0.001 ;
-					decalx = (posx - (int)posx) * -1 - 0.001;
+					decaly = ((posx - (int)posx) * -1) * data->trigo.tanx - 0.001 ;
+					decalx = ((posx - (int)posx) * -1) - 0.001;
 					length += hyr;
 					
 				}
@@ -484,26 +507,91 @@ int ft_ray(t_data *data)
 			else if (90 <= ax && ax < 180)
 			{
 				ax -= 90;
-				hyv = (posy - (int)posy) / cos(ax / RAD);
-				hyr = (1-(posx - (int)posx)) / cos((90 - ax) / RAD);
+				hyv = (posy - (int)posy) / data->trigo.cosy;
+				hyr = (1-(posx - (int)posx)) / data->trigo.cosx;
 				if (hyv < hyr)
 				{
 					decaly = ((posy - (int)posy) * -1) - 0.001;
-					decalx = (posy - (int)posy) * tan((ax) / RAD) - 0.001 ;
+					decalx = (posy - (int)posy) * data->trigo.tany - 0.001 ;
 					length += hyv;
 				}
 				else
 				{
-					decaly = ((1 - (posx - (int)posx)) * -1) * tan((90 - ax) / RAD) + 0.001;
+					decaly = ((1 - (posx - (int)posx)) * -1) * data->trigo.tanx + 0.001;
 					decalx = (1 - (posx - (int)posx)) + 0.001;
 					length += hyr;
 					
 				}
+				ax += 90;
 			}
-			printf("\t\t%f\t%f\n", (1 -(posx - (int)posx) * -1),  tan((90 - ax) / RAD) + 0.001);
+			else if (180 <= ax && ax < 270)
+			{
+				ax -= 180;
+				if (ax == 0)
+					ax = 0.1;
+				hyv = (1 - (posy - (int)posy)) / data->trigo.cosy;
+				hyr = (1 - (posx - (int)posx)) / data->trigo.cosx;
+				if (hyv < hyr)
+				{
+					decaly = (1 - (posy - (int)posy)) + 0.001;
+					decalx = (1 - (posy - (int)posy)) * data->trigo.tany + 0.001 ;
+					length += hyv;
+				}
+				else
+				{
+					decaly = (1 - (posx - (int)posx)) * data->trigo.tanx + 0.001 ;
+					decalx = (1 - (posx - (int)posx)) + 0.001;
+					length += hyr;
+					
+				}
+				ax += 180;
+			}
+			else if ((270 <= ax && ax < 360))
+			{
+				ax -= 270;
+				if (ax == 0)
+					ax = 0.1;
+				hyv = (1 - (posy - (int)posy)) / data->trigo.cosy;
+				hyr = ((posx - (int)posx)) / data->trigo.cosx;
+				if (hyv < hyr)
+				{
+					decaly = (1 - (posy - (int)posy)) + 0.001;
+					decalx = ((1 - (posy - (int)posy)) * -1 ) * data->trigo.tany + 0.001 ;
+					length += hyv;
+				}
+				else
+				{
+					decaly = (posx - (int)posx) * data->trigo.tanx - 0.001;
+					decalx = ((posx - (int)posx) * -1) - 0.001;
+					length += hyr;
+					
+				}
+				ax += 270;
+			}
+			printf("\t\t\t\t %f\t%f\n", 1 - (posy - (int)posy) , cos((90 - ax) / RAD));
+			// }
+			// else if (270 <= ax && ax < 360)
+			// {
+			// 	ax -= 90;
+			// 	hyv = (posy - (int)posy) / cos(ax / RAD);
+			// 	hyr = (1-(posx - (int)posx)) / cos((90 - ax) / RAD);
+			// 	if (hyv < hyr)
+			// 	{
+			// 		decaly = ((posy - (int)posy) * -1) - 0.001;
+			// 		decalx = (posy - (int)posy) * tan((ax) / RAD) - 0.001 ;
+			// 		length += hyv;
+			// 	}
+			// 	else
+			// 	{
+			// 		decaly = ((1 - (posx - (int)posx)) * -1) * tan((90 - ax) / RAD) + 0.001;
+			// 		decalx = (1 - (posx - (int)posx)) + 0.001;
+			// 		length += hyr;
+					
+			// 	}
+			// 	ax += 90
+			// }
 			// else 
 			// {
-			// 	printf("ERRORR\n");
 			// 	exit(0);
 			// }
 			if (length < 0)
@@ -553,7 +641,7 @@ int ft_ray(t_data *data)
 		}
 		i++;
 	mlx_put_image_to_window(data->mlx.mlx, data->mlx.mlx_win, data->mlx.i, 0, 0);
-	printf("x = %.3fy = %.3f rota = %.3f fov = %d\n", data->playerx, data->playery, data->playerr,data->playerfov);
+	// printf("x = %.3fy = %.3f rota = %.3f fov = %d\n", data->playerx, data->playery, data->playerr,data->playerfov);
 	}
 	return (0);
 }
@@ -603,6 +691,10 @@ int main(int c, char **av)
 
 	mlx_hook(data.mlx.mlx_win, 2, 1L << 0, &ft_key, &data);
 	// mlx_hook(m.mlx_win, 17, 1L << 0, &ft_cross_close, &data);
-	mlx_loop(data.mlx.mlx);
+	// mlx_loop(data.mlx.mlx);
     return (0);
 }
+
+
+
+// ./cub3d ./test.cub  0.11s user 0.11s system 7% cpu 3.060 total (sans)
