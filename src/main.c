@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ngriveau <ngriveau@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nicolasgriveau <nicolasgriveau@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 14:23:20 by ngriveau          #+#    #+#             */
-/*   Updated: 2023/05/11 20:02:58 by ngriveau         ###   ########.fr       */
+/*   Updated: 2023/05/11 23:31:04 by nicolasgriv      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -336,8 +336,8 @@ int ft_init(int c, char **av, t_data *data)
 	if (ft_verif_ok_map(data))
 		return (1);
 	printf(ORANGE"\nPlayer pos\tx = %.2f y %.2f\n"NC, data->playerx, data->playery);
-	data->mlx.winx = 1000;
-	data->mlx.winy = 1000;
+	data->mlx.winx = 760;
+	data->mlx.winy = 760;
 	data->playerfov = 90;
 	data->lenwall = 12;
 	return (0);
@@ -477,38 +477,6 @@ void ft_color_colone(t_data *data, int x, float len, int pcofwall, int face)
 	}
 }
 
-// void ft_calcul_trigo(t_data *data, float ax)
-// {
-// 	if (0 <= ax && ax < 90)
-// 	{
-// 		data->trigo.cosy = cos((90 - ax) / RAD);
-// 		data->trigo.cosx = cos(ax / RAD);
-// 		data->trigo.tany = tan((90 - ax) / RAD);
-// 		data->trigo.tanx = tan((ax) / RAD);
-// 	}
-// 	else if (90 <= ax && ax < 180)
-// 	{
-// 		data->trigo.cosy = cos(ax / RAD);
-// 		data->trigo.cosx = cos((90 - ax) / RAD);
-// 		data->trigo.tany = tan((ax) / RAD);
-// 		data->trigo.tanx = tan((90 - ax) / RAD);
-// 	}
-// 	else if (180 <= ax && ax < 270)
-// 	{
-// 		data->trigo.cosy = cos((90 - ax) / RAD);
-// 		data->trigo.cosx = cos(ax / RAD);
-// 		data->trigo.tany = tan((90 - ax) / RAD);
-// 		data->trigo.tanx = tan((ax) / RAD);
-// 	}
-// 	else if (270 <= ax && ax < 360)
-// 	{
-// 		data->trigo.cosy = cos(ax / RAD);
-// 		data->trigo.cosx = cos((90 - ax) / RAD);
-// 		data->trigo.tany = tan((ax) / RAD)
-// 		data->trigo.tanx = tan((90 - ax) / RAD)
-// 	}
-// }
-
 
 int ft_ray(t_data *data)
 {
@@ -617,7 +585,7 @@ int ft_ray(t_data *data)
 				{
 					decaly = (1 - (posx - (int)posx)) * tan((ax) / RAD) + 0.001 ;
 					decalx = (1 - (posx - (int)posx)) + 0.001;
-					length += hyr;
+					length += hyr ;
 					face = 2;
 					pcofwall = (int)((posy + decaly - (int)(posy + decaly))*100);
 				}
@@ -674,25 +642,50 @@ int ft_ray(t_data *data)
 		ft_color_colone(data, i, length, pcofwall, face);
 
 		i++;
-	// printf("x = %.3fy = %.3f rota = %.3f fov = %d\n", data->playerx, data->playery, data->playerr,data->playerfov);
+	// printf("x = %.1fy = %.1f r = %.1f f=%d angle = %.2f\n", data->playerx, data->playery, data->playerr,data->playerfov, ax);
 	}
 	mlx_put_image_to_window(data->mlx.mlx, data->mlx.mlx_win, data->mlx.i, 0, 0);
 	return (0);
 }
 int	ft_key(int keycode, t_data *data)
 {
+	printf("c = %.2f s = %.2f t = %.2f\n", -cos(data->playerr/ RAD), -sin(data->playerr/ RAD), tan(data->playerr/ RAD));
 	if (keycode == TOUCH_LEFTARROW)
-			data->playerr -= 20;
+			data->playerr -= 15;
 	else if (keycode == TOUCH_RIGHTARROW)
-			data->playerr += 20;
+			data->playerr += 15;
 	else if (keycode == TOUCH_W)
-			data->playery -= 0.2;
+	{
+		if (data->map[((int)floor(data->playery + 0.42 * -sin(data->playerr / RAD)))][((int)floor(data->playerx + 0.42 * -cos(data->playerr / RAD)))] == 0)
+		{
+			data->playery += 0.2 * -sin(data->playerr / RAD);
+			data->playerx += 0.2 * -cos(data->playerr / RAD);
+		}
+	}
 	else if (keycode == TOUCH_S)
-			data->playery += 0.2;
+	{
+		if (data->map[((int)floor(data->playery + 0.42 * sin(data->playerr / RAD)))][((int)floor(data->playerx + 0.42 * cos(data->playerr / RAD)))] == 0)
+		{
+			data->playery += 0.2 * sin(data->playerr / RAD);
+			data->playerx += 0.2 * cos(data->playerr / RAD);
+		}
+	}
 	else if (keycode == TOUCH_A)
-			data->playerx += 0.2;
+	{
+		if (data->map[((int)floor(data->playery + 0.42 * cos(data->playerr / RAD)))][((int)floor(data->playerx + 0.42 * -sin(data->playerr / RAD)))] == 0)
+		{
+			data->playerx += 0.2 * -sin(data->playerr / RAD);
+			data->playery += 0.2 * cos(data->playerr / RAD);
+		}
+	}
 	else if (keycode == TOUCH_D)
-			data->playerx -= 0.2;
+	{
+		if (data->map[((int)floor(data->playery + 0.42 * -cos(data->playerr / RAD)))][((int)floor(data->playerx + 0.42 * sin(data->playerr / RAD)))] == 0)
+		{
+			data->playerx += 0.2 * sin(data->playerr / RAD);
+			data->playery += 0.2 * -cos(data->playerr / RAD);
+		}
+	}
 	else if (keycode == TOUCH_PLUS)
 			data->playerfov -= 10;
 	else if (keycode == TOUCH_MOINS)
@@ -710,8 +703,8 @@ int	ft_key(int keycode, t_data *data)
 	if (180 < data->playerfov)
 		data->playerfov = 180;
 
-	mlx_destroy_image(data->mlx.mlx, data->mlx.i);
-	data->mlx.i = mlx_new_image(data->mlx.mlx, data->mlx.winx, data->mlx.winy);
+	// mlx_destroy_image(data->mlx.mlx, data->mlx.i);
+	// data->mlx.i = mlx_new_image(data->mlx.mlx, data->mlx.winx, data->mlx.winy);
 	ft_ray(data);
 	return (0);
 }

@@ -16,28 +16,51 @@
 # include "../../lib/minilibx-linux/mlx.h"
 
 
-#  define TOUCH_LEFTARROW 65361
-#  define TOUCH_RIGHTARROW 65363
-#  define TOUCH_UPARROW 65362
-#  define TOUCH_DOWNARROW 65364
-#  define TOUCH_MOINS 45
-#  define TOUCH_PLUS 61
-#  define TOUCH_ONE 49
-#  define TOUCH_TOW 50
-#  define TOUCH_THREE 51
-#  define TOUCH_FOUR 52
-#  define TOUCH_FIVE 53
-#  define TOUCH_W 119
-#  define TOUCH_A 100
-#  define TOUCH_S 115
-#  define TOUCH_D 97
-#  define ESC 65307
-#  define TOUCH_C 99
-#  define TOUCH_X 120
-#  define TOUCH_M 109
-#  define TOUCH_N 110
-#  define TOUCH_I 105
-#  define TOUCH_P 112
+
+// #  define TOUCH_LEFTARROW 65361
+// #  define TOUCH_RIGHTARROW 65363
+// #  define TOUCH_UPARROW 65362
+// #  define TOUCH_DOWNARROW 65364
+// #  define TOUCH_MOINS 45
+// #  define TOUCH_PLUS 61
+// #  define TOUCH_ONE 49
+// #  define TOUCH_TOW 50
+// #  define TOUCH_THREE 51
+// #  define TOUCH_FOUR 52
+// #  define TOUCH_FIVE 53
+// #  define TOUCH_W 119
+// #  define TOUCH_A 100
+// #  define TOUCH_S 115
+// #  define TOUCH_D 97
+// #  define ESC 65307
+// #  define TOUCH_C 99
+// #  define TOUCH_X 120
+// #  define TOUCH_M 109
+// #  define TOUCH_N 110
+// #  define TOUCH_I 105
+// #  define TOUCH_P 112
+#  define TOUCH_LEFTARROW 123
+#  define TOUCH_RIGHTARROW 124
+#  define TOUCH_UPARROW 126
+#  define TOUCH_DOWNARROW 125
+#  define TOUCH_MOINS 27
+#  define TOUCH_PLUS 24
+#  define TOUCH_ONE 18
+#  define TOUCH_TOW 19
+#  define TOUCH_THREE 20
+#  define TOUCH_W 13
+#  define TOUCH_A 0
+#  define TOUCH_S 1
+#  define TOUCH_D 2
+#  define ESC 53
+#  define TOUCH_C 8
+#  define TOUCH_X 7
+#  define TOUCH_M 46
+#  define TOUCH_N 45
+#  define TOUCH_I 34
+#  define TOUCH_P 35
+#  define TOUCH_FOUR 21
+#  define TOUCH_FIVE 230
 #  define RAD 57.295779513
 
 typedef struct s_color 

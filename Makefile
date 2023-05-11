@@ -8,12 +8,6 @@ SRCS += ft_strdup.c
 SRCS += ft_substr.c
 SRCS += ft_isdigit.c
 SRCS += ft_atoiplus.c
-SRCS += 
-SRCS += 
-SRCS += 
-SRCS += 
-SRCS += 
-SRCS += 
 
 
 SRC_PATH += ./src/
@@ -34,15 +28,23 @@ NAME = cub3d
 CC = cc
 
 CFLAGS = -Wall -Werror -Wextra -g
-CFLAGS_EXE = -Wall -Werror -Wextra -lmlx -lm -lXext -MMD -lX11 -I ./lib/minilibx-linux -L ./lib/minilibx-linux
-# FLAGSMACOS = -lmlx -framework OpenGL -framework AppKit -MMD -I ./lib/minilibx_macos -L ./lib/minilibx_macos
+CFLAGS_LINUX = -Wall -Werror -Wextra -lmlx -lm -lXext -MMD -lX11 -I ./lib/minilibx-linux -L ./lib/minilibx-linux -D OS=0
+FLAGSMACOS = -lmlx -framework OpenGL -framework AppKit -MMD -I ./lib/minilibx_macos -L ./lib/minilibx_macos -D OS=1
 
 
 
 vpath %.c ${SRC_PATH}
 vpath %.h ${HEAD_PATH}
 
-all: ${NAME}
+linux:  ${OBJS}
+	@	$(MAKE) --no-print-directory -s -C ./lib/minilibx-linux/
+	@	${CC}  -o ${NAME} ${OBJS} ${HEAD_PATH} ${CFLAGS_LINUX}
+	@	echo -ne "\r\033[2K" $(LIGHTGREEN) "\t$(NAME) OK" "\033[0m" "\n"
+
+macos: ${OBJS}
+	@	$(MAKE) --no-print-directory -s -C ./lib/minilibx_macos/
+	@	${CC}  -o ${NAME} ${OBJS}  ${HEAD_PATH} ${FLAGSMACOS}
+	@	echo -ne "\r\033[2K" $(LIGHTGREEN) "\t$(NAME) OK" "\033[0m" "\n"
 
 run: all
 # @	clear
@@ -56,11 +58,6 @@ ${OBJS}: ${OBJS_PATH}/%.o: %.c Makefile
 	@	mkdir -p ${OBJS_PATH}
 	@	$(COLORCOMPIL)
 	@	${CC} ${CFLAGS} -c $< -o $@ ${HEAD_PATH}
-
-${NAME}:  ${OBJS}
-	@	$(MAKE) --no-print-directory -s -C ./lib/minilibx-linux/
-	@	${CC}  -o ${NAME} ${OBJS} ${LIB} ${HEAD_PATH} ${CFLAGS_EXE}
-	@	echo -ne "\r\033[2K" $(LIGHTGREEN) "\t$(NAME) OK" "\033[0m" "\n"
 
 
 clean:
