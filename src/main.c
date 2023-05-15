@@ -6,7 +6,7 @@
 /*   By: ngriveau <ngriveau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 14:23:20 by ngriveau          #+#    #+#             */
-/*   Updated: 2023/05/15 16:28:39 by ngriveau         ###   ########.fr       */
+/*   Updated: 2023/05/15 17:41:34 by ngriveau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -432,6 +432,31 @@ void	ft_draw(t_data *data, float x, float y, int color)
 	}
 }
 
+void	ft_draw_mini(t_data *data, float x, float y, int color)
+{
+	unsigned long	pixel;
+
+	x = roundf(x);
+	y = roundf(y);
+	ft_color(color, data);
+	pixel = (y * data->mini.img.size) + (x * 4);
+	// printf("x = %.0f\ty = %.0f\tcolor = %d\n", x, y, color);
+	if (data->mini.img.e == 1)
+	{
+		data->mini.img.data[pixel + 0] = 1;
+		data->mini.img.data[pixel + 1] = data->mlx.r;
+		data->mini.img.data[pixel + 2] = data->mlx.g;
+		data->mini.img.data[pixel + 3] = data->mlx.b;
+	}
+	else if (data->mini.img.e == 0)
+	{
+		data->mini.img.data[pixel + 0] = data->mlx.b;
+		data->mini.img.data[pixel + 1] = data->mlx.g;
+		data->mini.img.data[pixel + 2] = data->mlx.r;
+		data->mini.img.data[pixel + 3] = 1;
+	}
+}
+
 
 int ft_pixel_of_img(t_data *data, int face, int pcofwall, int y)
 {
@@ -524,6 +549,7 @@ void ft_color_colone(t_data *data, int x, float len, int pcofwall, int face)
 	while (y < (data->mlx.winy / 2) + (10 / len)*data->lenwall)
 	{
 		// printf("coucou = %d\n",;
+		// ft_draw(data, x, y, 0xFF0000);
 		ft_draw(data, x, y, ft_pixel_of_img(data, face, pcofwall, ((y - start) * 100 / wall)));
 		y++;
 	}
@@ -533,7 +559,6 @@ void ft_color_colone(t_data *data, int x, float len, int pcofwall, int face)
 		y++;
 	}
 }
-
 
 int ft_ray(t_data *data)
 {
@@ -681,16 +706,11 @@ int ft_ray(t_data *data)
 			// printf("Decalx = %.3f Decaly = %.3f\n", decalx, decaly);
 			posx += decalx;
 			posy += decaly;
-			ft_draw(data, (int)((data->playerx + 1)*5), (int)((data->playery+1)*5),0xffff00);
-			ft_draw(data, (int)((data->playerx + 1)*5)-1, (int)((data->playery+1)*5),0xffff00);
-			ft_draw(data, (int)((data->playerx + 1)*5)+1, (int)((data->playery+1)*5),0xffff00);
-			ft_draw(data, (int)((data->playerx + 1)*5), (int)((data->playery+1)*5)-1,0xffff00);
-			ft_draw(data, (int)((data->playerx + 1)*5), (int)((data->playery+1)*5)+1,0xffff00);
-			ft_draw(data, (int)((posx+1)*5), (int)((posy+1)*5),0xff0000);
+			ft_draw_mini(data, (int)((posx*5)), (int)((posy)*5),0xff0000);
 			// fprintf(stderr, NC"y = %d(%.2f) x = %d(%.2f) pcdecal = %d\n", (int)floor(posy), posy,  (int)floor(posx), posx, pcofwall);
 			if (data->map[((int)floor(posy))][((int)floor(posx))] == 1)
 			{
-				ft_draw(data, (int)((posx+1)*5), (int)((posy+1)*5),0xffffff);
+				ft_draw_mini(data, (int)((posx)*5), (int)((posy)*5),0xffffff);
 				// printf("BREAK x = %d(%f) y = %d(%f) len = %.2f\n\n", (int)floor(posx), posx, (int)floor(posy), posy, length);
 				break;
 			}
@@ -701,7 +721,14 @@ int ft_ray(t_data *data)
 		i++;
 		// printf("x = %.1fy = %.1f r = %.1f f=%d angle = %.2f\n", data->playerx, data->playery, data->playerr,data->playerfov, ax);
 	}
+
 	mlx_put_image_to_window(data->mlx.mlx, data->mlx.mlx_win, data->mlx.i, 0, 0);
+	mlx_put_image_to_window(data->mlx.mlx, data->mlx.mlx_win, data->mini.i, 0, 0);
+	ft_draw(data, (int)((data->playerx + 1)*5), (int)((data->playery+1)*5),0xffff00);
+	ft_draw(data, (int)((data->playerx + 1)*5)-1, (int)((data->playery+1)*5),0xffff00);
+	ft_draw(data, (int)((data->playerx + 1)*5)+1, (int)((data->playery+1)*5),0xffff00);
+	ft_draw(data, (int)((data->playerx + 1)*5), (int)((data->playery+1)*5)-1,0xffff00);
+	ft_draw(data, (int)((data->playerx + 1)*5), (int)((data->playery+1)*5)+1,0xffff00);
 	return (0);
 }
 int	ft_key(int keycode, t_data *data)
@@ -762,6 +789,8 @@ int	ft_key(int keycode, t_data *data)
 	// data->playerx = 21.5;
 	// data->playery = 8.5;
 	// data->playerr = 200;
+	// mlx_destroy_image(data->mlx.mlx, data->mlx.i);
+	// data->mlx.i = mlx_new_image(data->mlx.mlx, data->mlx.winx, data->mlx.winy);
 	ft_ray(data);
 	return (0);
 }
@@ -820,11 +849,16 @@ int main(int c, char **av)
 	free(data.west.path);
 	free(data.east.path);
 
+	data.mini.i = mlx_new_image(data.mlx.mlx, data.mapx*5, data.mapy*5);
+	data.mini.img.data = mlx_get_data_addr(data.mini.i, &data.mini.img.p, &data.mini.img.size, &data.mini.img.e);
+	
+
 	if (ft_ray(&data))
 		return (1);
 
 	mlx_hook(data.mlx.mlx_win, 2, 1L << 0, &ft_key, &data);
 	mlx_hook(data.mlx.mlx_win, 17, 1L << 0, &ft_cross_close, &data);
+	mlx_do_key_autorepeatoff(data.mlx.mlx);
 	
 	mlx_loop(data.mlx.mlx);
     return (0);

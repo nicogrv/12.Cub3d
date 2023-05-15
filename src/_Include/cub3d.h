@@ -17,9 +17,9 @@
 
 
 
-# define WINX 2000
-# define WINY 1360
-# define FOV 180
+# define WINX 800
+# define WINY 800
+# define FOV 90
 
 #  define TOUCH_LEFTARROW 65361
 #  define TOUCH_RIGHTARROW 65363
@@ -97,6 +97,7 @@ typedef struct s_img
 
 typedef struct s_texture
 {
+	void	*i;
 	void	*tex;
 	char	*path;
 	int		width;
@@ -130,6 +131,7 @@ typedef struct s_data
 	int			fdfile;
 	char		*pathfile;
 	t_texture	north;
+	t_texture	mini;
 	t_texture	east;
 	t_texture	south;
 	t_texture	west;
