@@ -17,6 +17,10 @@
 
 
 
+# define WINX 2000
+# define WINY 1360
+# define FOV 180
+
 #  define TOUCH_LEFTARROW 65361
 #  define TOUCH_RIGHTARROW 65363
 #  define TOUCH_UPARROW 65362

@@ -1,12 +1,12 @@
-NO      ./assets/debug.xpm
-SO      ./assets/debug.xpm
-WE      ./assets/debug.xpm
-EA      ./assets/debug.xpm
+NO      ./assets/titou.xpm
+SO      ./assets/titou.xpm
+WE      ./assets/titou.xpm
+EA      ./assets/titou.xpm
 
 
 
-F 142,142,142
-C 35,35,35    
+F 241,176,0
+C 135,206,235  
 
 
                         1111111
