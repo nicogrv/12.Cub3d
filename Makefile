@@ -54,7 +54,7 @@ valgrind: all
 	valgrind ./${NAME}
 
 
-${OBJS}: ${OBJS_PATH}/%.o: %.c Makefile
+${OBJS}: ${OBJS_PATH}/%.o: %.c Makefile ./src/_Include/cub3d.h
 	@	mkdir -p ${OBJS_PATH}
 	@	$(COLORCOMPIL)
 	@	${CC} ${CFLAGS} -c $< -o $@ ${HEAD_PATH}
