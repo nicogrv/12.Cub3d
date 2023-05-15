@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nicolasgriveau <nicolasgriveau@student.    +#+  +:+       +#+        */
+/*   By: ngriveau <ngriveau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 14:23:20 by ngriveau          #+#    #+#             */
-/*   Updated: 2023/05/11 23:31:04 by nicolasgriv      ###   ########.fr       */
+/*   Updated: 2023/05/15 12:33:22 by ngriveau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -455,9 +455,30 @@ void ft_color_colone(t_data *data, int x, float len, int pcofwall, int face)
 	int y;
 	int wall;
 	int start;
+	static int saveface;
 
 	y = 0;
+	
+	// if (face == 1)
+		// printf("1 pc = %d\n", pcofwall);
+	// if (face == 2)
+		// printf("\t2 pc = %d\n", pcofwall);
+	// if (face == 3)
+		// printf("\t\t3 pc = %d\n", pcofwall);
+	// if (face == 4)
+		// printf("\t\t\t4 pc = %d\n", pcofwall);
+	if (0 < pcofwall && pcofwall < 99)
+		saveface = face;
+	if (pcofwall == 100)
+		pcofwall = 99;
+	if (pcofwall == 99 || pcofwall == 0)
+	{
+		// printf("change (%d)->(%d)\n",face, saveface);
+		face = saveface;
+	}
 	wall = (data->mlx.winy / 2) + (10 / len)*data->lenwall - ((data->mlx.winy / 2) - (10 / len)*data->lenwall);
+	if (data->mlx.winy < wall)
+		y = data->mlx.winy - wall;
 	while (y < (data->mlx.winy / 2) - (10 / len)*data->lenwall)
 	{
 		ft_draw(data, x, y, data->sky.color);
@@ -533,7 +554,7 @@ int ft_ray(t_data *data)
 					decalx = ((posx - (int)posx) * -1) - 0.001;
 					length += hyr;
 					face = 4;
-					pcofwall = (int)((posy + decaly - (int)(posy + decaly))*100);
+					pcofwall = 100-((int)((posy + decaly - (int)(posy + decaly))*100));
 					
 				}
 			}
@@ -579,7 +600,7 @@ int ft_ray(t_data *data)
 					decalx = (1 - (posy - (int)posy)) * tan((90 - ax) / RAD) + 0.001 ;
 					length += hyv;
 					face = 3;
-					pcofwall = (int)((posx + decalx - (int)(posx + decalx))*100);
+					pcofwall = 100-((int)((posx + decalx - (int)(posx + decalx))*100));
 				}
 				else
 				{
@@ -605,7 +626,7 @@ int ft_ray(t_data *data)
 					decalx = ((1 - (posy - (int)posy)) * -1 )* tan((ax) / RAD) + 0.001 ;
 					length += hyv;
 					face = 3;
-					pcofwall = (int)((posx + decalx - (int)(posx + decalx))*100);
+					pcofwall = 100-((int)((posx + decalx - (int)(posx + decalx))*100));
 				}
 				else
 				{
@@ -613,7 +634,7 @@ int ft_ray(t_data *data)
 					decalx = ((posx - (int)posx) * -1) - 0.001;
 					length += hyr;
 					face = 4;
-					pcofwall = (int)((posy + decaly - (int)(posy + decaly))*100);
+					pcofwall = 100-((int)((posy + decaly - (int)(posy + decaly))*100));
 				}
 				ax += 270;
 			}
@@ -642,7 +663,7 @@ int ft_ray(t_data *data)
 		ft_color_colone(data, i, length, pcofwall, face);
 
 		i++;
-	// printf("x = %.1fy = %.1f r = %.1f f=%d angle = %.2f\n", data->playerx, data->playery, data->playerr,data->playerfov, ax);
+		// printf("x = %.1fy = %.1f r = %.1f f=%d angle = %.2f\n", data->playerx, data->playery, data->playerr,data->playerfov, ax);
 	}
 	mlx_put_image_to_window(data->mlx.mlx, data->mlx.mlx_win, data->mlx.i, 0, 0);
 	return (0);
@@ -703,6 +724,10 @@ int	ft_key(int keycode, t_data *data)
 	if (180 < data->playerfov)
 		data->playerfov = 180;
 
+	// data->playerx = 21.5;
+	// data->playery = 8.5;
+	// data->playerr = 200;
+	
 	// mlx_destroy_image(data->mlx.mlx, data->mlx.i);
 	// data->mlx.i = mlx_new_image(data->mlx.mlx, data->mlx.winx, data->mlx.winy);
 	ft_ray(data);
