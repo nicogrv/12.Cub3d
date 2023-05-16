@@ -6,7 +6,7 @@
 /*   By: ngriveau <ngriveau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 14:23:20 by ngriveau          #+#    #+#             */
-/*   Updated: 2023/05/16 15:17:06 by ngriveau         ###   ########.fr       */
+/*   Updated: 2023/05/16 16:45:35 by ngriveau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -593,11 +593,37 @@ void ft_color_colone(t_data *data, int x, float len, int pcofwall, int face)
 	}
 	savelen = len;
 }
+int ft_ray(t_data *data);
+
+int	ft_mouse_move(t_data *data)
+{
+	int x;
+	double i;
+	int y;
+
+	
+	mlx_mouse_move(data->mlx.mlx, data->mlx.mlx_win, data->mlx.winx / 2, data->mlx.winy / 2);
+	mlx_mouse_get_pos(data->mlx.mlx, data->mlx.mlx_win, &x, &y);
+	if (x != data->mlx.winx / 2)
+	{
+		data->mouse.b = 1;
+		data->playerr-= (data->mlx.winx / 2 - x) / 2;
+		// printf("dif = %d\n",  (data->mlx.winx / 2) - x);
+			if (data->playerr < 0)
+			data->playerr += 360;
+			else if (360 < data->playerr)
+			data->playerr -= 360;
+		i = 0;
+		// while (i < 100000000)
+			// i++;
+		ft_ray(data);
+	}
+	return (0);
+}
 
 int ft_ray(t_data *data)
 {
 	float	i = 0;
-	float	angle = 0;
 	float	ax = 0;
 	float	hyv = 0;
 	float	hyr = 0;
@@ -610,14 +636,17 @@ int ft_ray(t_data *data)
 	int		pcofwall;
 	
 
-	angle = data->playerfov / (float)data->mlx.winx;
-	// while (i < 700)
 	while (i < (float)data->mlx.winx)
 	{
+		if (data->mouse.b)
+		{
+			i = 0;
+			data->mouse.b = 0;
+		}
 		posx = data->playerx;
 		posy = data->playery;
-		length = 0;
-		ax =  angle * i + data->playerr - 45;
+		length = 0.1;
+		ax =  data->playerfov / (float)data->mlx.winx * i + data->playerr - 45;
 		if (ax == 90)
 			ax = 89.9;
 		if (360 <= ax)
@@ -627,6 +656,8 @@ int ft_ray(t_data *data)
 		// printf("\n\n\n\t\t----NEW RAY----\n\n\n");
 		while (1)
 		{
+			// if(ft_mouse_move(data))
+			// 	break ;
 			// printf("Start pos Ray x = %.2f y = %.2f len = %.2f\n",posx, posy, length);
 			if (0 <= ax && ax < 90)
 			{
@@ -750,7 +781,8 @@ int ft_ray(t_data *data)
 			}
 		}
 		// printf("length = %.5f\n\n\n\n", length);
-		ft_color_colone(data, i, length, pcofwall, face);
+		if (!data->mouse.b)
+			ft_color_colone(data, i, length, pcofwall, face);
 
 		i++;
 		// printf("x = %.1fy = %.1f r = %.1f f=%d angle = %.2f\n", data->playerx, data->playery, data->playerr,data->playerfov, ax);
@@ -918,7 +950,9 @@ int main(int c, char **av)
 	mlx_hook(data.mlx.mlx_win, 2, 1L << 0, &ft_key, &data);
 	mlx_hook(data.mlx.mlx_win, 17, 1L << 0, &ft_cross_close, &data);
 	mlx_do_key_autorepeaton(data.mlx.mlx);
+	mlx_mouse_hide(data.mlx.mlx, data.mlx.mlx_win);
 	
+	mlx_loop_hook(data.mlx.mlx, ft_mouse_move, &data);
 	mlx_loop(data.mlx.mlx);
     return (0);
 }
