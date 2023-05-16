@@ -6,7 +6,7 @@
 /*   By: ngriveau <ngriveau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 14:23:20 by ngriveau          #+#    #+#             */
-/*   Updated: 2023/05/15 17:41:34 by ngriveau         ###   ########.fr       */
+/*   Updated: 2023/05/16 15:17:06 by ngriveau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,8 @@ int	ft_init_id_verif_color(t_color *color, int *id, char *line, int i)
 	int j;
 	int colorid;
 
-	*id = *id + 1;
 	i = i + 1;
+	*id = *id + 1;
 	while (line[i] && (line[i] == ' ' || line[i] == '\t'))
 		i++;
 	if (line[i] == '\0' || ft_isdigit(line[i]) == 0)
@@ -157,6 +157,7 @@ int	ft_init_id(t_data *data, char **returnline)
 	*returnline = line;
 	while(line)
 	{
+		printf("id = %d\n", id);
 		i = 0;
 		while (line[i] && (line[i] == ' ' || line[i] == '\t'))
 			i++;
@@ -189,12 +190,13 @@ int	ft_init_id(t_data *data, char **returnline)
 		}
 		else if (line && id == 5 && line[i] && is_ws(line[i+1]) && line[i] == 'C')
 		{
+			printf("iccccccuiiiiii\n\n");
 			if (ft_init_id_verif_color(&data->sky, &id, line, i))
 				return (ft_free_path_tex(data), 1);
 		}
 		else
 		{
-			if (!data->east.path || !data->west.path || !data->south.path || !data->north.path)
+			if (!data->east.path || !data->west.path || !data->south.path || !data->north.path || id != 6)
 				return (ft_free_path_tex(data), 1);
 			else
 				return (0);
@@ -264,6 +266,8 @@ int ft_map(t_data *data)
 			data->map[y][x] = 7;
 		x = 0;
 		line = get_next_line(fd);
+		if (!line)
+			return (ft_free_map(data, y+1), 1);
 		while (line[x])
 		{
 			if (line[x] == ' ')
@@ -342,6 +346,33 @@ int ft_verif_ok_map(t_data *data)
 	return (0);
 }
 
+int ft_check_name_file(char *str)
+{
+	int i;
+
+	i = 0;
+	printf(" %s\n\n", str+i);
+	while (str[i])
+		i++;
+	printf(" %s\n\n", str+i);
+	if (str[--i] != 'b')
+		return (1);
+	printf(" %s\n\n", str+i);
+	
+	if (str[--i] != 'u')
+		return (1);
+	printf(" %s\n\n", str+i);
+	
+	if (str[--i] != 'c')
+		return (1);
+	printf(" %s\n\n", str+i);
+	if (str[--i] != '.')
+		return (1);
+	
+	printf(" %s\n\n", str+i);
+	return (0);
+}
+
 int ft_init(int c, char **av, t_data *data)
 {
 	char *line;
@@ -353,8 +384,8 @@ int ft_init(int c, char **av, t_data *data)
 	data->east.path = NULL;
 	data->mapx = 0;
 	data->ystartmap = 0;
-    if (c != 2)
-		return (printf(RED"Error number of arg1\n"NC));	
+    if (c != 2 || ft_check_name_file(av[1]))
+		return (printf(RED"Error number of arg1\n"NC));
 	data->fdfile = open(av[1], O_RDONLY);
 	if (data->fdfile == -1)
 		return (printf(RED"Error path of arg2\n"NC));
@@ -517,26 +548,28 @@ void ft_color_colone(t_data *data, int x, float len, int pcofwall, int face)
 	int wall;
 	int start;
 	static int saveface;
+	static float savelen = {0};
 
 	y = 0;
 	
 	if (pcofwall == 100)
 		pcofwall = 99;
-	if (pcofwall < 99)
+	if ((5 < pcofwall && pcofwall < 95) || (fabs(savelen - len) > 0.1))
 		saveface = face;
-	// if ((pcofwall == 0 && face == 2) ||( pcofwall == 1 && face == 4))
-	// {
-	// 	printf("change (%d)->(%d)%d\n",face, saveface, pcofwall);
-	// 	face = saveface;
-	// }
+	if ((fabs(savelen - len) < 0.4) && ((pcofwall <= 1 && (face == 4 || face == 2)) ||(pcofwall >= 98 && (face == 1 || face == 3))))
+	{
+		// printf("change (%d)->(%d)%d\n",face, saveface, pcofwall);
+		face = saveface;
+	}
+	// printf("(%.2f)(%.2f) = %f\n", len , savelen, fabs(len - savelen));
 	// if (face == 1)
-	// 	printf("1 pc = %d\n", pcofwall);
+		// printf("1 pc = %d\tlen = %.2f\n", pcofwall, len);
 	// if (face == 2)
-	// 	printf("\t2 pc = %d\n", pcofwall);
+		// printf("\t2 pc = %d\tlen = %.2f\n", pcofwall, len);
 	// if (face == 3)
-	// 	printf("\t\t3 pc = %d\n", pcofwall);
+		// printf("\t\t3 pc = %d\tlen = %.2f\n", pcofwall, len);
 	// if (face == 4)
-	// 	printf("\t\t\t4 pc = %d\n", pcofwall);
+		// printf("\t\t\t4 pc = %d\tlen = %.2f\n", pcofwall, len);
 	wall = (data->mlx.winy / 2) + (10 / len)*data->lenwall - ((data->mlx.winy / 2) - (10 / len)*data->lenwall);
 	if (data->mlx.winy < wall)
 		y = data->mlx.winy - wall;
@@ -558,6 +591,7 @@ void ft_color_colone(t_data *data, int x, float len, int pcofwall, int face)
 		ft_draw(data, x, y, data->floor.color);	
 		y++;
 	}
+	savelen = len;
 }
 
 int ft_ray(t_data *data)
@@ -706,7 +740,7 @@ int ft_ray(t_data *data)
 			// printf("Decalx = %.3f Decaly = %.3f\n", decalx, decaly);
 			posx += decalx;
 			posy += decaly;
-			ft_draw_mini(data, (int)((posx*5)), (int)((posy)*5),0xff0000);
+			ft_draw_mini(data, (int)((posx)*5), (int)((posy)*5),0x990000);
 			// fprintf(stderr, NC"y = %d(%.2f) x = %d(%.2f) pcdecal = %d\n", (int)floor(posy), posy,  (int)floor(posx), posx, pcofwall);
 			if (data->map[((int)floor(posy))][((int)floor(posx))] == 1)
 			{
@@ -723,13 +757,36 @@ int ft_ray(t_data *data)
 	}
 
 	mlx_put_image_to_window(data->mlx.mlx, data->mlx.mlx_win, data->mlx.i, 0, 0);
-	mlx_put_image_to_window(data->mlx.mlx, data->mlx.mlx_win, data->mini.i, 0, 0);
-	ft_draw(data, (int)((data->playerx + 1)*5), (int)((data->playery+1)*5),0xffff00);
-	ft_draw(data, (int)((data->playerx + 1)*5)-1, (int)((data->playery+1)*5),0xffff00);
-	ft_draw(data, (int)((data->playerx + 1)*5)+1, (int)((data->playery+1)*5),0xffff00);
-	ft_draw(data, (int)((data->playerx + 1)*5), (int)((data->playery+1)*5)-1,0xffff00);
-	ft_draw(data, (int)((data->playerx + 1)*5), (int)((data->playery+1)*5)+1,0xffff00);
+	mlx_put_image_to_window(data->mlx.mlx, data->mlx.mlx_win, data->mini.i, 5, 5);
+	mlx_pixel_put(data->mlx.mlx, data->mlx.mlx_win, (int)((data->playerx + 1)*5), (int)((data->playery+1)*5),0xffff00);
+	mlx_pixel_put(data->mlx.mlx, data->mlx.mlx_win, (int)((data->playerx + 1)*5)-1, (int)((data->playery+1)*5),0xffff00);
+	mlx_pixel_put(data->mlx.mlx, data->mlx.mlx_win, (int)((data->playerx + 1)*5)+1, (int)((data->playery+1)*5),0xffff00);
+	mlx_pixel_put(data->mlx.mlx, data->mlx.mlx_win, (int)((data->playerx + 1)*5), (int)((data->playery+1)*5)-1,0xffff00);
+	mlx_pixel_put(data->mlx.mlx, data->mlx.mlx_win, (int)((data->playerx + 1)*5), (int)((data->playery+1)*5)+1,0xffff00);
 	return (0);
+}
+
+int	ft_free_mlx(t_data *data)
+{
+	mlx_destroy_image(data->mlx.mlx, data->north.tex);
+	mlx_destroy_image(data->mlx.mlx, data->east.tex);
+	mlx_destroy_image(data->mlx.mlx, data->south.tex);
+	mlx_destroy_image(data->mlx.mlx, data->west.tex);
+	mlx_destroy_image(data->mlx.mlx, data->mini.i);
+	mlx_destroy_image(data->mlx.mlx, data->mlx.i);
+	mlx_destroy_window(data->mlx.mlx, data->mlx.mlx_win);
+	mlx_destroy_display(data->mlx.mlx);
+	free(data->mlx.mlx);
+	exit(0);
+	return (1);
+}
+
+int	ft_cross_close(t_data *data)
+{
+	ft_free_map(data, -42);
+	ft_free_mlx(data);
+	exit(0);
+	return (1);
 }
 int	ft_key(int keycode, t_data *data)
 {
@@ -785,12 +842,14 @@ int	ft_key(int keycode, t_data *data)
 		data->playerfov = 30;
 	if (180 < data->playerfov)
 		data->playerfov = 180;
+	if (keycode == ESC || keycode == -16779872)
+		ft_cross_close(data);
 
 	// data->playerx = 21.5;
 	// data->playery = 8.5;
 	// data->playerr = 200;
-	// mlx_destroy_image(data->mlx.mlx, data->mlx.i);
-	// data->mlx.i = mlx_new_image(data->mlx.mlx, data->mlx.winx, data->mlx.winy);
+	mlx_destroy_image(data->mlx.mlx, data->mlx.i);
+	data->mlx.i = mlx_new_image(data->mlx.mlx, data->mlx.winx, data->mlx.winy);
 	ft_ray(data);
 	return (0);
 }
@@ -798,27 +857,26 @@ int	ft_key(int keycode, t_data *data)
 
 
 
-int	ft_free_mlx(t_data *data)
-{
-	mlx_destroy_image(data->mlx.mlx, data->north.tex);
-	mlx_destroy_image(data->mlx.mlx, data->east.tex);
-	mlx_destroy_image(data->mlx.mlx, data->south.tex);
-	mlx_destroy_image(data->mlx.mlx, data->west.tex);
-	mlx_destroy_image(data->mlx.mlx, data->mlx.i);
-	mlx_destroy_window(data->mlx.mlx, data->mlx.mlx_win);
-	mlx_destroy_display(data->mlx.mlx);
-	free(data->mlx.mlx);
-	exit(0);
-	return (1);
-}
-int	ft_cross_close(t_data *data)
-{
-	ft_free_map(data, -42);
-	ft_free_mlx(data);
-	exit(0);
-	return (1);
-}
 
+
+void	ft_init_minimap(t_data *data)
+{
+	int x;
+	int y;
+
+	y = 0;
+	while (y < data->mapy*5)
+	{
+		x = 0;
+		while (x < data->mapx*5)
+		{
+			ft_draw_mini(data, x, y,data->sky.color);
+			x++;
+		}
+		y++;
+	}
+}
+ 
 
 int main(int c, char **av)
 {
@@ -852,13 +910,14 @@ int main(int c, char **av)
 	data.mini.i = mlx_new_image(data.mlx.mlx, data.mapx*5, data.mapy*5);
 	data.mini.img.data = mlx_get_data_addr(data.mini.i, &data.mini.img.p, &data.mini.img.size, &data.mini.img.e);
 	
-
+	ft_init_minimap(&data);
+	
 	if (ft_ray(&data))
 		return (1);
 
 	mlx_hook(data.mlx.mlx_win, 2, 1L << 0, &ft_key, &data);
 	mlx_hook(data.mlx.mlx_win, 17, 1L << 0, &ft_cross_close, &data);
-	mlx_do_key_autorepeatoff(data.mlx.mlx);
+	mlx_do_key_autorepeaton(data.mlx.mlx);
 	
 	mlx_loop(data.mlx.mlx);
     return (0);
