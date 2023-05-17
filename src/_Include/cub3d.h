@@ -152,6 +152,10 @@ typedef struct s_data
 	int 		lenwall;
 	int			ystartmap;
 
+	int			x;
+	int			y;
+	int			nbrpl;
+
 } 				t_data;
 
 

@@ -6,7 +6,7 @@
 /*   By: ngriveau <ngriveau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 14:23:20 by ngriveau          #+#    #+#             */
-/*   Updated: 2023/05/17 16:30:19 by ngriveau         ###   ########.fr       */
+/*   Updated: 2023/05/17 16:41:10 by ngriveau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -368,50 +368,60 @@ int	ft_map(t_data *data)
 	return (0);
 }
 
+void	ft_verif_ok_map_pt3(t_data *data)
+{
+	data->playerx = data->x + 0.5;
+	data->playery = data->y + 0.5;
+	if (data->map[data->y][data->x] == 2)
+		data->playerr = 90;
+	if (data->map[data->y][data->x] == 3)
+		data->playerr = 180;
+	if (data->map[data->y][data->x] == 4)
+		data->playerr = 270;
+	if (data->map[data->y][data->x] == 5)
+		data->playerr = 0;
+	printf(LIGHTPURPLE"P"NC);
+	data->map[data->y][data->x] = 0;
+	data->nbrpl++;
+}
+
+void	ft_verif_ok_map_pt2(t_data *data)
+{
+	if (data->map[data->y][data->x] == 1)
+		printf(LIGHTRED"%d"NC, data->map[data->y][data->x]);
+	else if (data->map[data->y][data->x] == 0)
+		printf(LIGHTGREEN"%d"NC, data->map[data->y][data->x]);
+	else if (data->map[data->y][data->x] == 7)
+		printf(" ");
+	if (is_player(data->map[data->y][data->x]))
+		ft_verif_ok_map_pt3(data);
+}
+
+
 int	ft_verif_ok_map(t_data *data)
 {
-	int	x;
-	int	y;
-	int	player;
-
-	x = -1;
-	y = -1;
-	player = 0;
-	while (++y < data->mapy)
+	data->x = -1;
+	data->y = -1;
+	data->nbrpl = 0;
+	while (++data->y < data->mapy)
 	{
-		while (++x < data->mapx)
+		while (++data->x < data->mapx)
 		{
-			if ((y == 0 || x == 0 || y == data->mapy -1 || x == data->mapx -1) && (data->map[y][x] == 0 || is_player(data->map[y][x])))
+			if ((data->y == 0 || data->x == 0 || data->y == data->mapy -1 || \
+data->x == data->mapx -1) && (data->map[data->y][data->x] == 0 || \
+is_player(data->map[data->y][data->x])))
 				return (ft_free_map(data, -42), printf(RED"Incorrect Map 1\n"NC));
-			if ((data->map[y][x] == 0 || is_player(data->map[y][x])) && (data->map[y -1][x] == 7 || data->map[y +1][x] == 7 || data->map[y][x -1] == 7 || data->map[y][x +1] == 7))
+			if ((data->map[data->y][data->x] == 0 || is_player(data->map\
+[data->y][data->x])) && (data->map[data->y -1][data->x] == 7 || data->map\
+[data->y +1][data->x] == 7 || data->map[data->y][data->x -1] == 7 || \
+data->map[data->y][data->x +1] == 7))
 				return (ft_free_map(data, -42), printf(RED"Incorrect Map 2\n"NC));
-			if (data->map[y][x] == 1)
-				printf(LIGHTRED"%d"NC, data->map[y][x]);
-			else if (data->map[y][x] == 0)
-				printf(LIGHTGREEN"%d"NC, data->map[y][x]);
-			else if (data->map[y][x] == 7)
-				printf(" ");
-			if (is_player(data->map[y][x]))
-			{
-				data->playerx = x + 0.5;
-				data->playery = y + 0.5;
-				if (data->map[y][x] == 2)
-					data->playerr = 90;
-				if (data->map[y][x] == 3)
-					data->playerr = 180;
-				if (data->map[y][x] == 4)
-					data->playerr = 270;
-				if (data->map[y][x] == 5)
-					data->playerr = 0;
-				printf(YELLOW"P"NC);
-				data->map[y][x] = 0;
-				player++;
-			}
+			ft_verif_ok_map_pt2(data);
 		}
 		printf("\n");
-		x = -1;
+		data->x = -1;
 	}
-	if (player != 1)
+	if (data->nbrpl != 1)
 		return (ft_free_map(data, -42), printf(RED"Incorrect Number Player\n"NC));
 	return (0);
 }
