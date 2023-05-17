@@ -6,7 +6,7 @@
 /*   By: ngriveau <ngriveau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 14:23:20 by ngriveau          #+#    #+#             */
-/*   Updated: 2023/05/17 17:07:42 by ngriveau         ###   ########.fr       */
+/*   Updated: 2023/05/17 17:22:48 by ngriveau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -668,167 +668,186 @@ int	ft_mouse_move(t_data *data)
 	return (0);
 }
 
+void	ft_ray_270_360(t_data *data)
+{
+	data->ax -= 270;
+	if (data->ax == 0)
+		data->ax = 0.1;
+	data->hyv = (1 - (data->posy - (int)data->posy)) / cos(data->ax / RAD);
+	data->hyr = ((data->posx - (int)data->posx)) / cos((90 - data->ax) / RAD);
+	if (data->hyv < data->hyr)
+	{
+		data->decaly = (1 - (data->posy - (int)data->posy)) + 0.001;
+		data->decalx = ((1 - (data->posy - (int)data->posy)) * -1) * tan((data->ax) / RAD) + 0.001 ;
+		data->length += data->hyv;
+		data->face = 3;
+		data->pcofwall = 100 - ((int)((data->posx + data->decalx - (int)(data->posx + data->decalx)) * 100));
+	}
+	else
+	{
+		data->decaly = (data->posx - (int)data->posx) * tan((90 - data->ax) / RAD) - 0.001;
+		data->decalx = ((data->posx - (int)data->posx) * -1) - 0.001;
+		data->length += data->hyr;
+		data->face = 4;
+		data->pcofwall = 100 - ((int)((data->posy + data->decaly - (int)(data->posy + data->decaly)) * 100));
+	}
+	data->ax += 270;
+}
+
+void	ft_ray_180_270(t_data *data)
+{
+	data->ax -= 180;
+	if (data->ax == 0)
+		data->ax = 0.1;
+	data->hyv = (1 - (data->posy - (int)data->posy)) / cos((90 - data->ax) / RAD);
+	data->hyr = (1 - (data->posx - (int)data->posx)) / cos(data->ax / RAD);
+	if (data->hyv < data->hyr)
+	{
+		data->decaly = (1 - (data->posy - (int)data->posy)) + 0.001;
+		data->decalx = (1 - (data->posy - (int)data->posy)) * tan((90 - data->ax) / RAD) + 0.001 ;
+		data->length += data->hyv;
+		data->face = 3;
+		data->pcofwall = 100 - ((int)((data->posx + data->decalx - (int)(data->posx + data->decalx)) * 100));
+	}
+	else
+	{
+		data->decaly = (1 - (data->posx - (int)data->posx)) * tan((data->ax) / RAD) + 0.001 ;
+		data->decalx = (1 - (data->posx - (int)data->posx)) + 0.001;
+		data->length += data->hyr ;
+		data->face = 2;
+		data->pcofwall = (int)((data->posy + data->decaly - (int)(data->posy + data->decaly)) * 100);
+	}
+	data->ax += 180;
+}
+
+
+void	ft_ray_90_180(t_data *data)
+{
+	data->ax -= 90;
+	if (data->ax == 0)
+		data->ax = 0.1;
+	data->hyv = (data->posy - (int)data->posy) / cos(data->ax / RAD);
+	data->hyr = (1 - (data->posx - (int)data->posx)) / cos((90 - data->ax) / RAD);
+	if (data->hyv < data->hyr)
+	{
+		data->decaly = ((data->posy - (int)data->posy) * -1) - 0.001;
+		data->decalx = (data->posy - (int)data->posy) * tan((data->ax) / RAD) - 0.001 ;
+		data->length += data->hyv;
+		data->face = 1;
+		data->pcofwall = (int)((data->posx + data->decalx - (int)(data->posx + data->decalx)) * 100);
+	}
+	else
+	{
+		data->decaly = ((1 - (data->posx - (int)data->posx)) * -1) * tan((90 - data->ax) / RAD) + 0.001;
+		data->decalx = (1 - (data->posx - (int)data->posx)) + 0.001;
+		data->length += data->hyr;
+		data->face = 2;
+		data->pcofwall = (int)((data->posy + data->decaly - (int)(data->posy + data->decaly)) * 100);
+	}
+	data->ax += 90;
+}
+
+void	ft_ray_0_90(t_data *data)
+{
+	if (data->ax == 0)
+		data->ax = 0.1;
+	if (data->ax == 90)
+		data->ax = 89.9;
+	data->hyv = (data->posy - (int)data->posy) / cos((90 - data->ax) / RAD);
+	data->hyr = (data->posx - (int)data->posx) / cos(data->ax / RAD);
+	if (data->hyv < -5)
+		data->hyv = 5;
+	if (data->hyv < data->hyr)
+	{
+		data->decaly = ((data->posy - (int)data->posy) * -1) - 0.001;
+		data->decalx = ((data->posy - (int)data->posy) * -1) * tan((90 - data->ax) / RAD) - 0.001;
+		data->length += data->hyv;
+		data->face = 1;
+		data->pcofwall = (int)((data->posx + data->decalx - (int)(data->posx + data->decalx)) * 100);
+	}
+	else
+	{
+		data->decaly = ((data->posx - (int)data->posx) * -1) * tan((data->ax) / RAD) - 0.001 ;
+		data->decalx = ((data->posx - (int)data->posx) * -1) - 0.001;
+		data->length += data->hyr;
+		data->face = 4;
+		data->pcofwall = 100 - ((int)((data->posy + data->decaly - (int)(data->posy + data->decaly)) * 100));
+	}
+}
+
+void	ft_ray_pt2(t_data *data)
+{
+	data->posx = data->playerx;
+	data->posy = data->playery;
+	data->length = 0.1;
+	data->ax = data->playerfov / (float)data->mlx.winx * data->i + data->playerr - 45;
+	if (data->ax == 90)
+		data->ax = 89.9;
+	if (360 <= data->ax)
+		data->ax -= 360;
+	else if (data->ax < 0)
+		data->ax += 360;
+}
+int	ft_ray_pt3(t_data *data)
+{
+	data->posx += data->decalx;
+	data->posy += data->decaly;
+	ft_draw_mini(data, (int)((data->posx) * 5), (int)((data->posy) * 5), MINI_MAP_COLOR_WALL);
+	if (data->map[((int)floor(data->posy))][((int)floor(data->posx))] == 1)
+	{
+		ft_draw_mini(data, (int)((data->posx) * 5), (int)((data->posy) * 5), MINI_MAP_COLOR_VOID);
+		return (1);
+	}
+	return (0);
+}
+
+void	ft_ray_pt4(t_data *data)
+{
+	mlx_put_image_to_window(data->mlx.mlx, data->mlx.mlx_win,\
+	 data->mlx.i, 0, 0);
+	mlx_put_image_to_window(data->mlx.mlx, data->mlx.mlx_win,\
+	 data->mini.i, 5, 5);
+	mlx_pixel_put(data->mlx.mlx, data->mlx.mlx_win, \
+		(int)((data->playerx + 1) * 5), (int)((data->playery +1) * 5), \
+			MINI_MAP_COLOR_PLAYER);
+	mlx_pixel_put(data->mlx.mlx, data->mlx.mlx_win, \
+		(int)((data->playerx + 1) * 5) - 1, (int)((data->playery +1) * 5), \
+			MINI_MAP_COLOR_PLAYER);
+	mlx_pixel_put(data->mlx.mlx, data->mlx.mlx_win, \
+		(int)((data->playerx + 1) * 5) + 1, (int)((data->playery +1) * 5), \
+			MINI_MAP_COLOR_PLAYER);
+	mlx_pixel_put(data->mlx.mlx, data->mlx.mlx_win, \
+		(int)((data->playerx + 1) * 5), (int)((data->playery +1) * 5) - 1, \
+			MINI_MAP_COLOR_PLAYER);
+	mlx_pixel_put(data->mlx.mlx, data->mlx.mlx_win, \
+		(int)((data->playerx + 1) * 5), (int)((data->playery +1) * 5) + 1, \
+			MINI_MAP_COLOR_PLAYER);
+}
+
+
 int	ft_ray(t_data *data)
 {
-	float	i;
-	float	ax;
-	float	hyv;
-	float	hyr;
-	float	posx;
-	float	posy;
-	float	decalx;
-	float	decaly;
-	float	length;
-	int		face;
-	int		pcofwall;
-
-	i = 0;
-	while (i < (float)data->mlx.winx)
+	data->i = 0;
+	while (data->i < (float)data->mlx.winx)
 	{
-		posx = data->playerx;
-		posy = data->playery;
-		length = 0.1;
-		ax = data->playerfov / (float)data->mlx.winx * i + data->playerr - 45;
-		if (ax == 90)
-			ax = 89.9;
-		if (360 <= ax)
-			ax -= 360;
-		else if (ax < 0)
-			ax += 360;
-		// printf("\n\n\n\t\t----NEW RAY----\n\n\n");
+		ft_ray_pt2(data);
 		while (1)
 		{
-			// printf("Start pos Ray x = %.2f y = %.2f len = %.2f\n",posx, posy, length);
-			if (0 <= ax && ax < 90)
-			{
-				if (ax == 0)
-					ax = 0.1;
-				if (ax == 90)
-					ax = 89.9;
-				hyv = (posy - (int)posy) / cos((90 - ax) / RAD);
-				hyr = (posx - (int)posx) / cos(ax / RAD);
-				if (hyv < -5)
-					hyv = 5;
-				if (hyv < hyr)
-				{
-					decaly = ((posy - (int)posy) * -1) - 0.001;
-					decalx = ((posy - (int)posy) * -1) * tan((90 - ax) / RAD) - 0.001 ;
-					length += hyv;
-					face = 1;
-					pcofwall = (int)((posx + decalx - (int)(posx + decalx)) * 100);
-				}
-				else
-				{
-					decaly = ((posx - (int)posx) * -1) * tan((ax) / RAD) - 0.001 ;
-					decalx = ((posx - (int)posx) * -1) - 0.001;
-					length += hyr;
-					face = 4;
-					pcofwall = 100 - ((int)((posy + decaly - (int)(posy + decaly)) * 100));
-				}
-			}
-			else if (90 <= ax && ax < 180)
-			{
-				ax -= 90;
-				if (ax == 0)
-					ax = 0.1;
-				hyv = (posy - (int)posy) / cos(ax / RAD);
-				hyr = (1 - (posx - (int)posx)) / cos((90 - ax) / RAD);
-				if (hyv < hyr)
-				{
-					decaly = ((posy - (int)posy) * -1) - 0.001;
-					decalx = (posy - (int)posy) * tan((ax) / RAD) - 0.001 ;
-					length += hyv;
-					face = 1;
-					pcofwall = (int)((posx + decalx - (int)(posx + decalx)) * 100);
-				}
-				else
-				{
-					decaly = ((1 - (posx - (int)posx)) * -1) * tan((90 - ax) / RAD) + 0.001;
-					decalx = (1 - (posx - (int)posx)) + 0.001;
-					length += hyr;
-					face = 2;
-					pcofwall = (int)((posy + decaly - (int)(posy + decaly)) * 100);
-				}
-				ax += 90;
-			}
-			else if (180 <= ax && ax < 270)
-			{
-				ax -= 180;
-				if (ax == 0)
-					ax = 0.1;
-				hyv = (1 - (posy - (int)posy)) / cos((90 - ax) / RAD);
-				hyr = (1 - (posx - (int)posx)) / cos(ax / RAD);
-				if (hyv < hyr)
-				{
-					decaly = (1 - (posy - (int)posy)) + 0.001;
-					decalx = (1 - (posy - (int)posy)) * tan((90 - ax) / RAD) + 0.001 ;
-					length += hyv;
-					face = 3;
-					pcofwall = 100 - ((int)((posx + decalx - (int)(posx + decalx)) * 100));
-				}
-				else
-				{
-					decaly = (1 - (posx - (int)posx)) * tan((ax) / RAD) + 0.001 ;
-					decalx = (1 - (posx - (int)posx)) + 0.001;
-					length += hyr ;
-					face = 2;
-					pcofwall = (int)((posy + decaly - (int)(posy + decaly)) * 100);
-				}
-				ax += 180;
-			}
-			else if ((270 <= ax && ax < 360))
-			{
-				ax -= 270;
-				if (ax == 0)
-					ax = 0.1;
-				hyv = (1 - (posy - (int)posy)) / cos(ax / RAD);
-				hyr = ((posx - (int)posx)) / cos((90 - ax) / RAD);
-				if (hyv < hyr)
-				{
-					decaly = (1 - (posy - (int)posy)) + 0.001;
-					decalx = ((1 - (posy - (int)posy)) * -1) * tan((ax) / RAD) + 0.001 ;
-					length += hyv;
-					face = 3;
-					pcofwall = 100 - ((int)((posx + decalx - (int)(posx + decalx)) * 100));
-				}
-				else
-				{
-					decaly = (posx - (int)posx) * tan((90 - ax) / RAD) - 0.001;
-					decalx = ((posx - (int)posx) * -1) - 0.001;
-					length += hyr;
-					face = 4;
-					pcofwall = 100 - ((int)((posy + decaly - (int)(posy + decaly)) * 100));
-				}
-				ax += 270;
-			}
-			// if (hyr < hyv)
-				// printf(LIGHTRED" %.3f"LIGHTGREEN" %.3f\t%.2f\n"NC, hyr, hyv, ax);
-			// else
-				// printf(LIGHTGREEN" %.3f "LIGHTRED"%.3f\t%.2f\n"NC, hyv, hyr, ax);
-			// printf("Decalx = %.3f Decaly = %.3f\n", decalx, decaly);
-			posx += decalx;
-			posy += decaly;
-			ft_draw_mini(data, (int)((posx) * 5), (int)((posy) * 5), MINI_MAP_COLOR_WALL);
-			// fprintf(stderr, NC"y = %d(%.2f) x = %d(%.2f) pcdecal = %d\n", (int)floor(posy), posy,  (int)floor(posx), posx, pcofwall);
-			if (data->map[((int)floor(posy))][((int)floor(posx))] == 1)
-			{
-				ft_draw_mini(data, (int)((posx) * 5), (int)((posy) * 5), MINI_MAP_COLOR_VOID);
-				// printf("BREAK x = %d(%f) y = %d(%f) len = %.2f\n\n", (int)floor(posx), posx, (int)floor(posy), posy, length);
+			if (0 <= data->ax && data->ax < 90)
+				ft_ray_0_90(data);
+			else if (90 <= data->ax && data->ax < 180)
+				ft_ray_90_180(data);
+			else if (180 <= data->ax && data->ax < 270)
+				ft_ray_180_270(data);
+			else if ((270 <= data->ax && data->ax < 360))
+				ft_ray_270_360(data);
+			if (ft_ray_pt3(data))
 				break ;
-			}
 		}
-		// printf("length = %.5f\n\n\n\n", length);
-		ft_color_colone(data, i, length, pcofwall, face);
-		i++;
-		// printf("x = %.1fy = %.1f r = %.1f f=%d angle = %.2f\n", data->playerx, data->playery, data->playerr,data->playerfov, ax);
+		ft_color_colone(data, data->i, data->length, data->pcofwall, data->face);
+		data->i++;
 	}
-	mlx_put_image_to_window(data->mlx.mlx, data->mlx.mlx_win, data->mlx.i, 0, 0);
-	mlx_put_image_to_window(data->mlx.mlx, data->mlx.mlx_win, data->mini.i, 5, 5);
-	mlx_pixel_put(data->mlx.mlx, data->mlx.mlx_win, (int)((data->playerx + 1) * 5), (int)((data->playery +1) * 5), MINI_MAP_COLOR_PLAYER);
-	mlx_pixel_put(data->mlx.mlx, data->mlx.mlx_win, (int)((data->playerx + 1) * 5) - 1, (int)((data->playery +1) * 5), MINI_MAP_COLOR_PLAYER);
-	mlx_pixel_put(data->mlx.mlx, data->mlx.mlx_win, (int)((data->playerx + 1) * 5) + 1, (int)((data->playery +1) * 5), MINI_MAP_COLOR_PLAYER);
-	mlx_pixel_put(data->mlx.mlx, data->mlx.mlx_win, (int)((data->playerx + 1) * 5), (int)((data->playery +1) * 5) - 1, MINI_MAP_COLOR_PLAYER);
-	mlx_pixel_put(data->mlx.mlx, data->mlx.mlx_win, (int)((data->playerx + 1) * 5), (int)((data->playery +1) * 5) + 1, MINI_MAP_COLOR_PLAYER);
+	ft_ray_pt4(data);
 	return (0);
 }
 

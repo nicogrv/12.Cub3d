@@ -17,8 +17,8 @@
 
 
 
-# define WINX 2500
-# define WINY 1400
+# define WINX 1000
+# define WINY 1000
 # define FOV 90
 # define MINI_MAP_COLOR_WALL 0x990000
 # define MINI_MAP_COLOR_VOID 0xffffff
@@ -155,6 +155,17 @@ typedef struct s_data
 	int			x;
 	int			y;
 	int			nbrpl;
+	float		i;
+	float		ax;
+	float		hyv;
+	float		hyr;
+	float		posx;
+	float		posy;
+	float		decalx;
+	float		decaly;
+	float		length;
+	int			face;
+	int			pcofwall;
 
 } 				t_data;
 
