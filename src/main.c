@@ -6,7 +6,7 @@
 /*   By: ngriveau <ngriveau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 14:23:20 by ngriveau          #+#    #+#             */
-/*   Updated: 2023/05/17 16:41:10 by ngriveau         ###   ########.fr       */
+/*   Updated: 2023/05/17 16:42:56 by ngriveau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -443,6 +443,18 @@ int	ft_check_name_file(char *str)
 		return (1);
 	return (0);
 }
+void	ft_init_2(t_data *data)
+{
+	printf("x%d\ty%d\n"NC, data->mapx, data->mapy);
+	printf("\nN = %s\nS = %s\nO = %s\nE = %s\n"NC, data->north.path, data->south.path, data->west.path, data->east.path);
+	printf("\nFloor = "LIGHTRED"%d "LIGHTGREEN"%d "LIGHTBLUE"%d"NC, data->floor.r, data->floor.g, data->floor.b);
+	printf("\nSky   = "LIGHTRED"%d "LIGHTGREEN"%d "LIGHTBLUE"%d"NC, data->sky.r, data->sky.g, data->sky.b);
+	printf("\nPlayer pos\tx = %.2f y %.2f\n"NC, data->playerx, data->playery);
+	data->mlx.winx = WINX;
+	data->mlx.winy = WINY;
+	data->playerfov = FOV;
+	data->lenwall = (WINY / 100) * 2;
+}
 
 int	ft_init(int c, char **av, t_data *data)
 {
@@ -469,15 +481,7 @@ int	ft_init(int c, char **av, t_data *data)
 		return (ft_free_path_tex(data), 1);
 	if (ft_verif_ok_map(data))
 		return (ft_free_path_tex(data), 1);
-	printf("x%d\ty%d\n"NC, data->mapx, data->mapy);
-	printf("\nN = %s\nS = %s\nO = %s\nE = %s\n"NC, data->north.path, data->south.path, data->west.path, data->east.path);
-	printf("\nFloor = "LIGHTRED"%d "LIGHTGREEN"%d "LIGHTBLUE"%d"NC, data->floor.r, data->floor.g, data->floor.b);
-	printf("\nSky   = "LIGHTRED"%d "LIGHTGREEN"%d "LIGHTBLUE"%d"NC, data->sky.r, data->sky.g, data->sky.b);
-	printf("\nPlayer pos\tx = %.2f y %.2f\n"NC, data->playerx, data->playery);
-	data->mlx.winx = WINX;
-	data->mlx.winy = WINY;
-	data->playerfov = FOV;
-	data->lenwall = (WINY / 100) * 2;
+	ft_init_2(data);
 	return (0);
 }
 
