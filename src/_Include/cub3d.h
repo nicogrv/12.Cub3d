@@ -20,6 +20,9 @@
 # define WINX 2500
 # define WINY 1400
 # define FOV 90
+# define MINI_MAP_COLOR_WALL 0x990000
+# define MINI_MAP_COLOR_VOID 0xffffff
+# define MINI_MAP_COLOR_PLAYER 0xffff00
 
 #  define TOUCH_LEFTARROW 65361
 #  define TOUCH_RIGHTARROW 65363
@@ -76,10 +79,6 @@ typedef struct s_color
 	int color;
 }				t_color;
 
-typedef struct s_mouse
-{
-	int b;
-}				t_mouse;
 
 typedef struct s_raycast
 {
@@ -132,7 +131,6 @@ typedef struct s_mlx
 typedef struct s_data 
 {
 	t_mlx		mlx;
-	t_mouse		mouse;
 	int			**map;
 	int			fdfile;
 	char		*pathfile;
