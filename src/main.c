@@ -6,7 +6,7 @@
 /*   By: ngriveau <ngriveau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 14:23:20 by ngriveau          #+#    #+#             */
-/*   Updated: 2023/05/17 15:39:12 by ngriveau         ###   ########.fr       */
+/*   Updated: 2023/05/17 16:21:28 by ngriveau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,69 +159,115 @@ void	ft_free_path_tex(t_data *data)
 		free(data->east.path);
 	return ;
 }
+int ft_init_id_pt5(t_data *data, int id)
+{
+	if (!data->east.path || !data->west.path || !data->south.path || !data->north.path || id != 6)
+		return (ft_free_path_tex(data), 1);
+	else
+		return (0);
+}
+
+int ft_init_id_pt4(t_data *data, char *li, int *id, int i)
+{
+	if (li && *id == 2 && li[i] && li[i +1] && is_ws(li[i +2]) \
+			&& li[i] == 'W' && li[i +1] == 'E')
+	{
+		if (ft_init_id_verif_path(&data->west.path, id, li, i))
+			return (ft_free_path_tex(data), 1);
+	}
+	else if (li && *id == 3 && li[i] && li[i +1] && is_ws(li[i +2]) \
+			&& li[i] == 'E' && li[i +1] == 'A')
+	{
+		if (ft_init_id_verif_path(&data->east.path, id, li, i))
+			return (ft_free_path_tex(data), 1);
+	}
+	else if (li && *id == 4 && li[i] && is_ws(li[i +1]) && li[i] == 'F')
+	{
+		if (ft_init_id_verif_color(&data->floor, id, li, i))
+			return (ft_free_path_tex(data), 1);
+	}
+	else if (li && *id == 5 && li[i] && is_ws(li[i +1]) && li[i] == 'C')
+	{
+		if (ft_init_id_verif_color(&data->sky, id, li, i))
+			return (ft_free_path_tex(data), 1);
+	}
+	return (0);
+}
+
+int ft_init_id_pt3(t_data *data, char *li, int *id, int i)
+{
+	if (li && *id == 0 && li[i] && li[i +1] && is_ws(li[i +2]) \
+			&& li[i] == 'N' && li[i +1] == 'O')
+	{
+		if (ft_init_id_verif_path(&data->north.path, id, li, i))
+			return (ft_free_path_tex(data), 1);
+	}
+	else if (li && *id == 1 && li[i] && li[i +1] && is_ws(li[i +2]) \
+			&& li[i] == 'S' && li[i +1] == 'O')
+	{
+		if (ft_init_id_verif_path(&data->south.path, id, li, i))
+			return (ft_free_path_tex(data), 1);
+	}
+	return (ft_init_id_pt4(data, li, id, i));
+}
+
+int	ft_init_id_pt2(char *li, int i, int id)
+{
+	if (li && id == 0 && li[i] && li[i +1] && is_ws(li[i +2]) \
+				&& li[i] == 'N' && li[i +1] == 'O')
+		return (1);
+	else if (li && id == 1 && li[i] && li[i +1] && is_ws(li[i +2]) \
+			&& li[i] == 'S' && li[i +1] == 'O')
+		return (1);
+	else if (li && id == 2 && li[i] && li[i +1] && is_ws(li[i +2]) \
+			&& li[i] == 'W' && li[i +1] == 'E')
+		return (1);
+	else if (li && id == 3 && li[i] && li[i +1] && is_ws(li[i +2]) \
+			&& li[i] == 'E' && li[i +1] == 'A')
+		return (1);
+	else if (li && id == 4 && li[i] && is_ws(li[i +1]) && li[i] == 'F')
+		return (1);
+	else if (li && id == 5 && li[i] && is_ws(li[i +1]) && li[i] == 'C')
+		return (1);
+	else
+		return (0);
+
+}
+
+void ft_init_id_pt6(t_data *data, char **li, char **returnline)
+{
+	*li = get_next_line(data->fdfile);
+	data->ystartmap++;
+	*returnline = *li;
+}
 
 int	ft_init_id(t_data *data, char **returnline)
 {
-	char	*line;
+	char	*li;
 	int		id;
 	int		i;
 
 	id = 0;
-	line = get_next_line(data->fdfile);
-	data->ystartmap++;
-	*returnline = line;
-	while (line)
+	li = NULL;
+	ft_init_id_pt6(data, &li, returnline);
+	while (li)
 	{
 		i = 0;
-		while (line[i] && (line[i] == ' ' || line[i] == '\t'))
+		while (li[i] && (li[i] == ' ' || li[i] == '\t'))
 			i++;
-		if (line[i] == '\n')
+		if (li[i] == '\n')
 			(void) i;
-		else if (line && id == 0 && line[i] && line[i +1] && is_ws(line[i +2]) && line[i] == 'N' && line[i +1] == 'O')
+		else if (ft_init_id_pt2(li, i, id))
 		{
-			if (ft_init_id_verif_path(&data->north.path, &id, line, i))
-				return (ft_free_path_tex(data), 1);
-		}
-		else if (line && id == 1 && line[i] && line[i +1] && is_ws(line[i +2]) && line[i] == 'S' && line[i +1] == 'O')
-		{
-			if (ft_init_id_verif_path(&data->south.path, &id, line, i))
-				return (ft_free_path_tex(data), 1);
-		}
-		else if (line && id == 2 && line[i] && line[i +1] && is_ws(line[i +2]) && line[i] == 'W' && line[i +1] == 'E')
-		{
-			if (ft_init_id_verif_path(&data->west.path, &id, line, i))
-				return (ft_free_path_tex(data), 1);
-		}
-		else if (line && id == 3 && line[i] && line[i +1] && is_ws(line[i +2]) && line[i] == 'E' && line[i +1] == 'A')
-		{
-			if (ft_init_id_verif_path(&data->east.path, &id, line, i))
-				return (ft_free_path_tex(data), 1);
-		}
-		else if (line && id == 4 && line[i] && is_ws(line[i +1]) && line[i] == 'F')
-		{
-			if (ft_init_id_verif_color(&data->floor, &id, line, i))
-				return (ft_free_path_tex(data), 1);
-		}
-		else if (line && id == 5 && line[i] && is_ws(line[i +1]) && line[i] == 'C')
-		{
-			printf("iccccccuiiiiii\n\n");
-			if (ft_init_id_verif_color(&data->sky, &id, line, i))
-				return (ft_free_path_tex(data), 1);
+			if (ft_init_id_pt3(data, li, &id, i))
+				return (1);
 		}
 		else
-		{
-			if (!data->east.path || !data->west.path || !data->south.path || !data->north.path || id != 6)
-				return (ft_free_path_tex(data), 1);
-			else
-				return (0);
-		}
-		free(line);
-		line = get_next_line(data->fdfile);
-		data->ystartmap++;
-		*returnline = line;
+			return (ft_init_id_pt5(data, id));
+		free(li);
+		ft_init_id_pt6(data, &li, returnline);
 	}
-	free(line);
-	return (0);
+	return (free(li), 0);
 }
 
 void	ft_size_map(t_data *data, char *line)
