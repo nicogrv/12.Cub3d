@@ -6,7 +6,7 @@
 /*   By: ngriveau <ngriveau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 14:23:20 by ngriveau          #+#    #+#             */
-/*   Updated: 2023/05/17 17:22:48 by ngriveau         ###   ########.fr       */
+/*   Updated: 2023/05/17 17:59:43 by ngriveau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -844,7 +844,8 @@ int	ft_ray(t_data *data)
 			if (ft_ray_pt3(data))
 				break ;
 		}
-		ft_color_colone(data, data->i, data->length, data->pcofwall, data->face);
+		ft_color_colone(data, data->i, data->length, data->pcofwall, \
+			data->face);
 		data->i++;
 	}
 	ft_ray_pt4(data);
@@ -874,51 +875,60 @@ int	ft_cross_close(t_data *data)
 	return (1);
 }
 
-int	ft_key(int keycode, t_data *data)
+void	ft_key_4(int keycode, t_data *data)
 {
-	if (keycode == TOUCH_LEFTARROW)
-			data->playerr -= 15;
-	else if (keycode == TOUCH_RIGHTARROW)
-			data->playerr += 15;
-	else if (keycode == TOUCH_W)
+	if (keycode == TOUCH_W)
 	{
-		if (data->map[((int)floor(data->playery + 0.42 * -sin(data->playerr / RAD)))][((int)floor(data->playerx + 0.42 * -cos(data->playerr / RAD)))] == 0)
+		if (data->map[((int)floor(data->playery + 0.42 * -sin(data->playerr / \
+RAD)))][((int)floor(data->playerx + 0.42 * -cos(data->playerr / RAD)))] == 0)
 		{
 			data->playery += 0.2 * -sin(data->playerr / RAD);
 			data->playerx += 0.2 * -cos(data->playerr / RAD);
 		}
 	}
-	else if (keycode == TOUCH_S)
+	if (keycode == TOUCH_S)
 	{
-		if (data->map[((int)floor(data->playery + 0.42 * sin(data->playerr / RAD)))][((int)floor(data->playerx + 0.42 * cos(data->playerr / RAD)))] == 0)
+		if (data->map[((int)floor(data->playery + 0.42 * sin(data->playerr / \
+RAD)))][((int)floor(data->playerx + 0.42 * cos(data->playerr / RAD)))] == 0)
 		{
 			data->playery += 0.2 * sin(data->playerr / RAD);
 			data->playerx += 0.2 * cos(data->playerr / RAD);
 		}
 	}
-	else if (keycode == TOUCH_A)
+}
+
+void	ft_key_3(int keycode, t_data *data)
+{
+	if (keycode == TOUCH_A)
 	{
-		if (data->map[((int)floor(data->playery + 0.42 * cos(data->playerr / RAD)))][((int)floor(data->playerx + 0.42 * -sin(data->playerr / RAD)))] == 0)
+		if (data->map[((int)floor(data->playery + 0.42 * cos(data->playerr / \
+RAD)))][((int)floor(data->playerx + 0.42 * -sin(data->playerr / RAD)))] == 0)
 		{
 			data->playerx += 0.2 * -sin(data->playerr / RAD);
 			data->playery += 0.2 * cos(data->playerr / RAD);
 		}
 	}
-	else if (keycode == TOUCH_D)
+	if (keycode == TOUCH_D)
 	{
-		if (data->map[((int)floor(data->playery + 0.42 * -cos(data->playerr / RAD)))][((int)floor(data->playerx + 0.42 * sin(data->playerr / RAD)))] == 0)
+		if (data->map[((int)floor(data->playery + 0.42 * -cos(data->playerr / \
+RAD)))][((int)floor(data->playerx + 0.42 * sin(data->playerr / RAD)))] == 0)
 		{
 			data->playerx += 0.2 * sin(data->playerr / RAD);
 			data->playery += 0.2 * -cos(data->playerr / RAD);
 		}
 	}
-	else if (keycode == TOUCH_PLUS)
+	ft_key_4(keycode, data);
+}
+
+void	ft_key_2(int keycode, t_data *data)
+{
+	if (keycode == TOUCH_PLUS)
 			data->playerfov -= 10;
-	else if (keycode == TOUCH_MOINS)
+	if (keycode == TOUCH_MOINS)
 			data->playerfov += 10;
-	else if (keycode == TOUCH_N)
+	if (keycode == TOUCH_N)
 			data->lenwall -= 1;
-	else if (keycode == TOUCH_M)
+	if (keycode == TOUCH_M)
 			data->lenwall += 1;
 	if (data->playerr < 0)
 		data->playerr += 360;
@@ -930,6 +940,17 @@ int	ft_key(int keycode, t_data *data)
 		data->playerfov = 180;
 	if (keycode == ESC || keycode == -16779872)
 		ft_cross_close(data);
+	ft_key_3(keycode, data);
+}
+
+
+int	ft_key(int keycode, t_data *data)
+{
+	if (keycode == TOUCH_LEFTARROW)
+			data->playerr -= 15;
+	else if (keycode == TOUCH_RIGHTARROW)
+			data->playerr += 15;
+	ft_key_2(keycode, data);
 	mlx_destroy_image(data->mlx.mlx, data->mlx.i);
 	data->mlx.i = mlx_new_image(data->mlx.mlx, data->mlx.winx, data->mlx.winy);
 	ft_ray(data);
@@ -953,6 +974,34 @@ void	ft_init_minimap(t_data *data)
 		y++;
 	}
 }
+void ft_initmlx(t_data *data)
+{
+	data->mlx.mlx = mlx_init();
+	data->mlx.mlx_win = mlx_new_window(data->mlx.mlx, data->mlx.winx, \
+			data->mlx.winy, "Cub3d");
+	data->mlx.i = mlx_new_image(data->mlx.mlx, data->mlx.winx, data->mlx.winy);
+	data->mlx.data = mlx_get_data_addr(data->mlx.i, &data->mlx.p, \
+			&data->mlx.size, &data->mlx.e);
+	data->north.tex = mlx_xpm_file_to_image(data->mlx.mlx, data->north.path, \
+			&data->north.width, &data->north.height);
+	data->north.img.data = mlx_get_data_addr(data->north.tex, \
+			&data->north.img.p, &data->north.img.size, &data->north.img.e);
+	data->east.tex = mlx_xpm_file_to_image(data->mlx.mlx, \
+			data->east.path, &data->east.width, &data->east.height);
+	data->east.img.data = mlx_get_data_addr(data->east.tex, \
+			&data->east.img.p, &data->east.img.size, &data->east.img.e);
+	data->south.tex = mlx_xpm_file_to_image(data->mlx.mlx, data->south.path, \
+			&data->south.width, &data->south.height);
+	data->south.img.data = mlx_get_data_addr(data->south.tex, \
+			&data->south.img.p, &data->south.img.size, &data->south.img.e);
+	data->west.tex = mlx_xpm_file_to_image(data->mlx.mlx, data->west.path, \
+			&data->west.width, &data->west.height);
+	data->west.img.data = mlx_get_data_addr(data->west.tex, \
+			&data->west.img.p, &data->west.img.size, &data->west.img.e);
+	data->mini.i = mlx_new_image(data->mlx.mlx, data->mapx * 5, data->mapy * 5);
+	data->mini.img.data = mlx_get_data_addr(data->mini.i, &data->mini.img.p, \
+			&data->mini.img.size, &data->mini.img.e);
+}
 
 int	main(int c, char **av)
 {
@@ -960,24 +1009,11 @@ int	main(int c, char **av)
 
 	if (ft_init(c, av, &data))
 		return (1);
-	data.mlx.mlx = mlx_init();
-	data.mlx.mlx_win = mlx_new_window(data.mlx.mlx, data.mlx.winx, data.mlx.winy, "Cub3d");
-	data.mlx.i = mlx_new_image(data.mlx.mlx, data.mlx.winx, data.mlx.winy);
-	data.mlx.data = mlx_get_data_addr(data.mlx.i, &data.mlx.p, &data.mlx.size, &data.mlx.e);
-	data.north.tex = mlx_xpm_file_to_image(data.mlx.mlx, data.north.path, &data.north.width, &data.north.height);
-	data.north.img.data = mlx_get_data_addr(data.north.tex, &data.north.img.p, &data.north.img.size, &data.north.img.e);
-	data.east.tex = mlx_xpm_file_to_image(data.mlx.mlx, data.east.path, &data.east.width, &data.east.height);
-	data.east.img.data = mlx_get_data_addr(data.east.tex, &data.east.img.p, &data.east.img.size, &data.east.img.e);
-	data.south.tex = mlx_xpm_file_to_image(data.mlx.mlx, data.south.path, &data.south.width, &data.south.height);
-	data.south.img.data = mlx_get_data_addr(data.south.tex, &data.south.img.p, &data.south.img.size, &data.south.img.e);
-	data.west.tex = mlx_xpm_file_to_image(data.mlx.mlx, data.west.path, &data.west.width, &data.west.height);
-	data.west.img.data = mlx_get_data_addr(data.west.tex, &data.west.img.p, &data.west.img.size, &data.west.img.e);
+	ft_initmlx(&data);
 	free(data.north.path);
 	free(data.south.path);
 	free(data.west.path);
 	free(data.east.path);
-	data.mini.i = mlx_new_image(data.mlx.mlx, data.mapx * 5, data.mapy * 5);
-	data.mini.img.data = mlx_get_data_addr(data.mini.i, &data.mini.img.p, &data.mini.img.size, &data.mini.img.e);
 	ft_init_minimap(&data);
 	ft_ray(&data);
 	mlx_hook(data.mlx.mlx_win, 2, 1L << 0, &ft_key, &data);
