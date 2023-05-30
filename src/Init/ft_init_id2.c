@@ -6,11 +6,11 @@
 /*   By: ngriveau <ngriveau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 14:23:20 by ngriveau          #+#    #+#             */
-/*   Updated: 2023/05/30 11:03:33 by ngriveau         ###   ########.fr       */
+/*   Updated: 2023/05/30 11:24:20 by ngriveau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./_Include/cub3d.h"
+#include "../_Include/cub3d.h"
 
 void	ft_init_id_pt6(t_data *data, char **li, char **returnline)
 {

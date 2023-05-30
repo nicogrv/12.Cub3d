@@ -22,13 +22,19 @@ SRCS += ft_init.c
 SRCS += ft_utils.c
 SRCS += ft_input.c
 SRCS += ft_color.c
-SRCS += 
-SRCS += 
 
 SRC_PATH += ./src/
 SRC_PATH += ./src/Get_next_line/
 SRC_PATH += ./src/Libft/
+SRC_PATH += ./src/Init/
+SRC_PATH += ./src/Input/
+SRC_PATH += ./src/Map/
+SRC_PATH += ./src/Other/
+SRC_PATH += ./src/Raycasting/
+SRC_PATH += ./src/Draw/
+
 OBJS_PATH = ./src/_Objet
+
 HEAD_PATH += -I ./src/_Include
 
 

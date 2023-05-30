@@ -6,11 +6,11 @@
 /*   By: ngriveau <ngriveau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 14:23:20 by ngriveau          #+#    #+#             */
-/*   Updated: 2023/05/30 11:07:19 by ngriveau         ###   ########.fr       */
+/*   Updated: 2023/05/30 11:24:56 by ngriveau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./_Include/cub3d.h"
+#include "../_Include/cub3d.h"
 
 void	ft_ray_pt2(t_data *data)
 {

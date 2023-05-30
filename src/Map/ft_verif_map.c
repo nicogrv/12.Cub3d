@@ -6,11 +6,11 @@
 /*   By: ngriveau <ngriveau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 14:23:20 by ngriveau          #+#    #+#             */
-/*   Updated: 2023/05/30 10:54:03 by ngriveau         ###   ########.fr       */
+/*   Updated: 2023/05/30 11:24:46 by ngriveau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./_Include/cub3d.h"
+#include "../_Include/cub3d.h"
 
 void	ft_verif_ok_map_pt3(t_data *data)
 {

@@ -6,11 +6,11 @@
 /*   By: ngriveau <ngriveau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 14:23:20 by ngriveau          #+#    #+#             */
-/*   Updated: 2023/05/30 11:17:37 by ngriveau         ###   ########.fr       */
+/*   Updated: 2023/05/30 11:24:14 by ngriveau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./_Include/cub3d.h"
+#include "../_Include/cub3d.h"
 
 void	ft_init_id_verif_color_pt4(char *tmp, t_color *color)
 {

@@ -6,11 +6,11 @@
 /*   By: ngriveau <ngriveau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 14:23:20 by ngriveau          #+#    #+#             */
-/*   Updated: 2023/05/30 11:14:36 by ngriveau         ###   ########.fr       */
+/*   Updated: 2023/05/30 11:24:21 by ngriveau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./_Include/cub3d.h"
+#include "../_Include/cub3d.h"
 
 int	ft_init_id_verif_path(char **path_for_data, int *id, char *line, int i)
 {
