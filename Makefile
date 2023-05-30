@@ -8,7 +8,22 @@ SRCS += ft_strdup.c
 SRCS += ft_substr.c
 SRCS += ft_isdigit.c
 SRCS += ft_atoiplus.c
-
+SRCS += ft_ray_0_360.c
+SRCS += ft_init_id_verif_color.c
+SRCS += ft_init_id.c
+SRCS += ft_init_id2.c
+SRCS += ft_map.c
+SRCS += ft_ray.c
+SRCS += ft_key.c
+SRCS += ft_free.c
+SRCS += ft_draw.c
+SRCS += ft_verif_map.c
+SRCS += ft_init.c
+SRCS += ft_utils.c
+SRCS += ft_input.c
+SRCS += ft_color.c
+SRCS += 
+SRCS += 
 
 SRC_PATH += ./src/
 SRC_PATH += ./src/Get_next_line/

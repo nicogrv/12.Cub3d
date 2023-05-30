@@ -6,7 +6,7 @@
 /*   By: ngriveau <ngriveau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 17:32:42 by ngriveau          #+#    #+#             */
-/*   Updated: 2023/05/03 17:28:45 by ngriveau         ###   ########.fr       */
+/*   Updated: 2023/05/30 11:13:14 by ngriveau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,8 @@
 # include <sys/stat.h>
 # include <fcntl.h>
 # include <stdarg.h>
-#include  <limits.h> 
+# include  <limits.h> 
 // # include <bsd/string.h>
-
-
-
 
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 42
@@ -83,7 +80,7 @@ void	ft_lstdelone(t_list *lst, void (*del)(void*));
 void	ft_lstclear(t_list **lst, void (*del)(void*));
 void	ft_lstiter(t_list *lst, void (*f)(void *));
 t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
-int	ft_atoiplus(char *str);
+int		ft_atoiplus(char *str);
 
 int		ft_s(char *str, int verif);
 char	*ft_my_malloc(char *buffer, char *ligne, int size);

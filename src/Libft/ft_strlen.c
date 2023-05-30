@@ -6,13 +6,11 @@
 /*   By: ngriveau <ngriveau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/09 17:27:41 by ngriveau          #+#    #+#             */
-/*   Updated: 2023/05/03 19:24:21 by ngriveau         ###   ########.fr       */
+/*   Updated: 2023/05/30 11:15:30 by ngriveau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../_Include/cub3d.h"
-
-
 
 int	ft_strlen(const char *str)
 {
@@ -33,7 +31,8 @@ int	ft_strlen_mode(const char *str, int mode)
 		i++;
 	while (str && str[i] && mode == 1 && str[i] != '\n')
 		i++;
-	while (str && str[i] && mode == 2 && str[i] != ',' && str[i] != ' ' && str[i] != '\n')
+	while (str && str[i] && mode == 2 && str[i] != ',' && str[i] != ' ' \
+		&& str[i] != '\n')
 		i++;
 	while (str && str[i] && mode == 3 && str[i] != '\n' && str[i] != ' ')
 		i++;
