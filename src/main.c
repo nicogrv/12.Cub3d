@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nicolasgriveau <nicolasgriveau@student.    +#+  +:+       +#+        */
+/*   By: ngriveau <ngriveau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 14:23:20 by ngriveau          #+#    #+#             */
-/*   Updated: 2023/05/18 20:29:42 by nicolasgriv      ###   ########.fr       */
+/*   Updated: 2023/05/30 10:36:14 by ngriveau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -788,6 +788,7 @@ void	ft_ray_0_90(t_data *d)
 	d->hyr = (d->posx - (int)d->posx) / cos(d->ax / RAD);
 	if (d->hyv < -5)
 		d->hyv = 5;
+	ft_ray_0_90_pt2(d);
 }
 
 void	ft_ray_pt2(t_data *data)

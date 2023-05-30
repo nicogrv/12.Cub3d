@@ -36,6 +36,9 @@ FLAGSMACOS = -lmlx -framework OpenGL -framework AppKit -MMD -I ./lib/minilibx_ma
 vpath %.c ${SRC_PATH}
 vpath %.h ${HEAD_PATH}
 
+all:
+	@	echo make linux / make macos
+
 linux:  ${OBJS}
 	@	$(MAKE) --no-print-directory -s -C ./lib/minilibx-linux/
 	@	${CC}  -o ${NAME} ${OBJS} ${HEAD_PATH} ${CFLAGS_LINUX}
