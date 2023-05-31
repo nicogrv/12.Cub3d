@@ -6,7 +6,7 @@
 /*   By: ngriveau <ngriveau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 14:23:20 by ngriveau          #+#    #+#             */
-/*   Updated: 2023/05/30 11:24:56 by ngriveau         ###   ########.fr       */
+/*   Updated: 2023/05/31 18:04:13 by ngriveau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	ft_ray_pt2(t_data *data)
 {
 	data->posx = data->playerx;
 	data->posy = data->playery;
-	data->length = 0.1;
+	data->length = 0;
 	data->ax = data->playerfov / (float)data->mlx.winx * data->i + \
 			data->playerr - 45;
 	if (data->ax == 90)
@@ -65,6 +65,28 @@ void	ft_ray_pt4(t_data *data)
 			MINI_MAP_COLOR_PLAYER);
 }
 
+void ft_fish_eye(t_data *data)
+{
+	float angle;
+	fprintf(stdout, "%f,", data->length);
+	printf("%f,",data->ax);
+	if (data->ax <= data->playerr)
+	{
+		angle = cos((data->playerr - data->ax)/RAD);
+		// printf("%f,%f,", (data->playerr - data->ax)/RAD, cos((data->playerr - data->ax)/RAD));
+		data->length = data->length * (angle);
+
+	}
+	else
+	{
+		angle = cos((data->ax - data->playerr)/RAD);
+		// printf("%f,%f,", (data->ax - data->playerr)/RAD, cos((data->ax - data->playerr)/RAD));
+		data->length = data->length * (angle);
+
+	}
+	fprintf(stdout, "%f\n", data->length);
+}
+
 int	ft_ray(t_data *data)
 {
 	data->i = 0;
@@ -79,11 +101,12 @@ int	ft_ray(t_data *data)
 				ft_ray_90_180(data);
 			else if (180 <= data->ax && data->ax < 270)
 				ft_ray_180_270(data);
-			else if ((270 <= data->ax && data->ax < 360))
+			else if (270 <= data->ax && data->ax < 360)
 				ft_ray_270_360(data);
 			if (ft_ray_pt3(data))
 				break ;
 		}
+		ft_fish_eye(data);
 		ft_color_colone(data, data->i, data->length, data->pcofwall);
 		data->i++;
 	}

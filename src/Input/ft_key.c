@@ -6,7 +6,7 @@
 /*   By: ngriveau <ngriveau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 14:23:20 by ngriveau          #+#    #+#             */
-/*   Updated: 2023/05/30 11:24:39 by ngriveau         ###   ########.fr       */
+/*   Updated: 2023/05/31 14:33:57 by ngriveau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,10 @@ void	ft_key_2(int keycode, t_data *data)
 		data->playerfov = 180;
 	if (keycode == ESC || keycode == -16779872)
 		ft_cross_close(data);
+	// data->playerr = 90;
+	// data->playery = 6.7;
+	// data->playerx = 20.6;
+	printf("x = %f, y = %f\n", data->playerx, data->playery);
 	ft_key_3(keycode, data);
 }
 

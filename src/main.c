@@ -6,7 +6,7 @@
 /*   By: ngriveau <ngriveau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 14:23:20 by ngriveau          #+#    #+#             */
-/*   Updated: 2023/05/30 11:04:07 by ngriveau         ###   ########.fr       */
+/*   Updated: 2023/05/31 17:32:22 by ngriveau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,12 +24,18 @@ int	main(int c, char **av)
 	free(data.west.path);
 	free(data.east.path);
 	ft_init_minimap(&data);
+	data.playerr = 90;
+	data.playery = 6.4;
+	data.playerx = 26.4;
+	// data.playerr = 90;
+	// data.playery = 6.4;
+	// data.playerx = 24.6;
 	ft_ray(&data);
 	mlx_hook(data.mlx.mlx_win, 2, 1L << 0, &ft_key, &data);
 	mlx_hook(data.mlx.mlx_win, 17, 1L << 0, &ft_cross_close, &data);
 	mlx_do_key_autorepeaton(data.mlx.mlx);
-	mlx_mouse_hide(data.mlx.mlx, data.mlx.mlx_win);
-	mlx_loop_hook(data.mlx.mlx, ft_mouse_move, &data);
+	// mlx_mouse_hide(data.mlx.mlx, data.mlx.mlx_win);
+	// mlx_loop_hook(data.mlx.mlx, ft_mouse_move, &data);
 	mlx_loop(data.mlx.mlx);
 	return (0);
 }

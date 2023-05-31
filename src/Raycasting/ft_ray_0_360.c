@@ -6,7 +6,7 @@
 /*   By: ngriveau <ngriveau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 14:23:20 by ngriveau          #+#    #+#             */
-/*   Updated: 2023/05/30 11:23:54 by ngriveau         ###   ########.fr       */
+/*   Updated: 2023/05/31 18:01:46 by ngriveau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,11 +101,12 @@ void	ft_ray_90_180(t_data *d)
 
 void	ft_ray_0_90_pt2(t_data *d)
 {
+	fprintf(stdout, "caca %f\n", d->length);
 	if (d->hyv < d->hyr)
 	{
 		d->decaly = ((d->posy - (int)d->posy) * -1) - 0.001;
 		d->decalx = ((d->posy - (int)d->posy) * -1) * \
-						tan((90 - d->ax) / RAD) - 0.001;
+						tan((90 - d->ax) / RAD) - 0.00001;
 		d->length += d->hyv;
 		d->face = 1;
 		d->pcofwall = (int)((d->posx + d->decalx - \
@@ -121,6 +122,8 @@ void	ft_ray_0_90_pt2(t_data *d)
 		d->pcofwall = 100 - ((int)((d->posy + d->decaly - \
 					(int)(d->posy + d->decaly)) * 100));
 	}
+	fprintf(stdout, "salut %f\n", d->length);
+
 }
 
 void	ft_ray_0_90(t_data *d)
@@ -131,6 +134,7 @@ void	ft_ray_0_90(t_data *d)
 		d->ax = 89.9;
 	d->hyv = (d->posy - (int)d->posy) / cos((90 - d->ax) / RAD);
 	d->hyr = (d->posx - (int)d->posx) / cos(d->ax / RAD);
+	printf("\nhyp =%f\t r = %f\n", d->hyv, d->hyr);
 	if (d->hyv < -5)
 		d->hyv = 5;
 	ft_ray_0_90_pt2(d);
