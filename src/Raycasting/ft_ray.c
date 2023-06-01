@@ -6,7 +6,7 @@
 /*   By: ngriveau <ngriveau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 14:23:20 by ngriveau          #+#    #+#             */
-/*   Updated: 2023/05/31 18:04:13 by ngriveau         ###   ########.fr       */
+/*   Updated: 2023/06/01 14:19:25 by ngriveau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,8 @@ void ft_fish_eye(t_data *data)
 {
 	float angle;
 	fprintf(stdout, "%f,", data->length);
-	printf("%f,",data->ax);
+	printf("x = %.2f y = %.2f|x = %.2f y = %.2f", data->playerx, data->playery, data->posx, data->posy);
+	// printf("%f,",data->ax);
 	if (data->ax <= data->playerr)
 	{
 		angle = cos((data->playerr - data->ax)/RAD);
