@@ -6,7 +6,7 @@
 /*   By: ngriveau <ngriveau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 14:23:20 by ngriveau          #+#    #+#             */
-/*   Updated: 2023/06/01 14:13:01 by ngriveau         ###   ########.fr       */
+/*   Updated: 2023/06/01 17:12:05 by ngriveau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,8 +130,15 @@ void	ft_ray_0_90(t_data *d)
 		d->ax = 0.1;
 	if (d->ax == 90)
 		d->ax = 89.9;
-	d->hyv = (d->posy - (int)d->posy) / cos((90 - d->ax) / RAD);
+	d->hyv = (d->posy - (int)d->posy) / cos(((90 - d->ax) / RAD));
 	d->hyr = (d->posx - (int)d->posx) / cos(d->ax / RAD);
+	printf("d->posy = %f\tcos((90 - d->ax) / RAD) = %f\n\n", d->posy - (int)d->posy, cos((90 - d->ax) / RAD));
+	printf("hyv = %f\thyr = %f(%.2f)\n", d->hyv, d->hyr, d->playerr);
+	// if (d->ax == 86.010010)
+	// {
+	// 	printf("ici\n\n");
+	// 	d->hyv = 
+	// }
 	if (d->hyv < -5)
 		d->hyv = 5;
 	ft_ray_0_90_pt2(d);

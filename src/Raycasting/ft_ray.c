@@ -6,7 +6,7 @@
 /*   By: ngriveau <ngriveau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 14:23:20 by ngriveau          #+#    #+#             */
-/*   Updated: 2023/06/01 14:19:25 by ngriveau         ###   ########.fr       */
+/*   Updated: 2023/06/01 17:04:12 by ngriveau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,20 +68,25 @@ void	ft_ray_pt4(t_data *data)
 void ft_fish_eye(t_data *data)
 {
 	float angle;
+	// float x;
+	// float y;
+	// float py;
+	
+	printf("%f,",data->ax);
 	fprintf(stdout, "%f,", data->length);
-	printf("x = %.2f y = %.2f|x = %.2f y = %.2f", data->playerx, data->playery, data->posx, data->posy);
-	// printf("%f,",data->ax);
+	// printf("x = %f y = %f|x = %f y = %f", data->playerx, data->playery, data->posx, data->posy);
+	
 	if (data->ax <= data->playerr)
 	{
 		angle = cos((data->playerr - data->ax)/RAD);
-		// printf("%f,%f,", (data->playerr - data->ax)/RAD, cos((data->playerr - data->ax)/RAD));
+		printf("%f,%f,", (data->playerr - data->ax)/RAD, cos((data->playerr - data->ax)/RAD));
 		data->length = data->length * (angle);
 
 	}
 	else
 	{
 		angle = cos((data->ax - data->playerr)/RAD);
-		// printf("%f,%f,", (data->ax - data->playerr)/RAD, cos((data->ax - data->playerr)/RAD));
+		printf("%f,%f,", (data->ax - data->playerr)/RAD, cos((data->ax - data->playerr)/RAD));
 		data->length = data->length * (angle);
 
 	}
@@ -97,7 +102,7 @@ int	ft_ray(t_data *data)
 		while (1)
 		{
 			if (0 <= data->ax && data->ax < 90)
-				ft_ray_0_90(data);
+				ft_ray_0_90(data); 
 			else if (90 <= data->ax && data->ax < 180)
 				ft_ray_90_180(data);
 			else if (180 <= data->ax && data->ax < 270)
