@@ -1,27 +1,50 @@
 SHELL = /bin/bash
 
-SRCS += main.c
-SRCS += get_next_line_utils.c
-SRCS += get_next_line.c
-SRCS += ft_strlen.c
-SRCS += ft_strdup.c
-SRCS += ft_substr.c
-SRCS += ft_isdigit.c
-SRCS += ft_atoiplus.c
-SRCS += ft_ray_0_360.c
-SRCS += ft_init_id_verif_color.c
-SRCS += ft_init_id.c
-SRCS += ft_init_id2.c
-SRCS += ft_map.c
-SRCS += ft_ray.c
-SRCS += ft_key.c
-SRCS += ft_free.c
-SRCS += ft_draw.c
-SRCS += ft_verif_map.c
-SRCS += ft_init.c
-SRCS += ft_utils.c
-SRCS += ft_input.c
-SRCS += ft_color.c
+SRCS_MACOS += main.c
+SRCS_MACOS += get_next_line_utils.c
+SRCS_MACOS += get_next_line.c
+SRCS_MACOS += ft_strlen.c
+SRCS_MACOS += ft_strdup.c
+SRCS_MACOS += ft_substr.c
+SRCS_MACOS += ft_isdigit.c
+SRCS_MACOS += ft_atoiplus.c
+SRCS_MACOS += ft_ray_0_360.c
+SRCS_MACOS += ft_init_id_verif_color.c
+SRCS_MACOS += ft_init_id.c
+SRCS_MACOS += ft_init_id2.c
+SRCS_MACOS += ft_map.c
+SRCS_MACOS += ft_ray.c
+SRCS_MACOS += ft_key.c
+SRCS_MACOS += ft_free_macos.c
+SRCS_MACOS += ft_draw.c
+SRCS_MACOS += ft_verif_map.c
+SRCS_MACOS += ft_init.c
+SRCS_MACOS += ft_utils.c
+SRCS_MACOS += ft_input_macos.c
+SRCS_MACOS += ft_color.c
+
+SRCS_LINUX += main.c
+SRCS_LINUX += get_next_line_utils.c
+SRCS_LINUX += get_next_line.c
+SRCS_LINUX += ft_strlen.c
+SRCS_LINUX += ft_strdup.c
+SRCS_LINUX += ft_substr.c
+SRCS_LINUX += ft_isdigit.c
+SRCS_LINUX += ft_atoiplus.c
+SRCS_LINUX += ft_ray_0_360.c
+SRCS_LINUX += ft_init_id_verif_color.c
+SRCS_LINUX += ft_init_id.c
+SRCS_LINUX += ft_init_id2.c
+SRCS_LINUX += ft_map.c
+SRCS_LINUX += ft_ray.c
+SRCS_LINUX += ft_key.c
+SRCS_LINUX += ft_free_linux.c
+SRCS_LINUX += ft_draw.c
+SRCS_LINUX += ft_verif_map.c
+SRCS_LINUX += ft_init.c
+SRCS_LINUX += ft_utils.c
+SRCS_LINUX += ft_input_linux.c
+SRCS_LINUX += ft_color.c
 
 SRC_PATH += ./src/
 SRC_PATH += ./src/Get_next_line/
@@ -33,7 +56,8 @@ SRC_PATH += ./src/Other/
 SRC_PATH += ./src/Raycasting/
 SRC_PATH += ./src/Draw/
 
-OBJS_PATH = ./src/_Objet
+OBJS_PATH_LINUX = ./src/_Objet_L
+OBJS_PATH_MACOS = ./src/_Objet_M
 
 HEAD_PATH += -I ./src/_Include
 
@@ -42,7 +66,8 @@ HEAD_PATH += -I ./src/_Include
 
 
 
-OBJS = ${patsubst %.c, ${OBJS_PATH}/%.o, ${SRCS}}
+OBJS_LINUX = ${patsubst %.c, ${OBJS_PATH_LINUX}/%.o, ${SRCS_LINUX}}
+OBJS_MACOS = ${patsubst %.c, ${OBJS_PATH_MACOS}/%.o, ${SRCS_MACOS}}
 
 
 NAME = cub3d
@@ -60,14 +85,14 @@ vpath %.h ${HEAD_PATH}
 all:
 	@	echo make linux / make macos
 
-linux:  ${OBJS}
+linux:  ${OBJS_LINUX}
 	@	$(MAKE) --no-print-directory -s -C ./lib/minilibx-linux/
-	@	${CC}  -o ${NAME} ${OBJS} ${HEAD_PATH} ${CFLAGS_LINUX}
+	@	${CC}  -o ${NAME} ${OBJS_LINUX} ${HEAD_PATH} ${CFLAGS_LINUX}
 	@	echo -ne "\r\033[2K" $(LIGHTGREEN) "\t$(NAME) OK" "\033[0m" "\n"
 
-macos: ${OBJS}
+macos: ${OBJS_MACOS}
 	@	$(MAKE) --no-print-directory -s -C ./lib/minilibx_macos/
-	@	${CC}  -o ${NAME} ${OBJS}  ${HEAD_PATH} ${FLAGSMACOS}
+	@	${CC}  -o ${NAME} ${OBJS_MACOS}  ${HEAD_PATH} ${FLAGSMACOS}
 	@	echo -ne "\r\033[2K" $(LIGHTGREEN) "\t$(NAME) OK" "\033[0m" "\n"
 
 run: all
@@ -78,8 +103,14 @@ valgrind: all
 	valgrind ./${NAME}
 
 
-${OBJS}: ${OBJS_PATH}/%.o: %.c Makefile ./src/_Include/cub3d.h
-	@	mkdir -p ${OBJS_PATH}
+${OBJS_MACOS}: ${OBJS_PATH_MACOS}/%.o: %.c Makefile ./src/_Include/cub3d.h
+	@	mkdir -p ${OBJS_PATH_MACOS}
+	@	$(COLORCOMPIL)
+	@	${CC} ${CFLAGS} -c $< -o $@ ${HEAD_PATH}
+
+
+${OBJS_LINUX}: ${OBJS_PATH_LINUX}/%.o: %.c Makefile ./src/_Include/cub3d.h
+	@	mkdir -p ${OBJS_PATH_LINUX}
 	@	$(COLORCOMPIL)
 	@	${CC} ${CFLAGS} -c $< -o $@ ${HEAD_PATH}
 
@@ -133,7 +164,7 @@ COLORCOMPIL = \
        		echo -ne "\r\033[2K" $(LIGHTGREEN) "[$(P)%]" $(DARKGRAY) "Compiling MiniShell" $(WHITE) "$<"; \
 		fi \
 	fi
-T := $(words $(SRCS))
+T := $(words $(SRCS_MACOS))
 N := x
 C = $(words $N)$(eval N := x $N)
 P = `expr $C '*' 100 / $T / 5`

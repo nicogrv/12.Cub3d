@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_ray.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ngriveau <ngriveau@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nicolasgriveau <nicolasgriveau@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 14:23:20 by ngriveau          #+#    #+#             */
-/*   Updated: 2023/06/01 17:04:12 by ngriveau         ###   ########.fr       */
+/*   Updated: 2023/06/05 18:34:14 by nicolasgriv      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ void	ft_ray_pt2(t_data *data)
 		data->ax -= 360;
 	else if (data->ax < 0)
 		data->ax += 360;
+	printf("ray pt2 = %f\n", data->ax);
 }
 
 int	ft_ray_pt3(t_data *data)
@@ -73,7 +74,7 @@ void ft_fish_eye(t_data *data)
 	// float py;
 	
 	printf("%f,",data->ax);
-	fprintf(stdout, "%f,", data->length);
+	// fprintf(stdout, "%f,", data->length);
 	// printf("x = %f y = %f|x = %f y = %f", data->playerx, data->playery, data->posx, data->posy);
 	
 	if (data->ax <= data->playerr)
