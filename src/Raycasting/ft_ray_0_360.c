@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_ray_0_360.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ngriveau <ngriveau@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nicolasgriveau <nicolasgriveau@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 14:23:20 by ngriveau          #+#    #+#             */
-/*   Updated: 2023/06/01 17:12:05 by ngriveau         ###   ########.fr       */
+/*   Updated: 2023/06/06 19:13:55 by nicolasgriv      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,8 +132,8 @@ void	ft_ray_0_90(t_data *d)
 		d->ax = 89.9;
 	d->hyv = (d->posy - (int)d->posy) / cos(((90 - d->ax) / RAD));
 	d->hyr = (d->posx - (int)d->posx) / cos(d->ax / RAD);
-	printf("d->posy = %f\tcos((90 - d->ax) / RAD) = %f\n\n", d->posy - (int)d->posy, cos((90 - d->ax) / RAD));
-	printf("hyv = %f\thyr = %f(%.2f)\n", d->hyv, d->hyr, d->playerr);
+	// printf("%f, %f, ", cos((90 - d->ax) / RAD), d->ax);
+	// printf("1 %f\t%f\n", d->hyv, d->hyr);
 	// if (d->ax == 86.010010)
 	// {
 	// 	printf("ici\n\n");
@@ -142,4 +142,5 @@ void	ft_ray_0_90(t_data *d)
 	if (d->hyv < -5)
 		d->hyv = 5;
 	ft_ray_0_90_pt2(d);
+	// printf("2 %f\t%f\t%f\n", d->hyv, d->hyr, d->length);
 }
