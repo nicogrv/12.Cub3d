@@ -6,7 +6,7 @@
 /*   By: nicolasgriveau <nicolasgriveau@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 14:23:20 by ngriveau          #+#    #+#             */
-/*   Updated: 2023/06/08 17:53:26 by nicolasgriv      ###   ########.fr       */
+/*   Updated: 2023/06/06 23:31:06 by nicolasgriv      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,27 +16,43 @@ void	ft_key_4(int keycode, t_data *data)
 {
 	if (keycode == TOUCH_W)
 	{
-			data->playerx += 0.2 * cos(data->playerr / RAD);
-			data->playery -= 0.2 * sin(data->playerr / RAD);
+		if (data->map[((int)floor(data->playery + 0.42 * -sin(data->playerr / \
+RAD)))][((int)floor(data->playerx + 0.42 * -cos(data->playerr / RAD)))] == 0)
+		{
+			data->playery += 0.2 * -sin(data->playerr / RAD);
+			data->playerx += 0.2 * -cos(data->playerr / RAD);
+		}
 	}
 	if (keycode == TOUCH_S)
 	{
-			data->playerx -= 0.2 * cos(data->playerr / RAD);
+		if (data->map[((int)floor(data->playery + 0.42 * sin(data->playerr / \
+RAD)))][((int)floor(data->playerx + 0.42 * cos(data->playerr / RAD)))] == 0)
+		{
 			data->playery += 0.2 * sin(data->playerr / RAD);
+			data->playerx += 0.2 * cos(data->playerr / RAD);
+		}
 	}
 }
 
 void	ft_key_3(int keycode, t_data *data)
 {
-	if (keycode == TOUCH_D)
-	{
-			data->playerx += 0.2 * sin(data->playerr / RAD);
-			data->playery += 0.2 * cos(data->playerr / RAD);
-	}
 	if (keycode == TOUCH_A)
 	{
-			data->playerx -= 0.2 * sin(data->playerr / RAD);
-			data->playery -= 0.2 * cos(data->playerr / RAD);
+		if (data->map[((int)floor(data->playery + 0.42 * cos(data->playerr / \
+RAD)))][((int)floor(data->playerx + 0.42 * -sin(data->playerr / RAD)))] == 0)
+		{
+			data->playerx += 0.2 * -sin(data->playerr / RAD);
+			data->playery += 0.2 * cos(data->playerr / RAD);
+		}
+	}
+	if (keycode == TOUCH_D)
+	{
+		if (data->map[((int)floor(data->playery + 0.42 * -cos(data->playerr / \
+RAD)))][((int)floor(data->playerx + 0.42 * sin(data->playerr / RAD)))] == 0)
+		{
+			data->playerx += 0.2 * sin(data->playerr / RAD);
+			data->playery += 0.2 * -cos(data->playerr / RAD);
+		}
 	}
 	ft_key_4(keycode, data);
 }
@@ -55,8 +71,8 @@ void	ft_key_2(int keycode, t_data *data)
 		data->playerr += 360;
 	if (360 < data->playerr)
 		data->playerr -= 360;
-	if (data->playerfov < 0)
-		data->playerfov = 0;
+	if (data->playerfov < 30)
+		data->playerfov = 30;
 	if (180 < data->playerfov)
 		data->playerfov = 180;
 	if (keycode == ESC || keycode == -16779872)
@@ -70,9 +86,9 @@ void	ft_key_2(int keycode, t_data *data)
 
 int	ft_key(int keycode, t_data *data)
 {
-	if (keycode == TOUCH_RIGHTARROW)
+	if (keycode == TOUCH_LEFTARROW)
 			data->playerr -= 15;
-	else if (keycode == TOUCH_LEFTARROW)
+	else if (keycode == TOUCH_RIGHTARROW)
 			data->playerr += 15;
 	ft_key_2(keycode, data);
 	if (keycode == TOUCH_I)

@@ -6,7 +6,7 @@
 /*   By: nicolasgriveau <nicolasgriveau@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 14:23:20 by ngriveau          #+#    #+#             */
-/*   Updated: 2023/06/08 18:29:09 by nicolasgriv      ###   ########.fr       */
+/*   Updated: 2023/06/08 20:35:55 by nicolasgriv      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,120 +45,86 @@ void	ft_ray_pt4(t_data *data)
 	mlx_put_image_to_window(data->mlx.mlx, data->mlx.mlx_win, \
 		data->mlx.i, 0, 0);
 	// mlx_put_image_to_window(data->mlx.mlx, data->mlx.mlx_win, data->mini.i, 5, 5);
-	mlx_pixel_put(data->mlx.mlx, data->mlx.mlx_win, (int)((data->playerx + 1) * 5), (int)((data->playery +1) * 5), MINI_MAP_COLOR_PLAYER);
-	mlx_pixel_put(data->mlx.mlx, data->mlx.mlx_win, (int)((data->playerx + 1) * 5) - 1, (int)((data->playery +1) * 5), MINI_MAP_COLOR_PLAYER);
-	mlx_pixel_put(data->mlx.mlx, data->mlx.mlx_win, (int)((data->playerx + 1) * 5) + 1, (int)((data->playery +1) * 5), MINI_MAP_COLOR_PLAYER);
-	mlx_pixel_put(data->mlx.mlx, data->mlx.mlx_win, (int)((data->playerx + 1) * 5), (int)((data->playery +1) * 5) - 1, MINI_MAP_COLOR_PLAYER);
-	mlx_pixel_put(data->mlx.mlx, data->mlx.mlx_win, (int)((data->playerx + 1) * 5), (int)((data->playery +1) * 5) + 1, MINI_MAP_COLOR_PLAYER);
+	mlx_pixel_put(data->mlx.mlx, data->mlx.mlx_win, \
+		(int)((data->playerx + 1) * 5), (int)((data->playery +1) * 5), \
+			MINI_MAP_COLOR_PLAYER);
+	mlx_pixel_put(data->mlx.mlx, data->mlx.mlx_win, \
+		(int)((data->playerx + 1) * 5) - 1, (int)((data->playery +1) * 5), \
+			MINI_MAP_COLOR_PLAYER);
+	mlx_pixel_put(data->mlx.mlx, data->mlx.mlx_win, \
+		(int)((data->playerx + 1) * 5) + 1, (int)((data->playery +1) * 5), \
+			MINI_MAP_COLOR_PLAYER);
+	mlx_pixel_put(data->mlx.mlx, data->mlx.mlx_win, \
+		(int)((data->playerx + 1) * 5), (int)((data->playery +1) * 5) - 1, \
+			MINI_MAP_COLOR_PLAYER);
+	mlx_pixel_put(data->mlx.mlx, data->mlx.mlx_win, \
+		(int)((data->playerx + 1) * 5), (int)((data->playery +1) * 5) + 1, \
+			MINI_MAP_COLOR_PLAYER);
 }
 
-
-
-void ft_cube_2d(int mapx, int mapy, t_data *data, int id, int size)
+void ft_fish_eye(t_data *data)
 {
-	int x = mapx*size;
-	int y = mapy*size;
+	data->anglec = 1;
+	data->angles = 1;
+	float angle = data->playerfov * (floor(0.5 * data->mlx.winx) - data->i) / (data->mlx.winx - 1);
+	// float angle_correction = 
+	printf("%.2f %.2f %.2f\n", data->playerr - data->ax, angle, 0.5 * tan((data->playerfov * (floor(0.5 * data->mlx.winx) - data->i) / (data->mlx.winx - 1))/RAD) / tan((0.5 * data->mlx.winx)/RAD));
+	// printf("x = %f y = %f|x = %f y = %f", data->pleayerx, data->playery, data->posx, data->posy);
+	{
+		// printf("data->playerr = %.2f data->ax = %.2f\n", data->playerr,data->ax);
+		// if (0 <= data->ax && data->ax < 45)
+		// data->length = data->length * (data->anglec);
+		// else
+		{
+			angle = cos((data->playerr - data->ax) / RAD);
+			data->length = data->length * (angle);
 
-	while (y < mapy*size+size)
-	{
-		while (x < mapx*size+size)
-		{
-			// printf("\t\tx = %d\t y %d\n", x, y);
-			if (id == -1)
-				ft_draw(data, x, y, 0);
-			if (id == 0)
-				ft_draw(data, x, y, 0x009900);
-			if (id == 1)
-				ft_draw(data, x, y, 0x990000);
-			x++;
 		}
-		x = mapx*size;
-		y++;
+	data->lengthback = data->length;
+	// data->length -= (0.5 * tan((data->playerfov * (floor(0.3 * data->mlx.winx) - data->i) / (data->mlx.winx - 1))/RAD) / tan((0.5 * data->mlx.winx)/RAD));
+	// printf("%f\n", data->length);
+		
 	}
-}
-
-void ft_draw_map(t_data *data)
-{
-	int size = 80;
-	int x = 0;
-	int y = 0;
-	while (y < data->mapy)
-	{
-		while (x < data->mapx)
-		{
-			if (data->map[y][x] == 0)
-				ft_cube_2d(x, y, data, 0, size);
-			else if (data->map[y][x] == 1)
-				ft_cube_2d(x, y, data, 1, size);
-			else
-				ft_cube_2d(x, y, data, -1, size);
-			x++;
-		}
-		x = 0;
-		y++;
-	}
-	x = 0;
-	y = 0;
-	while(y < data->mlx.winy)
-	{
-		while (x < data->mlx.winx)
-		{
-			if (x % size == 0)
-				ft_draw(data, x, y, 0);
-			if (y % size == 0)
-				ft_draw(data, x, y, 0);
-			x++;
-		}
-		x = 0;
-		y++;
-	}
-	ft_draw(data, (data->playerx ) * size, (data->playery ) * size, MINI_MAP_COLOR_PLAYER);
-	ft_draw(data, (data->playerx ) * size - 1, (data->playery ) * size, MINI_MAP_COLOR_PLAYER);
-	ft_draw(data, (data->playerx ) * size + 1, (data->playery ) * size, MINI_MAP_COLOR_PLAYER);
-	ft_draw(data, (data->playerx ) * size, (data->playery ) * size - 1, MINI_MAP_COLOR_PLAYER);
-	ft_draw(data, (data->playerx ) * size, (data->playery ) * size + 1, MINI_MAP_COLOR_PLAYER);
-	int i = 0;
-	// data->playerfov = 0;
-	data->playerfov = 90;
-	float posx = (data->playerx );
-	float posy = (data->playery );
-	float angle = data->playerr - data->playerfov/2;
-	float iangle = (float)data->playerfov / (float)data->mlx.winx;
-	// float hyv;
-	// float hyh;
-	while (i < data->mlx.winx * 1 + 1)
-	{
-		data->anglec = cos(angle/RAD); 
-		data->angles = -sin(angle/RAD);
-		posx = (data->playerx);
-		posy = (data->playery);
-		while (1)
-		{
-			ft_draw(data, posx, posy, 0x0000ff);
-			if (data->map[(int)(posy)][(int)(posx)] == 1)
-				break ;
-			posx += 0.0001 * data->anglec;
-			posy += 0.0001 * data->angles;
-			// printf("x = %f\ty = %f\n", x, y);
-		}
-		printf("(%.2f)(%.2f)posx = %f\tposy = %f\n(%f)", data->playerx, data->playery, posx, posy, sqrt(pow(fabs(data->playerx - posx), 2) + pow(fabs(data->playery - posy), 2)));
-		data->face = 1;
-		// data->lenwall = 2;
-		i++;
-		angle += iangle;
-		ft_color_colone(data, i, sqrt(pow(fabs(data->playerx - posx), 2) + pow(fabs(data->playery - posy), 2)), 46);
-	}
-	mlx_put_image_to_window(data->mlx.mlx, data->mlx.mlx_win, data->mlx.i, 0, 0);
 }
 
 int	ft_ray(t_data *data)
 {
 	data->i = 0;
-	data->anglec = cos(data->playerr/RAD);
-	data->angles = -sin(data->playerr/RAD);
-	printf("x = %.3f y = %.3f p = %.0f c = %.2f s = %.2f\n", data->playerx, data->playery, data->playerr, data->anglec, data->angles);
-	ft_draw_map(data);
-	return (0);
+	while (data->i < (float)data->mlx.winx)
+	{
+		ft_ray_pt2(data);
+		// printf("ax = %f\tleght = %f\n", data->ax, data->length);
+		while (1)
+		{
+			if (0 <= data->ax && data->ax < 90)
+				ft_ray_0_90(data); 
+			else if (90 <= data->ax && data->ax < 180)
+				ft_ray_90_180(data);
+			else if (180 <= data->ax && data->ax < 270)
+				ft_ray_180_270(data);
+			else if (270 <= data->ax && data->ax < 360)
+				ft_ray_270_360(data);
+			if (ft_ray_pt3(data))
+				break ;
+		}
+		ft_fish_eye(data);
+		printf("\t %f\n", round(data->mlx.winx * (0.5 +(0.5 * tan((data->playerfov * (floor(0.5 * data->mlx.winx) - data->i) / (data->mlx.winx - 1))/RAD) / tan((0.5 * data->mlx.winx)/RAD)))));
+		if (data->switchcast == 1)
+		{
+			ft_color_colone(data, round(data->mlx.winx * (0.5 +(0.5 * tan((data->playerfov * (floor(0.5 * data->mlx.winx) - data->i) / (data->mlx.winx - 1))/RAD) / tan((0.5 * data->mlx.winx)/RAD)))), data->length, data->pcofwall);
+			// ft_draw(data, data->i, data->length*30, 0xff00ff);
+			ft_draw(data, data->i, (0.5 * tan((data->playerfov * (floor(0.5 * data->mlx.winx) - data->i) / (data->mlx.winx - 1))/RAD) / tan((0.5 * data->mlx.winx)/RAD))*30, 0);		
+		}
+		else
+		{
+			ft_color_colone(data, data->i, data->lengthback, data->pcofwall);
+			// ft_draw(data, data->i, data->lengthback*60, 0x0000ff);
+		}
+		// ft_draw(data, data->i, data->anglec*30, 0xff0000);
+		
+		// ft_draw(data, data->i, (-4/450*data->lengthback+1)*60, 0xff00ff);
+		data->i++;
+	}
 	ft_ray_pt4(data);
 	return (0);
 }

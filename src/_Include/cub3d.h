@@ -6,7 +6,7 @@
 /*   By: nicolasgriveau <nicolasgriveau@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 14:23:20 by ngriveau          #+#    #+#             */
-/*   Updated: 2023/06/07 15:48:40 by nicolasgriv      ###   ########.fr       */
+/*   Updated: 2023/06/08 20:45:41 by nicolasgriv      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@
 # include <math.h>
 # include "../../lib/minilibx-linux/mlx.h"
 
-# define WINX 900
+# define WINX 1100
 # define WINY 650
 # define FOV 90
 # define MINI_MAP_COLOR_WALL 0x990000
