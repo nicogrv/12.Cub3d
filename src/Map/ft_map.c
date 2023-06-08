@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_map.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ngriveau <ngriveau@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nicolasgriveau <nicolasgriveau@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 14:23:20 by ngriveau          #+#    #+#             */
-/*   Updated: 2023/05/30 11:24:44 by ngriveau         ###   ########.fr       */
+/*   Updated: 2023/06/09 01:18:29 by nicolasgriv      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ int	ft_map_pt2(t_data *data, int *y, int x, int fd)
 	line = get_next_line(fd);
 	if (!line)
 		return (ft_free_map(data, *y +1), 1);
+	printf("line = %s", line);
 	while (line[x])
 	{
 		if (line[x] == ' ' || line[x] == '0' || line[x] == '1' || \
@@ -50,7 +51,7 @@ int	ft_map_pt2(t_data *data, int *y, int x, int fd)
 		else if (line[x] == '\n')
 			break ;
 		else
-			return (free(line), printf(RED"Error in map\n"NC));
+			return (free(line), printf(RED"Error in map (%s)%d\n"NC, line, x));
 		x++;
 	}
 	free(line);
