@@ -6,7 +6,7 @@
 /*   By: nicolasgriveau <nicolasgriveau@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 14:23:20 by ngriveau          #+#    #+#             */
-/*   Updated: 2023/06/08 15:48:17 by nicolasgriv      ###   ########.fr       */
+/*   Updated: 2023/06/08 17:53:26 by nicolasgriv      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,8 @@ void	ft_key_2(int keycode, t_data *data)
 		data->playerr += 360;
 	if (360 < data->playerr)
 		data->playerr -= 360;
-	if (data->playerfov < 30)
-		data->playerfov = 30;
+	if (data->playerfov < 0)
+		data->playerfov = 0;
 	if (180 < data->playerfov)
 		data->playerfov = 180;
 	if (keycode == ESC || keycode == -16779872)

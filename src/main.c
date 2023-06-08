@@ -6,7 +6,7 @@
 /*   By: nicolasgriveau <nicolasgriveau@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 14:23:20 by ngriveau          #+#    #+#             */
-/*   Updated: 2023/06/08 16:26:51 by nicolasgriv      ###   ########.fr       */
+/*   Updated: 2023/06/08 17:57:55 by nicolasgriv      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	main(int c, char **av)
 	free(data.west.path);
 	free(data.east.path);
 	ft_init_minimap(&data);
-	data.playerr = 45;
+	data.playerr = 15;
 	// data.playery = 8;
 	// data.playerx = 27.1;
 	data.switchcast = 1;

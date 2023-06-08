@@ -6,7 +6,7 @@
 /*   By: nicolasgriveau <nicolasgriveau@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 14:23:20 by ngriveau          #+#    #+#             */
-/*   Updated: 2023/06/08 16:42:51 by nicolasgriv      ###   ########.fr       */
+/*   Updated: 2023/06/08 18:29:09 by nicolasgriv      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,9 +67,9 @@ void ft_cube_2d(int mapx, int mapy, t_data *data, int id, int size)
 			if (id == -1)
 				ft_draw(data, x, y, 0);
 			if (id == 0)
-				ft_draw(data, x, y, 0x00ff00);
+				ft_draw(data, x, y, 0x009900);
 			if (id == 1)
-				ft_draw(data, x, y, 0xff0000);
+				ft_draw(data, x, y, 0x990000);
 			x++;
 		}
 		x = mapx*size;
@@ -118,29 +118,35 @@ void ft_draw_map(t_data *data)
 	ft_draw(data, (data->playerx ) * size, (data->playery ) * size - 1, MINI_MAP_COLOR_PLAYER);
 	ft_draw(data, (data->playerx ) * size, (data->playery ) * size + 1, MINI_MAP_COLOR_PLAYER);
 	int i = 0;
-
-	float posx = (data->playerx ) * size;
-	float posy = (data->playery ) * size;
+	// data->playerfov = 0;
+	data->playerfov = 90;
+	float posx = (data->playerx );
+	float posy = (data->playery );
 	float angle = data->playerr - data->playerfov/2;
 	float iangle = (float)data->playerfov / (float)data->mlx.winx;
-	while (i < data->mlx.winx)
+	// float hyv;
+	// float hyh;
+	while (i < data->mlx.winx * 1 + 1)
 	{
 		data->anglec = cos(angle/RAD); 
-		data->angles = -sin(angle/RAD); 
-		posx = (data->playerx) * size;
-		posy = (data->playery) * size;
-		
+		data->angles = -sin(angle/RAD);
+		posx = (data->playerx);
+		posy = (data->playery);
 		while (1)
 		{
-			ft_draw(data, posx, posy, 0x5555ff);
-			if (data->map[(int)posy/size][(int)posx/size] == 1)
+			ft_draw(data, posx, posy, 0x0000ff);
+			if (data->map[(int)(posy)][(int)(posx)] == 1)
 				break ;
-			posx += 1 * data->anglec;
-			posy += 1 * data->angles;
+			posx += 0.0001 * data->anglec;
+			posy += 0.0001 * data->angles;
 			// printf("x = %f\ty = %f\n", x, y);
-		}	
+		}
+		printf("(%.2f)(%.2f)posx = %f\tposy = %f\n(%f)", data->playerx, data->playery, posx, posy, sqrt(pow(fabs(data->playerx - posx), 2) + pow(fabs(data->playery - posy), 2)));
+		data->face = 1;
+		// data->lenwall = 2;
 		i++;
 		angle += iangle;
+		ft_color_colone(data, i, sqrt(pow(fabs(data->playerx - posx), 2) + pow(fabs(data->playery - posy), 2)), 46);
 	}
 	mlx_put_image_to_window(data->mlx.mlx, data->mlx.mlx_win, data->mlx.i, 0, 0);
 }
