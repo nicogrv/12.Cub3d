@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_atoiplus.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ngriveau <ngriveau@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nicolasgriveau <nicolasgriveau@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 13:21:17 by ngriveau          #+#    #+#             */
-/*   Updated: 2023/05/30 11:15:00 by ngriveau         ###   ########.fr       */
+/*   Updated: 2023/06/09 00:06:29 by nicolasgriv      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ int	ft_atoiplus_pt2(char *str, int i, long nb, int signe)
 	if (str[i] == '\0' && 0 <= (nb * signe)
 		&& (nb * signe) <= 255 && (i - index) < 15)
 		return (nb * signe);
-	printf("atoi = %s\n", str);
 	return (-1);
 }
 

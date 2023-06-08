@@ -6,7 +6,7 @@
 /*   By: nicolasgriveau <nicolasgriveau@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 14:23:20 by ngriveau          #+#    #+#             */
-/*   Updated: 2023/06/06 23:31:06 by nicolasgriv      ###   ########.fr       */
+/*   Updated: 2023/06/08 23:33:53 by nicolasgriv      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ void	ft_key_2(int keycode, t_data *data)
 	// data->playerr = 90;
 	// data->playery = 6.7;
 	// data->playerx = 20.6;
-	// printf("x = %f, y = %f\n", data->playerx, data->playery);
+	printf("x = %f, y = %f\n", data->playerx, data->playery);
 	ft_key_3(keycode, data);
 }
 
@@ -91,8 +91,6 @@ int	ft_key(int keycode, t_data *data)
 	else if (keycode == TOUCH_RIGHTARROW)
 			data->playerr += 15;
 	ft_key_2(keycode, data);
-	if (keycode == TOUCH_I)
-		data->switchcast *= -1;
 	// mlx_destroy_image(data->mlx.mlx, data->mlx.i);
 	// data->mlx.i = mlx_new_image(data->mlx.mlx, data->mlx.winx, data->mlx.winy);
 	ft_ray(data);

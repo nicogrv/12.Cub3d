@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_init.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nicolasgriveau <nicolasgriveau@student.    +#+  +:+       +#+        */
+/*   By: ngriveau <ngriveau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 14:23:20 by ngriveau          #+#    #+#             */
-/*   Updated: 2023/06/06 16:08:44 by nicolasgriv      ###   ########.fr       */
+/*   Updated: 2023/05/31 19:03:54 by ngriveau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

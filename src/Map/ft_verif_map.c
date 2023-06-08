@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_verif_map.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ngriveau <ngriveau@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nicolasgriveau <nicolasgriveau@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 14:23:20 by ngriveau          #+#    #+#             */
-/*   Updated: 2023/05/30 11:24:46 by ngriveau         ###   ########.fr       */
+/*   Updated: 2023/06/09 00:09:59 by nicolasgriv      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	ft_verif_ok_map_pt3(t_data *data)
 		data->playerr = 270;
 	if (data->map[data->y][data->x] == 5)
 		data->playerr = 0;
-	printf(LIGHTPURPLE"P"NC);
+	printf(LIGHTPURPLE"■"NC);
 	data->map[data->y][data->x] = 0;
 	data->nbrpl++;
 }
@@ -32,9 +32,9 @@ void	ft_verif_ok_map_pt3(t_data *data)
 void	ft_verif_ok_map_pt2(t_data *data)
 {
 	if (data->map[data->y][data->x] == 1)
-		printf(LIGHTRED"%d"NC, data->map[data->y][data->x]);
+		printf(LIGHTRED"■"NC);
 	else if (data->map[data->y][data->x] == 0)
-		printf(LIGHTGREEN"%d"NC, data->map[data->y][data->x]);
+		printf(LIGHTGREEN"■"NC);
 	else if (data->map[data->y][data->x] == 7)
 		printf(" ");
 	if (is_player(data->map[data->y][data->x]))
