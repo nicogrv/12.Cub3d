@@ -6,7 +6,7 @@
 /*   By: nicolasgriveau <nicolasgriveau@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 14:23:20 by ngriveau          #+#    #+#             */
-/*   Updated: 2023/06/06 16:09:04 by nicolasgriv      ###   ########.fr       */
+/*   Updated: 2023/06/06 23:31:06 by nicolasgriv      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,8 @@ int	ft_key(int keycode, t_data *data)
 	else if (keycode == TOUCH_RIGHTARROW)
 			data->playerr += 15;
 	ft_key_2(keycode, data);
+	if (keycode == TOUCH_I)
+		data->switchcast *= -1;
 	// mlx_destroy_image(data->mlx.mlx, data->mlx.i);
 	// data->mlx.i = mlx_new_image(data->mlx.mlx, data->mlx.winx, data->mlx.winy);
 	ft_ray(data);

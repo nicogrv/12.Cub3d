@@ -6,7 +6,7 @@
 /*   By: nicolasgriveau <nicolasgriveau@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 14:23:20 by ngriveau          #+#    #+#             */
-/*   Updated: 2023/06/06 19:21:10 by nicolasgriv      ###   ########.fr       */
+/*   Updated: 2023/06/08 14:18:04 by nicolasgriv      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,7 @@ void	ft_ray_pt4(t_data *data)
 {
 	mlx_put_image_to_window(data->mlx.mlx, data->mlx.mlx_win, \
 		data->mlx.i, 0, 0);
-	// mlx_put_image_to_window(data->mlx.mlx, data->mlx.mlx_win, \
-	// 	data->mini.i, 5, 5);
+	// mlx_put_image_to_window(data->mlx.mlx, data->mlx.mlx_win, data->mini.i, 5, 5);
 	mlx_pixel_put(data->mlx.mlx, data->mlx.mlx_win, \
 		(int)((data->playerx + 1) * 5), (int)((data->playery +1) * 5), \
 			MINI_MAP_COLOR_PLAYER);
@@ -65,27 +64,20 @@ void	ft_ray_pt4(t_data *data)
 
 void ft_fish_eye(t_data *data)
 {
-	float angle;
-	// float x;
-	// float y;
-	// float py;
-	
+	data->anglec = 1;
+	data->angles = 1;
 	printf("%f,", data->length);
 	// printf("x = %f y = %f|x = %f y = %f", data->pleayerx, data->playery, data->posx, data->posy);
-	// if (89.9 < data->ax && data->ax < 90.0)
-	// if (0 <= data->ax && data->ax < 90)
+	data->lengthback = data->length;
 	{
 		// printf("data->playerr = %.2f data->ax = %.2f\n", data->playerr,data->ax);
-		if (data->ax <= data->playerr)
+		// if (0 <= data->ax && data->ax < 45)
+		data->anglec = (cos(((data->ax - data->playerr)) / RAD));
+		data->length = data->length * (data->anglec);
+		// else
 		{
-			angle = cos(((data->playerr - data->ax) / RAD)); 
-			data->length = data->length * (angle);
-
-		}
-		else
-		{
-			angle = cos((data->ax - data->playerr) / RAD);
-			data->length = data->length * (angle);
+			// angle = cos((data->ax) / RAD);
+			// data->length = data->length * (angle);
 
 		}
 	printf("%f\n", data->length);
@@ -99,7 +91,7 @@ int	ft_ray(t_data *data)
 	while (data->i < (float)data->mlx.winx)
 	{
 		ft_ray_pt2(data);
-		printf("ax = %f\tleght = %f\n", data->ax, data->length);
+		// printf("ax = %f\tleght = %f\n", data->ax, data->length);
 		while (1)
 		{
 			if (0 <= data->ax && data->ax < 90)
@@ -114,9 +106,18 @@ int	ft_ray(t_data *data)
 				break ;
 		}
 		ft_fish_eye(data);
-		ft_color_colone(data, data->i, data->length, data->pcofwall);
-		ft_draw(data, data->i, data->length*10, 0xff0000);
-		ft_draw(data, data->i, data->length*10, 0xff0000);
+		if (data->switchcast == 1)
+		{
+			ft_color_colone(data, data->i, data->length, data->pcofwall);
+			ft_draw(data, data->i, data->length*30, 0xff00ff);
+		}
+		else
+		{
+			ft_color_colone(data, data->i, data->lengthback, data->pcofwall);
+			ft_draw(data, data->i, data->lengthback*60, 0x0000ff);
+		}
+		ft_draw(data, data->i, data->anglec*30, 0xff0000);
+		// ft_draw(data, data->i, (-4/450*data->lengthback+1)*60, 0xff00ff);
 		data->i++;
 	}
 	ft_ray_pt4(data);

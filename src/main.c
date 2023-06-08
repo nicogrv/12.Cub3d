@@ -6,7 +6,7 @@
 /*   By: nicolasgriveau <nicolasgriveau@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 14:23:20 by ngriveau          #+#    #+#             */
-/*   Updated: 2023/06/06 18:49:49 by nicolasgriv      ###   ########.fr       */
+/*   Updated: 2023/06/07 15:17:47 by nicolasgriv      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ int	main(int c, char **av)
 	data.playerr = 45;
 	data.playery = 6.6;
 	data.playerx = 26.4;
+	data.switchcast = 1;
 	// data.playerr = 90;
 	// data.playery = 6.4;
 	// data.playerx = 24.6;
