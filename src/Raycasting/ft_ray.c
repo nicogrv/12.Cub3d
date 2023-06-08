@@ -6,7 +6,7 @@
 /*   By: nicolasgriveau <nicolasgriveau@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 14:23:20 by ngriveau          #+#    #+#             */
-/*   Updated: 2023/06/08 14:58:05 by nicolasgriv      ###   ########.fr       */
+/*   Updated: 2023/06/08 16:42:51 by nicolasgriv      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,6 @@ void	ft_ray_pt2(t_data *data)
 	data->length = 0;
 	data->ax = data->playerfov / (float)data->mlx.winx * data->i + \
 			data->playerr - 45;
-	data->anglec = cos(data->playerr/RAD);
-	data->angles = sin(data->playerr/RAD);
-	printf("p = %f\tc = %f\ts = %f\n", data->playerr, data->anglec, data->angles);
 	if (360 <= data->ax)
 		data->ax -= 360;
 	else if (data->ax < 0)
@@ -55,34 +52,10 @@ void	ft_ray_pt4(t_data *data)
 	mlx_pixel_put(data->mlx.mlx, data->mlx.mlx_win, (int)((data->playerx + 1) * 5), (int)((data->playery +1) * 5) + 1, MINI_MAP_COLOR_PLAYER);
 }
 
-void ft_fish_eye(t_data *data)
+
+
+void ft_cube_2d(int mapx, int mapy, t_data *data, int id, int size)
 {
-	data->anglec = 1;
-	data->angles = 1;
-	printf("%f,", data->length);
-	// printf("x = %f y = %f|x = %f y = %f", data->pleayerx, data->playery, data->posx, data->posy);
-	data->lengthback = data->length;
-	{
-		// printf("data->playerr = %.2f data->ax = %.2f\n", data->playerr,data->ax);
-		// if (0 <= data->ax && data->ax < 45)
-		data->anglec = (cos(((data->ax - data->playerr)) / RAD));
-		data->length = data->length * (data->anglec);
-		// else
-		{
-			// angle = cos((data->ax) / RAD);
-			// data->length = data->length * (angle);
-
-		}
-	printf("%f\n", data->length);
-		
-	}
-}
-
-
-
-void ft_cube_2d(int mapx, int mapy, t_data *data, int id)
-{
-	int size = 20;
 	int x = mapx*size;
 	int y = mapy*size;
 
@@ -91,21 +64,22 @@ void ft_cube_2d(int mapx, int mapy, t_data *data, int id)
 		while (x < mapx*size+size)
 		{
 			// printf("\t\tx = %d\t y %d\n", x, y);
+			if (id == -1)
+				ft_draw(data, x, y, 0);
 			if (id == 0)
-				ft_draw(data, x, y, 0x00aa00);
+				ft_draw(data, x, y, 0x00ff00);
 			if (id == 1)
-				ft_draw(data, x, y, 0xaa0000);
+				ft_draw(data, x, y, 0xff0000);
 			x++;
 		}
 		x = mapx*size;
 		y++;
 	}
-	
-
 }
 
 void ft_draw_map(t_data *data)
 {
+	int size = 80;
 	int x = 0;
 	int y = 0;
 	while (y < data->mapy)
@@ -113,50 +87,72 @@ void ft_draw_map(t_data *data)
 		while (x < data->mapx)
 		{
 			if (data->map[y][x] == 0)
-				ft_cube_2d(x+1, y+1, data, 0);
-			if (data->map[y][x] == 1)
-				ft_cube_2d(x+1, y+1, data, 1);
+				ft_cube_2d(x, y, data, 0, size);
+			else if (data->map[y][x] == 1)
+				ft_cube_2d(x, y, data, 1, size);
+			else
+				ft_cube_2d(x, y, data, -1, size);
 			x++;
 		}
 		x = 0;
 		y++;
 	}
-	ft_draw(data, (int)((data->playerx + 1) * 20), (int)((data->playery +1) * 20), MINI_MAP_COLOR_PLAYER);
-	ft_draw(data, (int)((data->playerx + 1) * 20) - 1, (int)((data->playery +1) * 20), MINI_MAP_COLOR_PLAYER);
-	ft_draw(data, (int)((data->playerx + 1) * 20) + 1, (int)((data->playery +1) * 20), MINI_MAP_COLOR_PLAYER);
-	ft_draw(data, (int)((data->playerx + 1) * 20), (int)((data->playery +1) * 20) - 1, MINI_MAP_COLOR_PLAYER);
-	ft_draw(data, (int)((data->playerx + 1) * 20), (int)((data->playery +1) * 20) + 1, MINI_MAP_COLOR_PLAYER);
+	x = 0;
+	y = 0;
+	while(y < data->mlx.winy)
+	{
+		while (x < data->mlx.winx)
+		{
+			if (x % size == 0)
+				ft_draw(data, x, y, 0);
+			if (y % size == 0)
+				ft_draw(data, x, y, 0);
+			x++;
+		}
+		x = 0;
+		y++;
+	}
+	ft_draw(data, (data->playerx ) * size, (data->playery ) * size, MINI_MAP_COLOR_PLAYER);
+	ft_draw(data, (data->playerx ) * size - 1, (data->playery ) * size, MINI_MAP_COLOR_PLAYER);
+	ft_draw(data, (data->playerx ) * size + 1, (data->playery ) * size, MINI_MAP_COLOR_PLAYER);
+	ft_draw(data, (data->playerx ) * size, (data->playery ) * size - 1, MINI_MAP_COLOR_PLAYER);
+	ft_draw(data, (data->playerx ) * size, (data->playery ) * size + 1, MINI_MAP_COLOR_PLAYER);
+	int i = 0;
+
+	float posx = (data->playerx ) * size;
+	float posy = (data->playery ) * size;
+	float angle = data->playerr - data->playerfov/2;
+	float iangle = (float)data->playerfov / (float)data->mlx.winx;
+	while (i < data->mlx.winx)
+	{
+		data->anglec = cos(angle/RAD); 
+		data->angles = -sin(angle/RAD); 
+		posx = (data->playerx) * size;
+		posy = (data->playery) * size;
+		
+		while (1)
+		{
+			ft_draw(data, posx, posy, 0x5555ff);
+			if (data->map[(int)posy/size][(int)posx/size] == 1)
+				break ;
+			posx += 1 * data->anglec;
+			posy += 1 * data->angles;
+			// printf("x = %f\ty = %f\n", x, y);
+		}	
+		i++;
+		angle += iangle;
+	}
 	mlx_put_image_to_window(data->mlx.mlx, data->mlx.mlx_win, data->mlx.i, 0, 0);
 }
 
 int	ft_ray(t_data *data)
 {
 	data->i = 0;
+	data->anglec = cos(data->playerr/RAD);
+	data->angles = -sin(data->playerr/RAD);
+	printf("x = %.3f y = %.3f p = %.0f c = %.2f s = %.2f\n", data->playerx, data->playery, data->playerr, data->anglec, data->angles);
 	ft_draw_map(data);
-	while (data->i < (float)data->mlx.winx)
-	{
-		
-		ft_ray_pt2(data);
-		// printf("ax = %f\tleght = %f\n", data->ax, data->length);
-		while (1)
-		{
-			return (0);
-		}
-		ft_fish_eye(data);
-		// if (data->switchcast == 1)
-		// {
-		// 	ft_color_colone(data, data->i, data->length, data->pcofwall);
-		// 	ft_draw(data, data->i, data->length*30, 0xff00ff);
-		// }
-		// else
-		// {
-		// 	ft_color_colone(data, data->i, data->lengthback, data->pcofwall);
-		// 	ft_draw(data, data->i, data->lengthback*60, 0x0000ff);
-		// }
-		ft_draw(data, data->i, data->anglec*30, 0xff0000);
-		// ft_draw(data, data->i, (-4/450*data->lengthback+1)*60, 0xff00ff);
-		data->i++;
-	}
+	return (0);
 	ft_ray_pt4(data);
 	return (0);
 }

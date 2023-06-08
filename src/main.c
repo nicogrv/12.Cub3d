@@ -6,7 +6,7 @@
 /*   By: nicolasgriveau <nicolasgriveau@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 14:23:20 by ngriveau          #+#    #+#             */
-/*   Updated: 2023/06/07 15:17:47 by nicolasgriv      ###   ########.fr       */
+/*   Updated: 2023/06/08 16:26:51 by nicolasgriv      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,14 @@ int	main(int c, char **av)
 	free(data.east.path);
 	ft_init_minimap(&data);
 	data.playerr = 45;
-	data.playery = 6.6;
-	data.playerx = 26.4;
+	// data.playery = 8;
+	// data.playerx = 27.1;
 	data.switchcast = 1;
 	// data.playerr = 90;
 	// data.playery = 6.4;
 	// data.playerx = 24.6;
+	data.anglec = cos(data.playerr/RAD);
+	data.angles = sin(data.playerr/RAD);
 	ft_ray(&data);
 	mlx_hook(data.mlx.mlx_win, 2, 1L << 0, &ft_key, &data);
 	mlx_hook(data.mlx.mlx_win, 17, 1L << 0, &ft_cross_close, &data);
