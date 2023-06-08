@@ -6,7 +6,7 @@
 /*   By: nicolasgriveau <nicolasgriveau@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 14:23:20 by ngriveau          #+#    #+#             */
-/*   Updated: 2023/06/09 00:03:34 by nicolasgriv      ###   ########.fr       */
+/*   Updated: 2023/06/09 00:46:20 by nicolasgriv      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@
 # include <math.h>
 # include "../../lib/minilibx-linux/mlx.h"
 
-# define WINX 1100
+# define WINX 1500
 # define WINY 600
 # define FOV 90
 # define MINI_MAP_COLOR_WALL 0x990000
@@ -175,6 +175,7 @@ typedef struct s_data
 	int			face;
 	int			pcofwall;
 	float		nbr_column;
+	// float		last_nbr_column;
 
 }	t_data;
 

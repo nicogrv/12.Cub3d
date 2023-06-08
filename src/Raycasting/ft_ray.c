@@ -6,7 +6,7 @@
 /*   By: nicolasgriveau <nicolasgriveau@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 14:23:20 by ngriveau          #+#    #+#             */
-/*   Updated: 2023/06/09 00:00:38 by nicolasgriv      ###   ########.fr       */
+/*   Updated: 2023/06/09 00:50:28 by nicolasgriv      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ void	ft_ray_pt2(t_data *data)
 		data->ax -= 360;
 	else if (data->ax < 0)
 		data->ax += 360;
+	if (360 <= data->ax)
+		data->ax -= 360;
 }
 
 int	ft_ray_pt3(t_data *data)
@@ -71,14 +73,12 @@ void ft_fish_eye(t_data *data)
 
 	data->length = data->length * cos((data->playerr - data->ax) / RAD);
 	pos = 0.5 * tan((data->playerr - data->ax)/RAD) / tan((0.5 * data->playerfov)/RAD);
-	// data->nbr_column = data->i;
 	data->nbr_column = round(data->mlx.winx * (0.5 - pos));
-	// printf("pos = %f\t%f\n", pos, data->nbr_column);
+	
 }
 
 int	ft_ray(t_data *data)
 {
-	static float before = 0;
 	data->i = 0;
 	while (data->i < (float)data->mlx.winx)
 	{
@@ -97,8 +97,7 @@ int	ft_ray(t_data *data)
 				break ;
 		}
 		ft_fish_eye(data);
-		if ((int)before + 1 != (int)data->nbr_column)
-			ft_color_colone(data, data->nbr_column-1, data->length, data->pcofwall);	
+		ft_color_colone(data, data->nbr_column-1, data->length, data->pcofwall);	
 		ft_color_colone(data, data->nbr_column, data->length, data->pcofwall);
 		data->i++;
 	}
