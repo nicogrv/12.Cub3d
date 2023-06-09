@@ -75,7 +75,7 @@ CC = cc
 
 CFLAGS = -Wall -Werror -Wextra -g
 CFLAGS_LINUX = -Wall -Werror -Wextra -lmlx -lm -lXext -MMD -lX11 -I ./lib/minilibx-linux -L ./lib/minilibx-linux -D OS=0
-FLAGSMACOS = -lmlx -framework OpenGL -framework AppKit -MMD -I ./lib/minilibx_macos -L ./lib/minilibx_macos -D OS=1
+FLAGSMACOS = -g3 -fsanitize=address -lmlx -framework OpenGL -framework AppKit -MMD -I ./lib/minilibx_macos -L ./lib/minilibx_macos -D OS=1
 
 
 
@@ -117,7 +117,8 @@ ${OBJS_LINUX}: ${OBJS_PATH_LINUX}/%.o: %.c Makefile ./src/_Include/cub3d.h
 
 clean:
 	@	echo -ne "\r\033[2K" $(YELLOW) "Cleaning\n\n"$(NC)
-	@	rm -rf ${OBJS_PATH}
+	@	rm -rf ${OBJS_PATH_LINUX}
+	@	rm -rf ${OBJS_PATH_MACOS}
 
 
 fclean: clean

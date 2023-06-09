@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_init.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ngriveau <ngriveau@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nicolasgriveau <nicolasgriveau@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 14:23:20 by ngriveau          #+#    #+#             */
-/*   Updated: 2023/05/31 19:03:54 by ngriveau         ###   ########.fr       */
+/*   Updated: 2023/06/09 11:43:59 by nicolasgriv      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ void	ft_initmlx(t_data *data)
 	data->mlx.i = mlx_new_image(data->mlx.mlx, data->mlx.winx, data->mlx.winy);
 	data->mlx.data = mlx_get_data_addr(data->mlx.i, &data->mlx.p, \
 			&data->mlx.size, &data->mlx.e);
+	fprintf(stderr, "file = %s\n", data->north.path);
 	data->north.tex = mlx_xpm_file_to_image(data->mlx.mlx, data->north.path, \
 			&data->north.width, &data->north.height);
 	data->north.img.data = mlx_get_data_addr(data->north.tex, \

@@ -6,7 +6,7 @@
 /*   By: nicolasgriveau <nicolasgriveau@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 14:23:20 by ngriveau          #+#    #+#             */
-/*   Updated: 2023/06/09 01:19:11 by nicolasgriv      ###   ########.fr       */
+/*   Updated: 2023/06/09 11:52:06 by nicolasgriv      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -175,7 +175,7 @@ typedef struct s_data
 	int			face;
 	int			pcofwall;
 	float		nbr_column;
-	// float		last_nbr_column;
+	
 
 }	t_data;
 
