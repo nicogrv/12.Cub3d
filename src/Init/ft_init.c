@@ -6,7 +6,7 @@
 /*   By: nicolasgriveau <nicolasgriveau@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 14:23:20 by ngriveau          #+#    #+#             */
-/*   Updated: 2023/06/09 11:43:59 by nicolasgriv      ###   ########.fr       */
+/*   Updated: 2023/06/09 17:45:28 by nicolasgriv      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,8 @@ void	ft_init_2(t_data *data)
 	data->mlx.winx = WINX;
 	data->mlx.winy = WINY;
 	data->playerfov = FOV;
-	data->lenwall = (WINY / 100) * 2;
+	data->lenwall = (WINX / 100) * 2;
+	data->minimap_size = MINI_MAP_SIZE;
 }
 
 void	ft_initmlx(t_data *data)
@@ -56,7 +57,6 @@ void	ft_initmlx(t_data *data)
 	data->mlx.i = mlx_new_image(data->mlx.mlx, data->mlx.winx, data->mlx.winy);
 	data->mlx.data = mlx_get_data_addr(data->mlx.i, &data->mlx.p, \
 			&data->mlx.size, &data->mlx.e);
-	fprintf(stderr, "file = %s\n", data->north.path);
 	data->north.tex = mlx_xpm_file_to_image(data->mlx.mlx, data->north.path, \
 			&data->north.width, &data->north.height);
 	data->north.img.data = mlx_get_data_addr(data->north.tex, \
@@ -73,7 +73,7 @@ void	ft_initmlx(t_data *data)
 			&data->west.width, &data->west.height);
 	data->west.img.data = mlx_get_data_addr(data->west.tex, \
 			&data->west.img.p, &data->west.img.size, &data->west.img.e);
-	data->mini.i = mlx_new_image(data->mlx.mlx, data->mapx * 5, data->mapy * 5);
+	data->mini.i = mlx_new_image(data->mlx.mlx, data->mapx * data->minimap_size, data->mapy * data->minimap_size);
 	data->mini.img.data = mlx_get_data_addr(data->mini.i, &data->mini.img.p, \
 			&data->mini.img.size, &data->mini.img.e);
 }
@@ -113,10 +113,10 @@ void	ft_init_minimap(t_data *data)
 	int	y;
 
 	y = 0;
-	while (y < data->mapy * 5)
+	while (y < data->mapy * data->minimap_size)
 	{
 		x = 0;
-		while (x < data->mapx * 5)
+		while (x < data->mapx * data->minimap_size)
 		{
 			ft_draw_mini(data, x, y, data->sky.color);
 			x++;

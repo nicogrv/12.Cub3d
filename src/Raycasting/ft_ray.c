@@ -6,7 +6,7 @@
 /*   By: nicolasgriveau <nicolasgriveau@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 14:23:20 by ngriveau          #+#    #+#             */
-/*   Updated: 2023/06/09 00:50:28 by nicolasgriv      ###   ########.fr       */
+/*   Updated: 2023/06/09 17:44:59 by nicolasgriv      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,12 +33,19 @@ int	ft_ray_pt3(t_data *data)
 {
 	data->posx += data->decalx;
 	data->posy += data->decaly;
-	ft_draw_mini(data, (int)((data->posx) * 5), (int)((data->posy) * 5), \
-		MINI_MAP_COLOR_WALL);
+	if (0.97 <= data->posx - (int)data->posx)
+		ft_draw_mini(data, ((int)(data->posx+1)) * data->minimap_size, (int)((data->posy) * data->minimap_size), MINI_MAP_COLOR_VOID);
+	else
+	{
+		if (0.97 <= data->posy - (int)data->posy)
+			ft_draw_mini(data, (int)((data->posx) * data->minimap_size), ((int)(data->posy+1)) * data->minimap_size, MINI_MAP_COLOR_VOID);
+		else
+			ft_draw_mini(data, (int)((data->posx) * data->minimap_size), (int)((data->posy) * data->minimap_size), MINI_MAP_COLOR_VOID);
+	}
 	if (data->map[((int)floor(data->posy))][((int)floor(data->posx))] == 1)
 	{
-		ft_draw_mini(data, (int)((data->posx) * 5), (int)((data->posy) * 5), \
-			MINI_MAP_COLOR_VOID);
+		ft_draw_mini(data, (int)((data->posx) * data->minimap_size), (int)((data->posy) * data->minimap_size), \
+			MINI_MAP_COLOR_WALL);
 		return (1);
 	}
 	return (0);
@@ -49,21 +56,21 @@ void	ft_ray_pt4(t_data *data)
 	mlx_put_image_to_window(data->mlx.mlx, data->mlx.mlx_win, \
 		data->mlx.i, 0, 0);
 	mlx_put_image_to_window(data->mlx.mlx, data->mlx.mlx_win, \
-		data->mini.i, 5, 5);
+		data->mini.i, 0, 0);
 	mlx_pixel_put(data->mlx.mlx, data->mlx.mlx_win, \
-		(int)((data->playerx + 1) * 5), (int)((data->playery +1) * 5), \
+		(int)(data->playerx * data->minimap_size), (int)(data->playery * data->minimap_size), \
 			MINI_MAP_COLOR_PLAYER);
 	mlx_pixel_put(data->mlx.mlx, data->mlx.mlx_win, \
-		(int)((data->playerx + 1) * 5) - 1, (int)((data->playery +1) * 5), \
+		(int)(data->playerx * data->minimap_size) - 1, (int)(data->playery * data->minimap_size), \
 			MINI_MAP_COLOR_PLAYER);
 	mlx_pixel_put(data->mlx.mlx, data->mlx.mlx_win, \
-		(int)((data->playerx + 1) * 5) + 1, (int)((data->playery +1) * 5), \
+		(int)(data->playerx * data->minimap_size) + 1, (int)(data->playery * data->minimap_size), \
 			MINI_MAP_COLOR_PLAYER);
 	mlx_pixel_put(data->mlx.mlx, data->mlx.mlx_win, \
-		(int)((data->playerx + 1) * 5), (int)((data->playery +1) * 5) - 1, \
+		(int)(data->playerx * data->minimap_size), (int)(data->playery * data->minimap_size) - 1, \
 			MINI_MAP_COLOR_PLAYER);
 	mlx_pixel_put(data->mlx.mlx, data->mlx.mlx_win, \
-		(int)((data->playerx + 1) * 5), (int)((data->playery +1) * 5) + 1, \
+		(int)(data->playerx * data->minimap_size), (int)(data->playery * data->minimap_size) + 1, \
 			MINI_MAP_COLOR_PLAYER);
 }
 
