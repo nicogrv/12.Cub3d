@@ -74,8 +74,8 @@ NAME = cub3d
 CC = cc
 
 CFLAGS = -Wall -Werror -Wextra -g
-CFLAGS_LINUX = -Wall -Werror -Wextra -lmlx -lm -lXext -MMD -lX11 -I ./lib/minilibx-linux -L ./lib/minilibx-linux -D OS=0
-FLAGSMACOS = -g3 -fsanitize=address -lmlx -framework OpenGL -framework AppKit -MMD -I ./lib/minilibx_macos -L ./lib/minilibx_macos -D OS=1
+CFLAGS_LINUX = -Wall -Werror -Wextra -lmlx -lm -lXext -MMD -lX11 -I ./lib/minilibx-linux -L ./lib/minilibx-linux
+FLAGSMACOS = -g3 -fsanitize=address -lmlx -framework OpenGL -framework AppKit -MMD -I ./lib/minilibx_macos -L ./lib/minilibx_macos
 
 
 
@@ -87,12 +87,12 @@ all:
 
 linux:  ${OBJS_LINUX}
 	@	$(MAKE) --no-print-directory -s -C ./lib/minilibx-linux/
-	@	${CC}  -o ${NAME} ${OBJS_LINUX} ${HEAD_PATH} ${CFLAGS_LINUX}
+	@	${CC}  -o ${NAME} ${OBJS_LINUX} ${HEAD_PATH} ${CFLAGS_LINUX} -D OS=0
 	@	echo -ne "\r\033[2K" $(LIGHTGREEN) "\t$(NAME) OK" "\033[0m" "\n"
 
 macos: ${OBJS_MACOS}
 	@	$(MAKE) --no-print-directory -s -C ./lib/minilibx_macos/
-	@	${CC}  -o ${NAME} ${OBJS_MACOS}  ${HEAD_PATH} ${FLAGSMACOS}
+	@	${CC} -o ${NAME} ${OBJS_MACOS}  ${HEAD_PATH} ${FLAGSMACOS} 
 	@	echo -ne "\r\033[2K" $(LIGHTGREEN) "\t$(NAME) OK" "\033[0m" "\n"
 
 run: all
@@ -106,13 +106,13 @@ valgrind: all
 ${OBJS_MACOS}: ${OBJS_PATH_MACOS}/%.o: %.c Makefile ./src/_Include/cub3d.h
 	@	mkdir -p ${OBJS_PATH_MACOS}
 	@	$(COLORCOMPIL)
-	@	${CC} ${CFLAGS} -c $< -o $@ ${HEAD_PATH}
+	@	${CC} -D OS=0 ${CFLAGS} -c $< -o $@ ${HEAD_PATH}
 
 
 ${OBJS_LINUX}: ${OBJS_PATH_LINUX}/%.o: %.c Makefile ./src/_Include/cub3d.h
 	@	mkdir -p ${OBJS_PATH_LINUX}
 	@	$(COLORCOMPIL)
-	@	${CC} ${CFLAGS} -c $< -o $@ ${HEAD_PATH}
+	@	${CC} -D OS=1 ${CFLAGS} -c $< -o $@ ${HEAD_PATH}
 
 
 clean:

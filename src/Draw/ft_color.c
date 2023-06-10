@@ -6,7 +6,7 @@
 /*   By: nicolasgriveau <nicolasgriveau@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 14:23:20 by ngriveau          #+#    #+#             */
-/*   Updated: 2023/06/10 23:20:56 by nicolasgriv      ###   ########.fr       */
+/*   Updated: 2023/06/10 23:22:06 by nicolasgriv      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,33 +43,32 @@ long long	ft_get_time(void)
 	return (tv.tv_usec + tv.tv_sec * 1000000);
 }
 
-void	ft_color_colone(t_data *data, int x, float len, int pcofwall)
+void	ft_color_colone(t_data *d, int x, float len, int pcofwall)
 {
 	int				wall;
 	static int		saveface;
 	static float	savelen = {0};
 	
-	data->y = 0;
+	d->y = 0;
 	if (pcofwall == 100)
 		pcofwall = 99;
 	if ((5 < pcofwall && pcofwall < 95) || (fabs(savelen - len) > 0.1))
-		saveface = data->face;
-	if ((fabs(savelen - len) < 0.4) && ((pcofwall <= 1 && (data->face == 4 || \
-data->face == 2)) || (pcofwall >= 98 && (data->face == 1 || data->face == 3))))
-		data->face = saveface;
-	wall = (data->mlx.winy / 2) + (10 / len) * data->lenwall - \
-		((data->mlx.winy / 2) - (10 / len) * data->lenwall);
-	if (data->mlx.winy < wall)
-		data->y = data->mlx.winy - wall;
-	while (data->y < (data->mlx.winy / 2) - (10 / len) * data->lenwall && 0 < (data->mlx.winy / 2) - (10 / len) * data->lenwall)
-		ft_draw(data, x, data->y++, data->sky.color);
-	data->nbrpl = (data->mlx.winy / 2) - (10 / len) * data->lenwall;
-	if (data->y < 0)
-		data->y = 0;
-	while (data->y < (data->mlx.winy / 2) + (10 / len) * data->lenwall && data->y < data->mlx.winy + 10)
-		ft_draw(data, x, data->y, ft_pixel_of_img(data, data->face, pcofwall, ((data->y - data->nbrpl) * 100 / wall)));
-	while (data->y < data->mlx.winy)
-		ft_draw(data, x, data->y++, data->floor.color);
+		saveface = d->face;
+	if ((fabs(savelen - len) < 0.4) && ((pcofwall <= 1 && (d->face == 4 || \
+d->face == 2)) || (pcofwall >= 98 && (d->face == 1 || d->face == 3))))
+		d->face = saveface;
+	wall = (d->mlx.winy / 2) + (10 / len) * d->lenwall - \
+		((d->mlx.winy / 2) - (10 / len) * d->lenwall);
+	if (d->mlx.winy < wall)
+		d->y = d->mlx.winy - wall;
+	while (d->y < (d->mlx.winy / 2) - (10 / len) * d->lenwall && 0 < (d->mlx.winy / 2) - (10 / len) * d->lenwall)
+		ft_draw(d, x, d->y++, d->sky.color);
+	d->nbrpl = (d->mlx.winy / 2) - (10 / len) * d->lenwall;
+	if (d->y < 0)
+		d->y = 0;
+	while (d->y < (d->mlx.winy / 2) + (10 / len) * d->lenwall && d->y < d->mlx.winy + 10)
+		ft_draw(d, x, d->y, ft_pixel_of_img(d, d->face, pcofwall, ((d->y - d->nbrpl) * 100 / wall)));
+	while (d->y < d->mlx.winy)
+		ft_draw(d, x, d->y++, d->floor.color);
 	savelen = len;
-
 }
