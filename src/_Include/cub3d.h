@@ -6,7 +6,7 @@
 /*   By: nicolasgriveau <nicolasgriveau@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 14:23:20 by ngriveau          #+#    #+#             */
-/*   Updated: 2023/06/09 17:46:29 by nicolasgriv      ###   ########.fr       */
+/*   Updated: 2023/06/09 17:48:35 by nicolasgriv      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,9 @@
 # include <sys/stat.h>
 # include <fcntl.h>
 # include <fcntl.h>
+# include <math.h>
 # include "get_next_line.h"
 # include "SuperLibft.h"
-# include <math.h>
 # include "../../lib/minilibx-linux/mlx.h"
 
 # define WINX 1000

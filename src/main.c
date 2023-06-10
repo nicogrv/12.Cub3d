@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ngriveau <ngriveau@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nicolasgriveau <nicolasgriveau@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 14:23:20 by ngriveau          #+#    #+#             */
-/*   Updated: 2023/05/31 18:50:38 by ngriveau         ###   ########.fr       */
+/*   Updated: 2023/06/10 12:53:24 by nicolasgriv      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,9 @@ int	main(int c, char **av)
 	free(data.west.path);
 	free(data.east.path);
 	ft_init_minimap(&data);
-	data.playerr = 60;
-	data.playery = 6.6;
-	data.playerx = 26.4;
+	data.playerr = 90;
+	data.playery = 15;
+	data.playerx = 27.99;
 	// data.playerr = 90;
 	// data.playery = 6.4;
 	// data.playerx = 24.6;
