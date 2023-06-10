@@ -6,7 +6,7 @@
 /*   By: nicolasgriveau <nicolasgriveau@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 14:23:20 by ngriveau          #+#    #+#             */
-/*   Updated: 2023/06/10 23:20:05 by nicolasgriv      ###   ########.fr       */
+/*   Updated: 2023/06/10 23:20:56 by nicolasgriv      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,9 +48,7 @@ void	ft_color_colone(t_data *data, int x, float len, int pcofwall)
 	int				wall;
 	static int		saveface;
 	static float	savelen = {0};
-	long long		time;
 	
-	time = ft_get_time();
 	data->y = 0;
 	if (pcofwall == 100)
 		pcofwall = 99;
