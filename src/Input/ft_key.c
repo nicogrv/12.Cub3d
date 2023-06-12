@@ -6,7 +6,7 @@
 /*   By: ngriveau <ngriveau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 14:23:20 by ngriveau          #+#    #+#             */
-/*   Updated: 2023/06/12 21:30:59 by ngriveau         ###   ########.fr       */
+/*   Updated: 2023/06/12 21:56:16 by ngriveau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,21 +80,22 @@ void	ft_key_2(int keycode, t_data *data)
 	// data->playerr = 90;
 	// data->playery = 6.7;
 	// data->playerx = 20.6;
-	printf("x = %f, y = %f\n", data->playerx, data->playery);
 	ft_key_3(keycode, data);
 }
 
 int	ft_key(int keycode, t_data *data)
 {
-	printf("start\n");
 	if (keycode == TOUCH_LEFTARROW)
 			data->playerr -= 15;
 	else if (keycode == TOUCH_RIGHTARROW)
 			data->playerr += 15;
 	ft_key_2(keycode, data);
-	mlx_destroy_image(data->mlx.mlx, data->mlx.i);
-	data->mlx.i = mlx_new_image(data->mlx.mlx, data->mlx.winx, data->mlx.winy);
+	if (OS == 1)
+	{
+		mlx_destroy_image(data->mlx.mlx, data->mlx.i);
+		data->mlx.i = mlx_new_image(data->mlx.mlx, data->mlx.winx, data->mlx.winy);
+	}
+	printf("x = %.1f y = %.1f r = %.0f\n", data->playerx, data->playery, data->playerr);
 	ft_ray(data);
-	printf("end\n");
 	return (0);
 }

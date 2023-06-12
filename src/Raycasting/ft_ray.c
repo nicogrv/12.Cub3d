@@ -6,7 +6,7 @@
 /*   By: ngriveau <ngriveau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 14:23:20 by ngriveau          #+#    #+#             */
-/*   Updated: 2023/06/12 21:34:18 by ngriveau         ###   ########.fr       */
+/*   Updated: 2023/06/12 22:05:38 by ngriveau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,8 +90,16 @@ void ft_fish_eye(t_data *data)
 void	ft_fps(t_data *data, long long fps)
 {
 	char	*str;
+	long long endfps;
 
-	str = ft_itoa((1000000/(int)(ft_get_time() - fps)));
+	endfps = ft_get_time();
+	if (endfps == fps)
+	{
+		printf("return\n");
+		return ;
+	}
+	str = ft_itoa((1000000/(int)(endfps - fps)));
+	printf("str = %s\n", str);
 	mlx_string_put(data->mlx.mlx, data->mlx.mlx_win, 10, data->mlx.winy-10, 0xffffff, "FPS:");
 	mlx_string_put(data->mlx.mlx, data->mlx.mlx_win, 35, data->mlx.winy-10, 0xffffff, str);
 	free(str);

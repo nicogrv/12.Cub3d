@@ -6,7 +6,7 @@
 /*   By: ngriveau <ngriveau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 14:23:20 by ngriveau          #+#    #+#             */
-/*   Updated: 2023/06/12 21:36:30 by ngriveau         ###   ########.fr       */
+/*   Updated: 2023/06/12 21:57:41 by ngriveau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,9 @@
 # define WINY 1000
 # define FOV 90
 # define MINI_MAP_COLOR_WALL 0x990000
-# define MINI_MAP_COLOR_VOID 0xffffff
-# define MINI_MAP_COLOR_PLAYER 0xffff00
-# define MINI_MAP_SIZE 5
+# define MINI_MAP_COLOR_VOID 0xffff00
+# define MINI_MAP_COLOR_PLAYER 0x00ff00
+# define MINI_MAP_SIZE 9
 
 # ifndef OS
 #  define OS 1

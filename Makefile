@@ -86,7 +86,7 @@ vpath %.c ${SRC_PATH}
 vpath %.h ${HEAD_PATH}
 
 all:
-	@	echo make linux / make macos
+	@	echo -e "\nmake "$(LIGHTRED)"linux"$(NC)"/"$(LIGHTCYAN)"macos"$(NC)" && ./cub3d ./map/*.cub\n"
 
 linux:  ${OBJS_LINUX}
 	@	$(MAKE) --no-print-directory -s -C ./lib/minilibx-linux/
@@ -138,7 +138,7 @@ re: fclean
 
 .PHONY: re clean fclean 
 
-NOCOLOR='\033[0m'
+NC='\033[0m'
 RED='\033[0;31m'
 GREEN='\033[0;32m'
 ORANGE='\033[0;33m'
@@ -173,3 +173,27 @@ N := x
 C = $(words $N)$(eval N := x $N)
 P = `expr $C '*' 100 / $T / 5`
 endif
+
+
+x = 13.5 y = 9.5 r = 75
+x = 13.5 y = 9.5 r = 60
+x = 13.5 y = 9.5 r = 45
+x = 13.5 y = 9.5 r = 30
+x = 13.3 y = 9.4 r = 30
+x = 13.3 y = 9.4 r = 15
+x = 13.1 y = 9.3 r = 15
+x = 13.1 y = 9.5 r = 15
+x = 13.1 y = 9.5 r = 0
+x = 13.1 y = 9.7 r = 0
+x = 12.9 y = 9.7 r = 0
+x = 12.9 y = 9.7 r = 0
+x = 12.7 y = 9.7 r = 0
+x = 12.5 y = 9.7 r = 0
+x = 12.3 y = 9.7 r = 0
+x = 12.1 y = 9.7 r = 0
+x = 11.9 y = 9.7 r = 0
+x = 11.7 y = 9.7 r = 0
+x = 11.5 y = 9.7 r = 0
+x = 11.3 y = 9.7 r = 0
+x = 11.1 y = 9.7 r = 0
+x = 10.9 y = 9.7 r = 0

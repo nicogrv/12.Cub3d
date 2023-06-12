@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_utils.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nicolasgriveau <nicolasgriveau@student.    +#+  +:+       +#+        */
+/*   By: ngriveau <ngriveau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 14:23:20 by ngriveau          #+#    #+#             */
-/*   Updated: 2023/06/12 20:30:49 by nicolasgriv      ###   ########.fr       */
+/*   Updated: 2023/06/12 21:54:23 by ngriveau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,8 @@ long long	ft_get_time(void)
 {
 	static struct timeval	tv;
 
+	(void) tv;
 	gettimeofday(&tv, NULL);
 	return (tv.tv_usec + tv.tv_sec * 1000000);
+	return (12);
 }
