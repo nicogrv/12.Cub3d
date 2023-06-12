@@ -6,7 +6,7 @@
 /*   By: nicolasgriveau <nicolasgriveau@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 14:23:20 by ngriveau          #+#    #+#             */
-/*   Updated: 2023/06/10 23:22:06 by nicolasgriv      ###   ########.fr       */
+/*   Updated: 2023/06/12 20:35:09 by nicolasgriv      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,15 +32,6 @@ void	ft_color(int nbr, t_data *data)
 	nbr = nbr - 16 * tmp;
 	data->mlx.b = tmp * 16;
 	data->mlx.b += nbr;
-}
-#include <sys/time.h>
-
-long long	ft_get_time(void)
-{
-	static struct timeval	tv;
-
-	gettimeofday(&tv, NULL);
-	return (tv.tv_usec + tv.tv_sec * 1000000);
 }
 
 void	ft_color_colone(t_data *d, int x, float len, int pcofwall)

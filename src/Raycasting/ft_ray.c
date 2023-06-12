@@ -6,7 +6,7 @@
 /*   By: nicolasgriveau <nicolasgriveau@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 14:23:20 by ngriveau          #+#    #+#             */
-/*   Updated: 2023/06/12 19:51:55 by nicolasgriv      ###   ########.fr       */
+/*   Updated: 2023/06/12 20:39:30 by nicolasgriv      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,11 +81,17 @@ void ft_fish_eye(t_data *data)
 	data->length = data->length * cos((data->playerr - data->ax) / RAD);
 	pos = 0.5 * tan((data->playerr - data->ax)/RAD) / tan((0.5 * data->playerfov)/RAD);
 	data->nbr_column = round(data->mlx.winx * (0.5 - pos));
+	ft_color_colone(data, data->nbr_column-1, data->length, data->pcofwall);	
+	ft_color_colone(data, data->nbr_column, data->length, data->pcofwall);
+		
 	
 }
 
 int	ft_ray(t_data *data)
 {
+	long long fps;
+
+	fps = ft_get_time();
 	data->i = 0;
 	while (data->i < (float)data->mlx.winx)
 	{
@@ -104,11 +110,11 @@ int	ft_ray(t_data *data)
 				break ;
 		}
 		ft_fish_eye(data);
-		ft_color_colone(data, data->nbr_column-1, data->length, data->pcofwall);	
-		ft_color_colone(data, data->nbr_column, data->length, data->pcofwall);
 		data->i++;
 	}
 	ft_ray_pt4(data);
+	// printf("fps = %d\n");
+	mlx_string_put(data->mlx.mlx, data->mlx.mlx_win, 90, 90, 0xffffff,)(1000000/(int)(ft_get_time() - fps)));
 	return (0);
 }
 

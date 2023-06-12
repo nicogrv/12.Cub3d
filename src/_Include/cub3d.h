@@ -6,7 +6,7 @@
 /*   By: nicolasgriveau <nicolasgriveau@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 14:23:20 by ngriveau          #+#    #+#             */
-/*   Updated: 2023/06/12 19:46:07 by nicolasgriv      ###   ########.fr       */
+/*   Updated: 2023/06/12 20:32:25 by nicolasgriv      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 # include <fcntl.h>
 # include <fcntl.h>
 # include <math.h>
+# include <sys/time.h>
 # include "get_next_line.h"
 # include "SuperLibft.h"
 # include "../../lib/minilibx-linux/mlx.h"
@@ -181,6 +182,7 @@ typedef struct s_data
 	int			face;
 	int			pcofwall;
 	float		nbr_column;
+	int			startfps;
 	
 
 }	t_data;
@@ -248,6 +250,8 @@ int		ft_cross_close(t_data *data);
 int		is_ws(char c);
 int		is_player(int c);
 int		ft_is_wc_or_new_line(char *line);
+long long	ft_get_time(void);
+
 
 int		main(int c, char **av);
 
