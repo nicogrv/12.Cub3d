@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_map.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nicolasgriveau <nicolasgriveau@student.    +#+  +:+       +#+        */
+/*   By: ngriveau <ngriveau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 14:23:20 by ngriveau          #+#    #+#             */
-/*   Updated: 2023/06/12 19:55:14 by nicolasgriv      ###   ########.fr       */
+/*   Updated: 2023/06/12 21:35:45 by ngriveau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,8 +75,9 @@ int	ft_map(t_data *data)
 	while (y < data->mapy)
 	{
 		if (ft_map_pt2(data, &y, x, fd))
-			return (1);
+			return (close(fd), 1);
 	}
+	close(fd);
 	return (0);
 }
 

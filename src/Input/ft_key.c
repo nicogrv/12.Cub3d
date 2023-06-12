@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_key.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nicolasgriveau <nicolasgriveau@student.    +#+  +:+       +#+        */
+/*   By: ngriveau <ngriveau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 14:23:20 by ngriveau          #+#    #+#             */
-/*   Updated: 2023/06/12 20:33:47 by nicolasgriv      ###   ########.fr       */
+/*   Updated: 2023/06/12 21:30:59 by ngriveau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,8 +92,8 @@ int	ft_key(int keycode, t_data *data)
 	else if (keycode == TOUCH_RIGHTARROW)
 			data->playerr += 15;
 	ft_key_2(keycode, data);
-	// mlx_destroy_image(data->mlx.mlx, data->mlx.i);
-	// data->mlx.i = mlx_new_image(data->mlx.mlx, data->mlx.winx, data->mlx.winy);
+	mlx_destroy_image(data->mlx.mlx, data->mlx.i);
+	data->mlx.i = mlx_new_image(data->mlx.mlx, data->mlx.winx, data->mlx.winy);
 	ft_ray(data);
 	printf("end\n");
 	return (0);

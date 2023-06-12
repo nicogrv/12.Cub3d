@@ -22,6 +22,7 @@ SRCS_MACOS += ft_init.c
 SRCS_MACOS += ft_utils.c
 SRCS_MACOS += ft_input_macos.c
 SRCS_MACOS += ft_color.c
+SRCS_MACOS += ft_itoa.c
 
 SRCS_LINUX += main.c
 SRCS_LINUX += get_next_line_utils.c
@@ -45,6 +46,8 @@ SRCS_LINUX += ft_init.c
 SRCS_LINUX += ft_utils.c
 SRCS_LINUX += ft_input_linux.c
 SRCS_LINUX += ft_color.c
+SRCS_LINUX += ft_itoa.c
+
 
 SRC_PATH += ./src/
 SRC_PATH += ./src/Get_next_line/

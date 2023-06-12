@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_ray.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nicolasgriveau <nicolasgriveau@student.    +#+  +:+       +#+        */
+/*   By: ngriveau <ngriveau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 14:23:20 by ngriveau          #+#    #+#             */
-/*   Updated: 2023/06/12 20:39:30 by nicolasgriv      ###   ########.fr       */
+/*   Updated: 2023/06/12 21:34:18 by ngriveau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,13 +87,23 @@ void ft_fish_eye(t_data *data)
 	
 }
 
+void	ft_fps(t_data *data, long long fps)
+{
+	char	*str;
+
+	str = ft_itoa((1000000/(int)(ft_get_time() - fps)));
+	mlx_string_put(data->mlx.mlx, data->mlx.mlx_win, 10, data->mlx.winy-10, 0xffffff, "FPS:");
+	mlx_string_put(data->mlx.mlx, data->mlx.mlx_win, 35, data->mlx.winy-10, 0xffffff, str);
+	free(str);
+}
+
 int	ft_ray(t_data *data)
 {
 	long long fps;
 
 	fps = ft_get_time();
-	data->i = 0;
-	while (data->i < (float)data->mlx.winx)
+	data->i = -1;
+	while (++data->i < (float)data->mlx.winx)
 	{
 		ft_ray_pt2(data);
 		while (1)
@@ -110,11 +120,9 @@ int	ft_ray(t_data *data)
 				break ;
 		}
 		ft_fish_eye(data);
-		data->i++;
 	}
 	ft_ray_pt4(data);
-	// printf("fps = %d\n");
-	mlx_string_put(data->mlx.mlx, data->mlx.mlx_win, 90, 90, 0xffffff,)(1000000/(int)(ft_get_time() - fps)));
+	ft_fps(data, fps);
 	return (0);
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nicolasgriveau <nicolasgriveau@student.    +#+  +:+       +#+        */
+/*   By: ngriveau <ngriveau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 14:23:20 by ngriveau          #+#    #+#             */
-/*   Updated: 2023/06/12 20:32:25 by nicolasgriv      ###   ########.fr       */
+/*   Updated: 2023/06/12 21:36:30 by ngriveau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,8 @@
 # include "SuperLibft.h"
 # include "../../lib/minilibx-linux/mlx.h"
 
-# define WINX 600
-# define WINY 600
+# define WINX 1000
+# define WINY 1000
 # define FOV 90
 # define MINI_MAP_COLOR_WALL 0x990000
 # define MINI_MAP_COLOR_VOID 0xffffff
@@ -251,6 +251,7 @@ int		is_ws(char c);
 int		is_player(int c);
 int		ft_is_wc_or_new_line(char *line);
 long long	ft_get_time(void);
+char	*ft_itoa(int n);
 
 
 int		main(int c, char **av);
