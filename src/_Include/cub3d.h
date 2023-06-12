@@ -6,7 +6,7 @@
 /*   By: nicolasgriveau <nicolasgriveau@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 14:23:20 by ngriveau          #+#    #+#             */
-/*   Updated: 2023/06/11 00:58:57 by nicolasgriv      ###   ########.fr       */
+/*   Updated: 2023/06/12 19:46:07 by nicolasgriv      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@
 # include "SuperLibft.h"
 # include "../../lib/minilibx-linux/mlx.h"
 
-# define WINX 1000
+# define WINX 600
 # define WINY 600
 # define FOV 90
 # define MINI_MAP_COLOR_WALL 0x990000
