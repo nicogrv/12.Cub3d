@@ -1,7 +1,7 @@
-NO      ./assets/debug.xpm
-SO      ./assets/black.xpm
-WE      ./assets/black.xpm
-EA      ./assets/black.xpm
+NO      ./assets/color/red.xpm
+SO      ./assets/color/blue.xpm
+WE      ./assets/color/orange.xpm
+EA      ./assets/color/green.xpm
 
 
 
