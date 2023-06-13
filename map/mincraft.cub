@@ -1,7 +1,7 @@
-NO      ./assets/debug.xpm
-SO      ./assets/debug.xpm
-WE      ./assets/debug.xpm
-EA      ./assets/debug.xpm
+NO      ./assets/minecraft/blackstone.xpm
+SO      ./assets/minecraft/bricks.xpm
+WE      ./assets/minecraft/diamond_ore.xpm
+EA      ./assets/minecraft/glowstone.xpm
 
 
 

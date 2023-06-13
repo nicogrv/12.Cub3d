@@ -6,7 +6,7 @@
 /*   By: ngriveau <ngriveau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 14:23:20 by ngriveau          #+#    #+#             */
-/*   Updated: 2023/06/13 16:29:41 by ngriveau         ###   ########.fr       */
+/*   Updated: 2023/06/13 16:58:52 by ngriveau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,8 @@
 # include "SuperLibft.h"
 # include "../../lib/minilibx-linux/mlx.h"
 
-# define WINX 1900
-# define WINY 1000
+# define WINX 1000
+# define WINY 800
 # define FOV 90
 # define MINI_MAP_COLOR_WALL 0x990000
 # define MINI_MAP_COLOR_VOID 0xffff00
