@@ -6,7 +6,7 @@
 /*   By: ngriveau <ngriveau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 14:23:20 by ngriveau          #+#    #+#             */
-/*   Updated: 2023/05/30 11:24:29 by ngriveau         ###   ########.fr       */
+/*   Updated: 2023/06/13 14:37:09 by ngriveau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,15 @@ int	ft_pixel_of_img(t_data *data, int face, int pcofwall, int y)
 	int	pixel;
 	int	x;
 
+	// printf("pc = %d\t y = %d\n", pcofwall, y);
+	if (y < 0)
+		y = 0;
+	if (99 < y)
+		y = 99;
+	if (pcofwall < 0)
+		pcofwall = 0;
+	if (99 <= pcofwall)
+		pcofwall = 99;
 	if (face == 1)
 	{
 		x = data->north.width * ((float)pcofwall / 100);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_color.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nicolasgriveau <nicolasgriveau@student.    +#+  +:+       +#+        */
+/*   By: ngriveau <ngriveau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 14:23:20 by ngriveau          #+#    #+#             */
-/*   Updated: 2023/06/12 20:35:09 by nicolasgriv      ###   ########.fr       */
+/*   Updated: 2023/06/13 14:34:40 by ngriveau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ d->face == 2)) || (pcofwall >= 98 && (d->face == 1 || d->face == 3))))
 	if (d->y < 0)
 		d->y = 0;
 	while (d->y < (d->mlx.winy / 2) + (10 / len) * d->lenwall && d->y < d->mlx.winy + 10)
-		ft_draw(d, x, d->y, ft_pixel_of_img(d, d->face, pcofwall, ((d->y - d->nbrpl) * 100 / wall)));
+		ft_draw(d, x, d->y, ft_pixel_of_img(d, d->face, pcofwall, (d->y - d->nbrpl) * 100 / wall));
 	while (d->y < d->mlx.winy)
 		ft_draw(d, x, d->y++, d->floor.color);
 	savelen = len;
