@@ -1,7 +1,7 @@
-NO      ./assets/orangewall.xpm
-SO      ./assets/orangewall.xpm
-WE      ./assets/greenwall.xpm
-EA      ./assets/purpelwall.xpm
+NO      ./assets/labyrinthe/redwall.xpm
+SO      ./assets/labyrinthe/orangewall.xpm
+WE      ./assets/labyrinthe/greenwall.xpm
+EA      ./assets/labyrinthe/purpelwall.xpm
 
 
 
