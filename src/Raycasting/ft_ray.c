@@ -6,7 +6,7 @@
 /*   By: ngriveau <ngriveau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 14:23:20 by ngriveau          #+#    #+#             */
-/*   Updated: 2023/06/13 10:47:59 by ngriveau         ###   ########.fr       */
+/*   Updated: 2023/06/13 13:55:49 by ngriveau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int	ft_ray_pt3(t_data *data)
 		else
 			ft_draw_mini(data, (int)((data->posx) * data->minimap_size), (int)((data->posy) * data->minimap_size), MINI_MAP_COLOR_VOID);
 	}
-	if (data->map[((int)floor(data->posy))][((int)floor(data->posx))] == 1)
+	if (data->map[((int)(data->posy))][(int)((data->posx))] == 1 || data->map[((int)(data->posy))][(int)((data->posx))] == 7)
 	{
 		ft_draw_mini(data, (int)((data->posx) * data->minimap_size), (int)((data->posy) * data->minimap_size), \
 			MINI_MAP_COLOR_WALL);
