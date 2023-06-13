@@ -6,7 +6,7 @@
 /*   By: ngriveau <ngriveau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 14:23:20 by ngriveau          #+#    #+#             */
-/*   Updated: 2023/06/13 15:33:10 by ngriveau         ###   ########.fr       */
+/*   Updated: 2023/06/13 15:45:32 by ngriveau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	ft_color_colone(t_data *d, int x, float len, float pcofwall)
 	static float	savelen = {0};
 	
 	d->y = 0;
-	printf("pc = %f\n", pcofwall);
+	// printf("pc = %f\n", pcofwall);
 	if ((5 < pcofwall && pcofwall < 95) || (fabs(savelen - len) > 0.1))
 		saveface = d->face;
 	if ((fabs(savelen - len) < 0.4) && ((pcofwall <= 1 && (d->face == 4 || \
