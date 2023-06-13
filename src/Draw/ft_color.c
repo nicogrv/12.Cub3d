@@ -6,7 +6,7 @@
 /*   By: ngriveau <ngriveau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 14:23:20 by ngriveau          #+#    #+#             */
-/*   Updated: 2023/06/13 15:45:32 by ngriveau         ###   ########.fr       */
+/*   Updated: 2023/06/13 16:11:23 by ngriveau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,12 +36,11 @@ void	ft_color(int nbr, t_data *data)
 
 void	ft_color_colone(t_data *d, int x, float len, float pcofwall)
 {
-	int				wall;
+	float				wall;
 	static int		saveface;
 	static float	savelen = {0};
 	
 	d->y = 0;
-	// printf("pc = %f\n", pcofwall);
 	if ((5 < pcofwall && pcofwall < 95) || (fabs(savelen - len) > 0.1))
 		saveface = d->face;
 	if ((fabs(savelen - len) < 0.4) && ((pcofwall <= 1 && (d->face == 4 || \
@@ -57,7 +56,9 @@ d->face == 2)) || (pcofwall >= 98 && (d->face == 1 || d->face == 3))))
 	if (d->y < 0)
 		d->y = 0;
 	while (d->y < (d->mlx.winy / 2) + (10 / len) * d->lenwall && d->y < d->mlx.winy + 10)
-		ft_draw(d, x, d->y, ft_pixel_of_img(d, d->face, pcofwall, (d->y - d->nbrpl) * 100 / wall));
+	{
+		ft_draw(d, x, d->y, ft_pixel_of_img(d, d->face, pcofwall, (d->y - d->nbrpl) *100/wall));
+	}
 	while (d->y < d->mlx.winy)
 		ft_draw(d, x, d->y++, d->floor.color);
 	savelen = len;

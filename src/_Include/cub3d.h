@@ -6,7 +6,7 @@
 /*   By: ngriveau <ngriveau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 14:23:20 by ngriveau          #+#    #+#             */
-/*   Updated: 2023/06/13 15:28:24 by ngriveau         ###   ########.fr       */
+/*   Updated: 2023/06/13 16:29:41 by ngriveau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,8 @@
 # include "SuperLibft.h"
 # include "../../lib/minilibx-linux/mlx.h"
 
-# define WINX 1000
-# define WINY 800
+# define WINX 1900
+# define WINY 1000
 # define FOV 90
 # define MINI_MAP_COLOR_WALL 0x990000
 # define MINI_MAP_COLOR_VOID 0xffff00
@@ -228,8 +228,8 @@ void	ft_free_map(t_data *data, int y);
 
 void	ft_draw(t_data *data, float x, float y, int color);
 void	ft_draw_mini(t_data *data, float x, float y, int color);
-int		ft_pixel_of_img(t_data *data, int face, float pcofwall, int y);
-void	ft_pixel_of_img_2(t_data *data, int face, float pcofwall, int y);
+int		ft_pixel_of_img(t_data *data, int face, float pcofwall, float y);
+void	ft_pixel_of_img_2(t_data *data, int face, float pcofwall, float y);
 
 int		ft_verif_ok_map(t_data *data);
 void	ft_verif_ok_map_pt2(t_data *data);

@@ -6,7 +6,7 @@
 /*   By: ngriveau <ngriveau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 14:23:20 by ngriveau          #+#    #+#             */
-/*   Updated: 2023/06/13 15:31:42 by ngriveau         ###   ########.fr       */
+/*   Updated: 2023/06/13 16:12:49 by ngriveau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ void	ft_draw_mini(t_data *data, float x, float y, int color)
 	}
 }
 
-void	ft_pixel_of_img_2(t_data *data, int face, float pcofwall, int y)
+void	ft_pixel_of_img_2(t_data *data, int face, float pcofwall, float y)
 {
 	int	pixel;
 	int	x;
@@ -72,7 +72,7 @@ void	ft_pixel_of_img_2(t_data *data, int face, float pcofwall, int y)
 	{
 		x = data->south.width * ((float)pcofwall / 100);
 		y = data->south.height * ((float)y / 100);
-		pixel = (y * data->south.img.size) + (x * 4);
+		pixel = ((int)y * data->south.img.size) + (x * 4);
 		data->mlx.r = data->south.img.data[pixel + 2];
 		data->mlx.g = data->south.img.data[pixel + 1];
 		data->mlx.b = data->south.img.data[pixel + 0];
@@ -81,32 +81,31 @@ void	ft_pixel_of_img_2(t_data *data, int face, float pcofwall, int y)
 	{
 		x = data->west.width * ((float)pcofwall / 100);
 		y = data->west.height * ((float)y / 100);
-		pixel = (y * data->west.img.size) + (x * 4);
+		pixel = ((int)y * data->west.img.size) + (x * 4);
 		data->mlx.r = data->west.img.data[pixel + 2];
 		data->mlx.g = data->west.img.data[pixel + 1];
 		data->mlx.b = data->west.img.data[pixel + 0];
 	}
 }
 
-int	ft_pixel_of_img(t_data *data, int face, float pcofwall, int y)
+int	ft_pixel_of_img(t_data *data, int face, float pcofwall, float y)
 {
 	int	pixel;
 	int	x;
 
-	// printf("pc = %f\t y = %d\n", pcofwall, y);
 	if (y < 0)
 		y = 0;
 	if (99 < y)
 		y = 99;
 	if (pcofwall < 0)
 		pcofwall = 0;
-	if (99 <= pcofwall)
-		pcofwall = 99;
+	if (100 <= pcofwall)
+		pcofwall = 100;
 	if (face == 1)
 	{
 		x = data->north.width * ((float)pcofwall / 100);
 		y = data->north.height * ((float)y / 100);
-		pixel = (y * data->north.img.size) + (x * 4);
+		pixel = ((int)y * data->north.img.size) + (x * 4);
 		data->mlx.r = data->north.img.data[pixel + 2];
 		data->mlx.g = data->north.img.data[pixel + 1];
 		data->mlx.b = data->north.img.data[pixel + 0];
@@ -115,7 +114,7 @@ int	ft_pixel_of_img(t_data *data, int face, float pcofwall, int y)
 	{
 		x = data->east.width * ((float)pcofwall / 100);
 		y = data->east.height * ((float)y / 100);
-		pixel = (y * data->east.img.size) + (x * 4);
+		pixel = ((int)y * data->east.img.size) + (x * 4);
 		data->mlx.r = data->east.img.data[pixel + 2];
 		data->mlx.g = data->east.img.data[pixel + 1];
 		data->mlx.b = data->east.img.data[pixel + 0];
