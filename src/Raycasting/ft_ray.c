@@ -6,7 +6,7 @@
 /*   By: ngriveau <ngriveau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 14:23:20 by ngriveau          #+#    #+#             */
-/*   Updated: 2023/06/13 13:55:49 by ngriveau         ###   ########.fr       */
+/*   Updated: 2023/06/13 15:29:53 by ngriveau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,8 +81,8 @@ void ft_fish_eye(t_data *data)
 	data->length = data->length * cos((data->playerr - data->ax) / RAD);
 	pos = 0.5 * tan((data->playerr - data->ax)/RAD) / tan((0.5 * data->playerfov)/RAD);
 	data->nbr_column = round(data->mlx.winx * (0.5 - pos));
-	ft_color_colone(data, data->nbr_column-1, data->length, data->pcofwall);	
-	ft_color_colone(data, data->nbr_column, data->length, data->pcofwall);
+	ft_color_colone(data, data->nbr_column-1, data->length, data->pcofwall/10);	
+	ft_color_colone(data, data->nbr_column, data->length, data->pcofwall/10);
 		
 	
 }

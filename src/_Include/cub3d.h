@@ -6,7 +6,7 @@
 /*   By: ngriveau <ngriveau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 14:23:20 by ngriveau          #+#    #+#             */
-/*   Updated: 2023/06/12 21:57:41 by ngriveau         ###   ########.fr       */
+/*   Updated: 2023/06/13 15:28:24 by ngriveau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@
 # include "../../lib/minilibx-linux/mlx.h"
 
 # define WINX 1000
-# define WINY 1000
+# define WINY 800
 # define FOV 90
 # define MINI_MAP_COLOR_WALL 0x990000
 # define MINI_MAP_COLOR_VOID 0xffff00
@@ -180,7 +180,7 @@ typedef struct s_data
 	float		decaly;
 	float		length;
 	int			face;
-	int			pcofwall;
+	float		pcofwall;
 	float		nbr_column;
 	int			startfps;
 	
@@ -228,8 +228,8 @@ void	ft_free_map(t_data *data, int y);
 
 void	ft_draw(t_data *data, float x, float y, int color);
 void	ft_draw_mini(t_data *data, float x, float y, int color);
-int		ft_pixel_of_img(t_data *data, int face, int pcofwall, int y);
-void	ft_pixel_of_img_2(t_data *data, int face, int pcofwall, int y);
+int		ft_pixel_of_img(t_data *data, int face, float pcofwall, int y);
+void	ft_pixel_of_img_2(t_data *data, int face, float pcofwall, int y);
 
 int		ft_verif_ok_map(t_data *data);
 void	ft_verif_ok_map_pt2(t_data *data);
@@ -242,7 +242,7 @@ void	ft_init_minimap(t_data *data);
 int		ft_init_id_verif_path(char **path_for_data, int *id, char *line, int i);
 
 void	ft_color(int nbr, t_data *data);
-void	ft_color_colone(t_data *data, int x, float len, int pcofwall);
+void	ft_color_colone(t_data *data, int x, float len, float pcofwall);
 
 int		ft_mouse_move(t_data *data);
 int		ft_cross_close(t_data *data);

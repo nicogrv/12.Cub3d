@@ -6,7 +6,7 @@
 /*   By: ngriveau <ngriveau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 14:23:20 by ngriveau          #+#    #+#             */
-/*   Updated: 2023/06/13 11:39:52 by ngriveau         ###   ########.fr       */
+/*   Updated: 2023/06/13 15:35:38 by ngriveau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	ft_ray_270_360(t_data *d)
 		d->length += d->hyv;
 		d->face = 3;
 		d->pcofwall = 100 - ((int)((d->posx + d->decalx - \
-						(int)(d->posx + d->decalx)) * 100));
+						(int)(d->posx + d->decalx)) * 1000));
 	}
 	else
 	{
@@ -36,7 +36,7 @@ void	ft_ray_270_360(t_data *d)
 		d->length += d->hyr;
 		d->face = 4;
 		d->pcofwall = 100 - ((int)((d->posy + d->decaly - \
-					(int)(d->posy + d->decaly)) * 100));
+					(int)(d->posy + d->decaly)) * 1000));
 	}
 	d->ax += 270;
 }
@@ -56,7 +56,7 @@ void	ft_ray_180_270(t_data *d)
 		d->length += d->hyv;
 		d->face = 3;
 		d->pcofwall = 100 - ((int)((d->posx + d->decalx - \
-				(int)(d->posx + d->decalx)) * 100));
+				(int)(d->posx + d->decalx)) * 1000));
 	}
 	else
 	{
@@ -65,7 +65,7 @@ void	ft_ray_180_270(t_data *d)
 		d->length += d->hyr ;
 		d->face = 2;
 		d->pcofwall = (int)((d->posy + d->decaly - \
-						(int)(d->posy + d->decaly)) * 100);
+						(int)(d->posy + d->decaly)) * 1000);
 	}
 	d->ax += 180;
 }
@@ -84,7 +84,7 @@ void	ft_ray_90_180(t_data *d)
 		d->length += d->hyv;
 		d->face = 1;
 		d->pcofwall = (int)((d->posx + d->decalx - \
-				(int)(d->posx + d->decalx)) * 100);
+				(int)(d->posx + d->decalx)) * 1000);
 	}
 	else
 	{
@@ -94,7 +94,7 @@ void	ft_ray_90_180(t_data *d)
 		d->length += d->hyr;
 		d->face = 2;
 		d->pcofwall = (int)((d->posy + d->decaly - \
-				(int)(d->posy + d->decaly)) * 100);
+				(int)(d->posy + d->decaly)) * 1000);
 	}
 	d->ax += 90;
 }
@@ -109,7 +109,7 @@ void	ft_ray_0_90_pt2(t_data *d)
 		d->length += d->hyv;
 		d->face = 1;
 		d->pcofwall = (int)((d->posx + d->decalx - \
-						(int)(d->posx + d->decalx)) * 100);
+						(int)(d->posx + d->decalx)) * 1000);
 	}
 	else
 	{
@@ -119,7 +119,7 @@ void	ft_ray_0_90_pt2(t_data *d)
 		d->length += d->hyr;
 		d->face = 4;
 		d->pcofwall = 100 - ((int)((d->posy + d->decaly - \
-					(int)(d->posy + d->decaly)) * 100));
+					(int)(d->posy + d->decaly)) * 1000));
 	}
 
 }

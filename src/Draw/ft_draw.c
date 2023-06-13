@@ -6,7 +6,7 @@
 /*   By: ngriveau <ngriveau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 14:23:20 by ngriveau          #+#    #+#             */
-/*   Updated: 2023/06/13 14:37:09 by ngriveau         ###   ########.fr       */
+/*   Updated: 2023/06/13 15:31:42 by ngriveau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ void	ft_draw_mini(t_data *data, float x, float y, int color)
 	}
 }
 
-void	ft_pixel_of_img_2(t_data *data, int face, int pcofwall, int y)
+void	ft_pixel_of_img_2(t_data *data, int face, float pcofwall, int y)
 {
 	int	pixel;
 	int	x;
@@ -88,12 +88,12 @@ void	ft_pixel_of_img_2(t_data *data, int face, int pcofwall, int y)
 	}
 }
 
-int	ft_pixel_of_img(t_data *data, int face, int pcofwall, int y)
+int	ft_pixel_of_img(t_data *data, int face, float pcofwall, int y)
 {
 	int	pixel;
 	int	x;
 
-	// printf("pc = %d\t y = %d\n", pcofwall, y);
+	// printf("pc = %f\t y = %d\n", pcofwall, y);
 	if (y < 0)
 		y = 0;
 	if (99 < y)

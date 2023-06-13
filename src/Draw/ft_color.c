@@ -6,7 +6,7 @@
 /*   By: ngriveau <ngriveau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 14:23:20 by ngriveau          #+#    #+#             */
-/*   Updated: 2023/06/13 14:34:40 by ngriveau         ###   ########.fr       */
+/*   Updated: 2023/06/13 15:33:10 by ngriveau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,15 +34,14 @@ void	ft_color(int nbr, t_data *data)
 	data->mlx.b += nbr;
 }
 
-void	ft_color_colone(t_data *d, int x, float len, int pcofwall)
+void	ft_color_colone(t_data *d, int x, float len, float pcofwall)
 {
 	int				wall;
 	static int		saveface;
 	static float	savelen = {0};
 	
 	d->y = 0;
-	if (pcofwall == 100)
-		pcofwall = 99;
+	printf("pc = %f\n", pcofwall);
 	if ((5 < pcofwall && pcofwall < 95) || (fabs(savelen - len) > 0.1))
 		saveface = d->face;
 	if ((fabs(savelen - len) < 0.4) && ((pcofwall <= 1 && (d->face == 4 || \
