@@ -1,0 +1,6 @@
+### LINUX
+* make linux && ./cub3d ./map/...
+### MACOS
+* make macos && ./cub3d ./map/...
+![map_42](https://github.com/nicogrv/12.Cub3d/assets/110118580/07bfa449-7a0c-4d41-b87d-a1f344f1c69f)
+![map_color](https://github.com/nicogrv/12.Cub3d/assets/110118580/80ae9a43-326e-4fb2-8d3e-6f83a701acd5)
