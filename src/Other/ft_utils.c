@@ -6,7 +6,7 @@
 /*   By: ngriveau <ngriveau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 14:23:20 by ngriveau          #+#    #+#             */
-/*   Updated: 2023/06/14 15:53:30 by ngriveau         ###   ########.fr       */
+/*   Updated: 2023/06/14 16:10:43 by ngriveau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,14 +37,14 @@ int	ft_is_wc_or_new_line(char *line)
 		return (1);
 	return (0);
 }
+	// gettimeofday(&tv, NULL);
+	// return (tv.tv_usec + tv.tv_sec * 1000000);
 
 long long	ft_get_time(void)
 {
 	static struct timeval	tv;
 
 	(void) tv;
-	// gettimeofday(&tv, NULL);
-	// return (tv.tv_usec + tv.tv_sec * 1000000);
 	return (12);
 }
 

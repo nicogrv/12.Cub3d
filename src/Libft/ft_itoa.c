@@ -6,7 +6,7 @@
 /*   By: ngriveau <ngriveau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 10:52:49 by ngriveau          #+#    #+#             */
-/*   Updated: 2023/06/12 21:25:02 by ngriveau         ###   ########.fr       */
+/*   Updated: 2023/06/14 16:08:38 by ngriveau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,8 +93,3 @@ char	*ft_itoa(int n)
 	nbr[size] = '\0';
 	return (ft_nbr_to_str(nbr, ndb, signe, --size));
 }
-
-// int main (void)
-// {
-// 	printf("%s",ft_itoa(-2147483648));
-// }

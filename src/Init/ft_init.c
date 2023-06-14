@@ -6,7 +6,7 @@
 /*   By: ngriveau <ngriveau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 14:23:20 by ngriveau          #+#    #+#             */
-/*   Updated: 2023/06/14 16:00:54 by ngriveau         ###   ########.fr       */
+/*   Updated: 2023/06/14 16:05:43 by ngriveau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,11 @@ int	ft_init_id_verif_path(char **path, int *id, char *line, int i)
 	fd = open(*path, O_RDONLY);
 	if (fd == -1 || ft_is_wc_or_new_line(line + i + \
 				ft_strlen_mode(line + i, 3)) == 0)
+	{
+		if (fd == -1)
+			return (1);
 		return (close(fd), 1);
+	}
 	close(fd);
 	return (0);
 }

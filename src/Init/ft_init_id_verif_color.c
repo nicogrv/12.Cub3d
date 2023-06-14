@@ -6,7 +6,7 @@
 /*   By: ngriveau <ngriveau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 14:23:20 by ngriveau          #+#    #+#             */
-/*   Updated: 2023/06/14 16:00:46 by ngriveau         ###   ########.fr       */
+/*   Updated: 2023/06/14 16:09:33 by ngriveau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,13 +37,13 @@ int	ft_init_id_verif_color_pt3(char *tmp, int *j, char *li, t_color *c)
 	{
 		tmp = ft_substr(li, *j, ft_strlen_mode(li + *j, 2));
 		if (!tmp)
-			return (free(tmp), printf("SORT 1\n"), 1);
+			return (free(tmp), 1);
 		if (c->id == 0 || c->id == 1 || c->id == 2)
 			ft_init_id_verif_color_pt4(tmp, c);
 		else
 		{
 			if (c->r == -1 || c->g == -1 || c->b == -1)
-				return (free(tmp), printf(RED"Error input color3"NC), 1);
+				return (free(tmp), 1);
 			return (free(tmp), 0);
 		}
 		free(tmp);
