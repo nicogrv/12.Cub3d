@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_init.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nicolasgriveau <nicolasgriveau@student.    +#+  +:+       +#+        */
+/*   By: ngriveau <ngriveau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 14:23:20 by ngriveau          #+#    #+#             */
-/*   Updated: 2023/06/12 20:16:02 by nicolasgriv      ###   ########.fr       */
+/*   Updated: 2023/06/14 12:00:32 by ngriveau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,22 +49,34 @@ void	ft_init_2(t_data *data)
 	data->minimap_size = MINI_MAP_SIZE;
 }
 
-void	ft_initmlx(t_data *data)
+void	ft_initmlx(t_data *d)
 {
-	data->mlx.mlx = mlx_init();
-	data->mlx.mlx_win = mlx_new_window(data->mlx.mlx, data->mlx.winx,data->mlx.winy, "Cub3d");
-	data->mlx.i = mlx_new_image(data->mlx.mlx, data->mlx.winx, data->mlx.winy);
-	data->mlx.data = 		mlx_get_data_addr(data->mlx.i, &data->mlx.p, &data->mlx.size, &data->mlx.e);
-	data->north.tex = 	mlx_xpm_file_to_image(data->mlx.mlx, data->north.path, &data->north.width, &data->north.height);
-	data->north.img.data = 	mlx_get_data_addr(data->north.tex, &data->north.img.p, &data->north.img.size, &data->north.img.e);
-	data->east.tex = 	mlx_xpm_file_to_image(data->mlx.mlx, data->east.path, &data->east.width, &data->east.height);
-	data->east.img.data = 	mlx_get_data_addr(data->east.tex, &data->east.img.p, &data->east.img.size, &data->east.img.e);
-	data->south.tex = 	mlx_xpm_file_to_image(data->mlx.mlx, data->south.path, &data->south.width, &data->south.height);
-	data->south.img.data = 	mlx_get_data_addr(data->south.tex, &data->south.img.p, &data->south.img.size, &data->south.img.e);
-	data->west.tex = 	mlx_xpm_file_to_image(data->mlx.mlx, data->west.path, &data->west.width, &data->west.height);
-	data->west.img.data = 	mlx_get_data_addr(data->west.tex, &data->west.img.p, &data->west.img.size, &data->west.img.e);
-	data->mini.i =				mlx_new_image(data->mlx.mlx, data->mapx * data->minimap_size, data->mapy * data->minimap_size);
-	data->mini.img.data = 	mlx_get_data_addr(data->mini.i, &data->mini.img.p, &data->mini.img.size, &data->mini.img.e);
+	d->mlx.mlx = mlx_init();
+	d->mlx.mlx_win = mlx_new_window(d->mlx.mlx, d->mlx.winx, \
+		d->mlx.winy, "Cub3d");
+	d->mlx.i = mlx_new_image(d->mlx.mlx, d->mlx.winx, d->mlx.winy);
+	d->mlx.data = mlx_get_data_addr(d->mlx.i, &d->mlx.p, \
+							&d->mlx.size, &d->mlx.e);
+	d->north.tex = mlx_xpm_file_to_image(d->mlx.mlx, d->north.path, \
+		&d->north.width, &d->north.height);
+	d->north.img.data = mlx_get_data_addr(d->north.tex, \
+		&d->north.img.p, &d->north.img.size, &d->north.img.e);
+	d->east.tex = mlx_xpm_file_to_image(d->mlx.mlx, d->east.path, \
+		&d->east.width, &d->east.height);
+	d->east.img.data = mlx_get_data_addr(d->east.tex, &d->east.img.p, \
+		&d->east.img.size, &d->east.img.e);
+	d->south.tex = mlx_xpm_file_to_image(d->mlx.mlx, d->south.path, \
+		&d->south.width, &d->south.height);
+	d->south.img.data = mlx_get_data_addr(d->south.tex, \
+		&d->south.img.p, &d->south.img.size, &d->south.img.e);
+	d->west.tex = mlx_xpm_file_to_image(d->mlx.mlx, d->west.path, \
+		&d->west.width, &d->west.height);
+	d->west.img.data = mlx_get_data_addr(d->west.tex, &d->west.img.p, \
+		&d->west.img.size, &d->west.img.e);
+	d->mini.i = mlx_new_image(d->mlx.mlx, d->mapx * \
+		d->minimap_size, d->mapy * d->minimap_size);
+	d->mini.img.data = mlx_get_data_addr(d->mini.i, &d->mini.img.p, \
+		&d->mini.img.size, &d->mini.img.e);
 }
 
 int	ft_init(int c, char **av, t_data *data)

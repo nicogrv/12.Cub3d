@@ -6,7 +6,7 @@
 /*   By: ngriveau <ngriveau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 14:23:20 by ngriveau          #+#    #+#             */
-/*   Updated: 2023/06/13 16:12:49 by ngriveau         ###   ########.fr       */
+/*   Updated: 2023/06/14 12:04:17 by ngriveau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,19 +88,24 @@ void	ft_pixel_of_img_2(t_data *data, int face, float pcofwall, float y)
 	}
 }
 
+void	ft_round_data(float *pcofwall, float *y)
+{
+	if (*y < 0)
+		*y = 0;
+	if (99 < *y)
+		*y = 99;
+	if (*pcofwall < 0)
+		*pcofwall = 0;
+	if (100 <= *pcofwall)
+		*pcofwall = 100;
+}
+
 int	ft_pixel_of_img(t_data *data, int face, float pcofwall, float y)
 {
 	int	pixel;
 	int	x;
 
-	if (y < 0)
-		y = 0;
-	if (99 < y)
-		y = 99;
-	if (pcofwall < 0)
-		pcofwall = 0;
-	if (100 <= pcofwall)
-		pcofwall = 100;
+	ft_round_data(&pcofwall, &y);
 	if (face == 1)
 	{
 		x = data->north.width * ((float)pcofwall / 100);

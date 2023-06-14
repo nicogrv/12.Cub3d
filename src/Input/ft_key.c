@@ -6,7 +6,7 @@
 /*   By: ngriveau <ngriveau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 14:23:20 by ngriveau          #+#    #+#             */
-/*   Updated: 2023/06/12 21:56:16 by ngriveau         ###   ########.fr       */
+/*   Updated: 2023/06/14 11:51:45 by ngriveau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,25 +77,22 @@ void	ft_key_2(int keycode, t_data *data)
 		data->playerfov = 180;
 	if (keycode == ESC || keycode == -16779872)
 		ft_cross_close(data);
-	// data->playerr = 90;
-	// data->playery = 6.7;
-	// data->playerx = 20.6;
 	ft_key_3(keycode, data);
 }
 
-int	ft_key(int keycode, t_data *data)
+int	ft_key(int keycode, t_data *d)
 {
 	if (keycode == TOUCH_LEFTARROW)
-			data->playerr -= 15;
+			d->playerr -= 15;
 	else if (keycode == TOUCH_RIGHTARROW)
-			data->playerr += 15;
-	ft_key_2(keycode, data);
+			d->playerr += 15;
+	ft_key_2(keycode, d);
 	if (OS == 1)
 	{
-		mlx_destroy_image(data->mlx.mlx, data->mlx.i);
-		data->mlx.i = mlx_new_image(data->mlx.mlx, data->mlx.winx, data->mlx.winy);
+		mlx_destroy_image(d->mlx.mlx, d->mlx.i);
+		d->mlx.i = mlx_new_image(d->mlx.mlx, d->mlx.winx, d->mlx.winy);
 	}
-	printf("x = %.1f y = %.1f r = %.0f\n", data->playerx, data->playery, data->playerr);
-	ft_ray(data);
+	printf("x = %.1f y = %.1f r = %.0f\n", d->playerx, d->playery, d->playerr);
+	ft_ray(d);
 	return (0);
 }

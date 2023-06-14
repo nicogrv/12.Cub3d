@@ -6,7 +6,7 @@
 /*   By: ngriveau <ngriveau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 14:23:20 by ngriveau          #+#    #+#             */
-/*   Updated: 2023/06/13 16:58:52 by ngriveau         ###   ########.fr       */
+/*   Updated: 2023/06/14 12:01:50 by ngriveau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -179,6 +179,7 @@ typedef struct s_data
 	float		decalx;
 	float		decaly;
 	float		length;
+	float		wall;
 	int			face;
 	float		pcofwall;
 	float		nbr_column;
