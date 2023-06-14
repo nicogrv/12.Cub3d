@@ -6,7 +6,7 @@
 /*   By: ngriveau <ngriveau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 14:23:20 by ngriveau          #+#    #+#             */
-/*   Updated: 2023/06/12 21:35:45 by ngriveau         ###   ########.fr       */
+/*   Updated: 2023/06/14 12:32:24 by ngriveau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ int	ft_map(t_data *data)
 	while (y < data->mapy)
 	{
 		if (ft_map_pt2(data, &y, x, fd))
-			return (close(fd), 1);
+			return (close(fd), ft_free_map(data, y+1), 1);
 	}
 	close(fd);
 	return (0);
