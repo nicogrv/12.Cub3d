@@ -6,7 +6,7 @@
 /*   By: ngriveau <ngriveau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 14:23:20 by ngriveau          #+#    #+#             */
-/*   Updated: 2023/06/14 15:38:12 by ngriveau         ###   ########.fr       */
+/*   Updated: 2023/06/14 16:01:06 by ngriveau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ int	ft_key(int keycode, t_data *d)
 	ft_key_2(keycode, d);
 	mlx_destroy_image(d->mlx.mlx, d->mlx.i);
 	d->mlx.i = mlx_new_image(d->mlx.mlx, d->mlx.winx, d->mlx.winy);
-	printf("x = %f y = %f r = %f\n", d->playerx, d->playery, d->playerr);
+	printf("x = %.2f y = %.2f r = %.2f\n", d->playerx, d->playery, d->playerr);
 	ft_ray(d);
 	return (0);
 }

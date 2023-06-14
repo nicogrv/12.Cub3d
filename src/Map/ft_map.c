@@ -6,7 +6,7 @@
 /*   By: ngriveau <ngriveau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 14:23:20 by ngriveau          #+#    #+#             */
-/*   Updated: 2023/06/14 14:37:01 by ngriveau         ###   ########.fr       */
+/*   Updated: 2023/06/14 16:01:27 by ngriveau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,8 @@ int	ft_map_pt2(t_data *data, int *y, int x, int fd)
 		data->map[*y][x] = 7;
 	x = 0;
 	line = get_next_line(fd);
+	if (line == NULL && *y == 0)
+		return (1);
 	if (!line)
 		return (ft_free_map(data, *y +1), 1);
 	while (line[x])
@@ -54,7 +56,6 @@ int	ft_map_pt2(t_data *data, int *y, int x, int fd)
 		x++;
 	}
 	free(line);
-	*y = *y + 1;
 	return (0);
 }
 
@@ -66,7 +67,7 @@ int	ft_map(t_data *data)
 
 	data->map = malloc(sizeof(int *) * data->mapy);
 	if (!data->map)
-		return (printf(RED"MALLOC\n"NC));
+		return (1);
 	fd = open(data->pathfile, O_RDONLY);
 	x = 0;
 	y = 0;
@@ -76,6 +77,7 @@ int	ft_map(t_data *data)
 	{
 		if (ft_map_pt2(data, &y, x, fd))
 			return (close(fd), ft_free_map(data, y + 1), 1);
+		y++;
 	}
 	close(fd);
 	return (0);

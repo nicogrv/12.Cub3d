@@ -6,7 +6,7 @@
 /*   By: ngriveau <ngriveau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 14:23:20 by ngriveau          #+#    #+#             */
-/*   Updated: 2023/06/14 14:39:52 by ngriveau         ###   ########.fr       */
+/*   Updated: 2023/06/14 16:00:46 by ngriveau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,12 +58,12 @@ int	ft_init_id_verif_color_pt2(int i, int *id, char *line, int *j)
 	while (line[i] && (line[i] == ' ' || line[i] == '\t'))
 		i++;
 	if (line[i] == '\0' || ft_isdigit(line[i]) == 0)
-		return (printf(RED"Error input color1 %c\n"NC, line[i]));
+		return (line[i]);
 	*j = i;
 	while (ft_isdigit(line[i]) || line[i] == ',' || is_ws(line[i]))
 		i++;
 	if (line[i] != '\n' && line[i] != '\0')
-		return (printf(RED"Error input color2n"NC));
+		return (1);
 	return (0);
 }
 

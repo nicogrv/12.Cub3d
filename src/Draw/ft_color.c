@@ -6,7 +6,7 @@
 /*   By: ngriveau <ngriveau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 14:23:20 by ngriveau          #+#    #+#             */
-/*   Updated: 2023/06/14 15:51:21 by ngriveau         ###   ########.fr       */
+/*   Updated: 2023/06/14 16:00:25 by ngriveau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,22 +51,12 @@ void	ft_color_colone(t_data *d, int x, float len, float pcofwall)
 	static int		saveface;
 	static float	savelen = {0};
 
-	d->y = 0;
-	if (570 < x && x< 590)
-	{
-		if (d->face != saveface)
-			printf(RED"%d,%d, %d %f %f\n"NC, d->face, saveface, x, pcofwall, fabs(savelen - len));
-		else
-			printf(GREEN"%d,%d, %d %f %f\n"NC, d->face, saveface, x, pcofwall, fabs(savelen - len));
-		
-	}	
+	d->y = 0;	
 	if ((fabs(savelen - len) < 0.4) && ((pcofwall <= 1 && (d->face == 4 || \
 d->face == 2)) || (pcofwall >= 98 && (d->face == 1 || d->face == 3))))
 		d->face = saveface;
 	if ((5 < pcofwall && pcofwall < 95) || (fabs(savelen - len) > 0.1))
 		saveface = d->face;
-	if (570 < x && x< 590)
-		printf("1 = %d %d\n", d->face, saveface);
 	d->wall = (d->mlx.winy / 2) + (10 / len) * d->lenwall - \
 		((d->mlx.winy / 2) - (10 / len) * d->lenwall);
 	if (d->mlx.winy < d->wall)
@@ -75,8 +65,6 @@ d->face == 2)) || (pcofwall >= 98 && (d->face == 1 || d->face == 3))))
 0 < (d->mlx.winy / 2) - (10 / len) * d->lenwall)
 		ft_draw(d, x, d->y++, d->sky.color);
 	d->nbrpl = (d->mlx.winy / 2) - (10 / len) * d->lenwall;
-	if (570 < x && x< 590)
-		printf(BLUE"%d,%d, %d %f %f\n"NC, d->face, saveface, x, pcofwall, fabs(savelen - len));
 	ft_color_colone_pt2(d, x, len, pcofwall);
 	savelen = len;
 }

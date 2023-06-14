@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_verif_map.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nicolasgriveau <nicolasgriveau@student.    +#+  +:+       +#+        */
+/*   By: ngriveau <ngriveau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 14:23:20 by ngriveau          #+#    #+#             */
-/*   Updated: 2023/06/09 00:09:59 by nicolasgriv      ###   ########.fr       */
+/*   Updated: 2023/06/14 16:02:21 by ngriveau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,19 +53,18 @@ int	ft_verif_ok_map(t_data *data)
 			if ((data->y == 0 || data->x == 0 || data->y == data->mapy -1 || \
 data->x == data->mapx -1) && (data->map[data->y][data->x] == 0 || \
 is_player(data->map[data->y][data->x])))
-				return (ft_free_map(data, -42), printf(RED"Incorrect Map\n"NC));
+				return (ft_free_map(data, -42), 1);
 			if ((data->map[data->y][data->x] == 0 || \
 is_player(data->map[data->y][data->x])) && (\
 data->map[data->y -1][data->x] == 7 || data->map[data->y +1][data->x] == 7 || \
 data->map[data->y][data->x -1] == 7 || data->map[data->y][data->x +1] == 7))
-				return (ft_free_map(data, -42), printf(RED"Incorrect Map\n"NC));
+				return (ft_free_map(data, -42), 1);
 			ft_verif_ok_map_pt2(data);
 		}
 		printf("\n");
 		data->x = -1;
 	}
 	if (data->nbrpl != 1)
-		return (ft_free_map(data, -42), \
-				printf(RED"Incorrect Number Player\n"NC));
+		return (ft_free_map(data, -42), 1);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: ngriveau <ngriveau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 14:23:20 by ngriveau          #+#    #+#             */
-/*   Updated: 2023/06/14 14:39:05 by ngriveau         ###   ########.fr       */
+/*   Updated: 2023/06/14 16:00:54 by ngriveau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,12 @@ int	ft_init_id_verif_path(char **path, int *id, char *line, int i)
 	while (line[i] && (line[i] == ' ' || line[i] == '\t'))
 		i++;
 	if (line[i] == '\0')
-		return (printf(RED"Error input path1\n"NC));
+		return (1);
 	*path = ft_substr(line, i, ft_strlen_mode(line + i, 3));
 	fd = open(*path, O_RDONLY);
 	if (fd == -1 || ft_is_wc_or_new_line(line + i + \
 				ft_strlen_mode(line + i, 3)) == 0)
-		return (close(fd), printf(RED"Error input path2\n"NC));
+		return (close(fd), 1);
 	close(fd);
 	return (0);
 }
@@ -90,13 +90,13 @@ int	ft_init(int c, char **av, t_data *data)
 	data->mapx = 0;
 	data->ystartmap = 0;
 	if (c != 2 || ft_check_name_file(av[1]))
-		return (printf(RED"Error number of arg1\n"NC));
+		return (1);
 	data->fdfile = open(av[1], O_RDONLY);
 	if (data->fdfile == -1)
-		return (printf(RED"Error path of arg2\n"NC));
+		return (1);
 	data->pathfile = av[1];
 	if (ft_init_id(data, &line))
-		return (free(line), printf(RED"Error in file3\n"NC));
+		return (free(line), 1);
 	ft_size_map(data, line);
 	close(data->fdfile);
 	if (ft_map(data))
