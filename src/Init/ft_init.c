@@ -6,13 +6,13 @@
 /*   By: ngriveau <ngriveau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 14:23:20 by ngriveau          #+#    #+#             */
-/*   Updated: 2023/06/14 14:21:09 by ngriveau         ###   ########.fr       */
+/*   Updated: 2023/06/14 14:39:05 by ngriveau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../_Include/cub3d.h"
 
-int	ft_init_id_verif_path(char **path_for_data, int *id, char *line, int i)
+int	ft_init_id_verif_path(char **path, int *id, char *line, int i)
 {
 	int	fd;
 
@@ -22,8 +22,8 @@ int	ft_init_id_verif_path(char **path_for_data, int *id, char *line, int i)
 		i++;
 	if (line[i] == '\0')
 		return (printf(RED"Error input path1\n"NC));
-	*path_for_data = ft_substr(line, i, ft_strlen_mode(line + i, 3));
-	fd = open(*path_for_data, O_RDONLY);
+	*path = ft_substr(line, i, ft_strlen_mode(line + i, 3));
+	fd = open(*path, O_RDONLY);
 	if (fd == -1 || ft_is_wc_or_new_line(line + i + \
 				ft_strlen_mode(line + i, 3)) == 0)
 		return (close(fd), printf(RED"Error input path2\n"NC));

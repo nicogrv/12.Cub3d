@@ -6,7 +6,7 @@
 /*   By: ngriveau <ngriveau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 14:23:20 by ngriveau          #+#    #+#             */
-/*   Updated: 2023/05/30 11:24:14 by ngriveau         ###   ########.fr       */
+/*   Updated: 2023/06/14 14:39:52 by ngriveau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,11 +31,11 @@ void	ft_init_id_verif_color_pt4(char *tmp, t_color *color)
 	}
 }
 
-int	ft_init_id_verif_color_pt3(char *tmp, int *j, char *line, t_color *c)
+int	ft_init_id_verif_color_pt3(char *tmp, int *j, char *li, t_color *c)
 {
 	while (1)
 	{
-		tmp = ft_substr(line, *j, ft_strlen_mode(line + *j, 2));
+		tmp = ft_substr(li, *j, ft_strlen_mode(li + *j, 2));
 		if (!tmp)
 			return (free(tmp), printf("SORT 1\n"), 1);
 		if (c->id == 0 || c->id == 1 || c->id == 2)
@@ -47,7 +47,7 @@ int	ft_init_id_verif_color_pt3(char *tmp, int *j, char *line, t_color *c)
 			return (free(tmp), 0);
 		}
 		free(tmp);
-		*j += ft_strlen_mode(line + *j, 2) + 1;
+		*j += ft_strlen_mode(li + *j, 2) + 1;
 	}
 }
 

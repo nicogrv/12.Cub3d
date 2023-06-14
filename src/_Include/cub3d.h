@@ -6,7 +6,7 @@
 /*   By: ngriveau <ngriveau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 14:23:20 by ngriveau          #+#    #+#             */
-/*   Updated: 2023/06/14 12:01:50 by ngriveau         ###   ########.fr       */
+/*   Updated: 2023/06/14 14:39:35 by ngriveau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -184,78 +184,77 @@ typedef struct s_data
 	float		pcofwall;
 	float		nbr_column;
 	int			startfps;
-	
 
 }	t_data;
 
-void	ft_ray_270_360(t_data *d);
-void	ft_ray_180_270(t_data *d);
-void	ft_ray_90_180(t_data *d);
-void	ft_ray_0_90_pt2(t_data *d);
-void	ft_ray_0_90(t_data *d);
+void		ft_ray_270_360(t_data *d);
+void		ft_ray_180_270(t_data *d);
+void		ft_ray_90_180(t_data *d);
+void		ft_ray_0_90_pt2(t_data *d);
+void		ft_ray_0_90(t_data *d);
 
-int		ft_init_id_verif_color(t_color *color, int *id, char *line, int i);
-int		ft_init_id_verif_color_pt2(int i, int *id, char *line, int *j);
-int		ft_init_id_verif_color_pt3(char *tmp, int *j, char *line, t_color *c);
-void	ft_init_id_verif_color_pt4(char *tmp, t_color *color);
+int			ft_init_id_verif_color(t_color *color, int *id, char *line, int i);
+int			ft_init_id_verif_color_pt2(int i, int *id, char *line, int *j);
+int			ft_init_id_verif_color_pt3(char *tmp, int *j, char *li, t_color *c);
+void		ft_init_id_verif_color_pt4(char *tmp, t_color *color);
 
-int		ft_init_id(t_data *data, char **returnline);
-int		ft_init_id_pt2(char *li, int i, int id);
-int		ft_init_id_pt3(t_data *data, char *li, int *id, int i);
-int		ft_init_id_pt4(t_data *data, char *li, int *id, int i);
-int		ft_init_id_pt5(t_data *data, int id);
-void	ft_init_id_pt6(t_data *data, char **li, char **returnline);
-int		ft_check_name_file(char *str);
+int			ft_init_id(t_data *data, char **returnline);
+int			ft_init_id_pt2(char *li, int i, int id);
+int			ft_init_id_pt3(t_data *data, char *li, int *id, int i);
+int			ft_init_id_pt4(t_data *data, char *li, int *id, int i);
+int			ft_init_id_pt5(t_data *data, int id);
+void		ft_init_id_pt6(t_data *data, char **li, char **returnline);
+int			ft_check_name_file(char *str);
 
-int		ft_map(t_data *data);
-int		ft_map_pt2(t_data *data, int *y, int x, int fd);
-void	ft_map_pt3(t_data *data, int y, int x, char *line);
-void	ft_size_map(t_data *data, char *line);
+int			ft_map(t_data *data);
+int			ft_map_pt2(t_data *data, int *y, int x, int fd);
+void		ft_map_pt3(t_data *data, int y, int x, char *line);
+void		ft_size_map(t_data *data, char *line);
 
-int		ft_ray(t_data *data);
-void	ft_ray_pt2(t_data *data);
-int		ft_ray_pt3(t_data *data);
-void	ft_ray_pt4(t_data *data);
+int			ft_ray(t_data *data);
+void		ft_ray_pt2(t_data *data);
+int			ft_ray_pt3(t_data *data);
+void		ft_ray_pt4(t_data *data);
 
-int		ft_key(int keycode, t_data *data);
-void	ft_key_2(int keycode, t_data *data);
-void	ft_key_3(int keycode, t_data *data);
-void	ft_key_4(int keycode, t_data *data);
+int			ft_key(int keycode, t_data *data);
+void		ft_key_2(int keycode, t_data *data);
+void		ft_key_3(int keycode, t_data *data);
+void		ft_key_4(int keycode, t_data *data);
 
 //Free
-int		ft_free_mlx(t_data *data);
-void	ft_free_path_tex(t_data *data);
-void	ft_free_map(t_data *data, int y);
+int			ft_free_mlx(t_data *data);
+void		ft_free_path_tex(t_data *data);
+void		ft_free_map(t_data *data, int y);
 
-void	ft_draw(t_data *data, float x, float y, int color);
-void	ft_draw_mini(t_data *data, float x, float y, int color);
-int		ft_pixel_of_img(t_data *data, int face, float pcofwall, float y);
-void	ft_pixel_of_img_2(t_data *data, int face, float pcofwall, float y);
+void		ft_draw(t_data *data, float x, float y, int color);
+void		ft_draw_mini(t_data *data, float x, float y, int color);
+int			ft_pixel_of_img(t_data *data, int face, float pcofwall, float y);
+void		ft_pixel_of_img_2(t_data *data, int face, float pcofwall, float y);
 
-int		ft_verif_ok_map(t_data *data);
-void	ft_verif_ok_map_pt2(t_data *data);
-void	ft_verif_ok_map_pt3(t_data *data);
+int			ft_verif_ok_map(t_data *data);
+void		ft_verif_ok_map_pt2(t_data *data);
+void		ft_verif_ok_map_pt3(t_data *data);
 
-int		ft_init(int c, char **av, t_data *data);
-void	ft_init_2(t_data *data);
-void	ft_initmlx(t_data *data);
-void	ft_init_minimap(t_data *data);
-int		ft_init_id_verif_path(char **path_for_data, int *id, char *line, int i);
+int			ft_init(int c, char **av, t_data *data);
+void		ft_init_2(t_data *data);
+void		ft_initmlx(t_data *data);
+void		ft_init_minimap(t_data *data);
+int			ft_init_id_verif_path(char **path, int *id, char *line, int i);
 
-void	ft_color(int nbr, t_data *data);
-void	ft_color_colone(t_data *data, int x, float len, float pcofwall);
+void		ft_color(int nbr, t_data *data);
+void		ft_color_colone(t_data *data, int x, float len, float pcofwall);
 
-int		ft_mouse_move(t_data *data);
-int		ft_cross_close(t_data *data);
+int			ft_mouse_move(t_data *data);
+int			ft_cross_close(t_data *data);
 
-int		is_ws(char c);
-int		is_player(int c);
-int		ft_is_wc_or_new_line(char *line);
+int			is_ws(char c);
+int			is_player(int c);
+int			ft_is_wc_or_new_line(char *line);
 long long	ft_get_time(void);
-char	*ft_itoa(int n);
+char		*ft_itoa(int n);
+void		ft_fps(t_data *data, long long fps);
 
-
-int		main(int c, char **av);
+int			main(int c, char **av);
 
 # define NC "\033[0m"
 # define RED "\033[0;31m"

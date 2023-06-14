@@ -6,7 +6,7 @@
 /*   By: ngriveau <ngriveau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 14:23:20 by ngriveau          #+#    #+#             */
-/*   Updated: 2023/06/13 16:27:02 by ngriveau         ###   ########.fr       */
+/*   Updated: 2023/06/14 14:35:13 by ngriveau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,4 +46,20 @@ long long	ft_get_time(void)
 	gettimeofday(&tv, NULL);
 	return (tv.tv_usec + tv.tv_sec * 1000000);
 	return (12);
+}
+
+void	ft_fps(t_data *data, long long fps)
+{
+	char		*str;
+	long long	endfps;
+
+	endfps = ft_get_time();
+	if (endfps == fps)
+		return ;
+	str = ft_itoa((1000000 / (int)(endfps - fps)));
+	mlx_string_put(data->mlx.mlx, data->mlx.mlx_win, 10, \
+		data->mlx.winy - 10, 0xffffff, "FPS:");
+	mlx_string_put(data->mlx.mlx, data->mlx.mlx_win, 35, \
+		data->mlx.winy - 10, 0xffffff, str);
+	free(str);
 }
