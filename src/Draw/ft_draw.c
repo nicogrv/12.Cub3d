@@ -6,7 +6,7 @@
 /*   By: ngriveau <ngriveau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 14:23:20 by ngriveau          #+#    #+#             */
-/*   Updated: 2023/06/14 12:04:17 by ngriveau         ###   ########.fr       */
+/*   Updated: 2023/06/14 15:20:34 by ngriveau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ void	ft_round_data(float *pcofwall, float *y)
 	if (*pcofwall < 0)
 		*pcofwall = 0;
 	if (100 <= *pcofwall)
-		*pcofwall = 100;
+		*pcofwall = 99.9;
 }
 
 int	ft_pixel_of_img(t_data *data, int face, float pcofwall, float y)

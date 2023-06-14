@@ -6,7 +6,7 @@
 /*   By: ngriveau <ngriveau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 14:23:20 by ngriveau          #+#    #+#             */
-/*   Updated: 2023/06/14 14:21:59 by ngriveau         ###   ########.fr       */
+/*   Updated: 2023/06/14 15:24:27 by ngriveau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,9 @@ int	main(int c, char **av)
 	free(data.west.path);
 	free(data.east.path);
 	ft_init_minimap(&data);
+	data.playerr = 180;
+	data.playerx = 17.499985;
+	data.playery = 8.500000;
 	ft_ray(&data);
 	mlx_hook(data.mlx.mlx_win, 2, 1L << 0, &ft_key, &data);
 	mlx_hook(data.mlx.mlx_win, 17, 1L << 0, &ft_cross_close, &data);
