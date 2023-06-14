@@ -85,8 +85,14 @@ FLAGSMACOS = -g3 -fsanitize=address -lmlx -framework OpenGL -framework AppKit -M
 vpath %.c ${SRC_PATH}
 vpath %.h ${HEAD_PATH}
 
-all:
-	@	echo -e "\nmake "$(LIGHTRED)"linux"$(NC)"/"$(LIGHTCYAN)"macos"$(NC)" && ./cub3d ./map/*.cub\n"
+
+all:  ${OBJS_LINUX}
+	@	$(MAKE) --no-print-directory -s -C ./lib/minilibx-linux/
+	@	${CC}  -o ${NAME} ${OBJS_LINUX} ${HEAD_PATH} ${CFLAGS_LINUX} -D OS=0
+	@	echo -ne "\r\033[2K" $(LIGHTGREEN) "\t$(NAME) OK" "\033[0m" "\n"
+
+# all:
+#	  @	echo -e "\nmake "$(LIGHTRED)"linux"$(NC)"/"$(LIGHTCYAN)"macos"$(NC)" && ./cub3d ./map/*.cub\n"
 
 linux:  ${OBJS_LINUX}
 	@	$(MAKE) --no-print-directory -s -C ./lib/minilibx-linux/
@@ -97,10 +103,6 @@ macos: ${OBJS_MACOS}
 	@	$(MAKE) --no-print-directory -s -C ./lib/minilibx_macos/
 	@	${CC} -o ${NAME} ${OBJS_MACOS}  ${HEAD_PATH} ${FLAGSMACOS} 
 	@	echo -ne "\r\033[2K" $(LIGHTGREEN) "\t$(NAME) OK" "\033[0m" "\n"
-
-run: all
-# @	clear
-	@	./${NAME}
 
 valgrind: all
 	valgrind ./${NAME}
@@ -173,27 +175,3 @@ N := x
 C = $(words $N)$(eval N := x $N)
 P = `expr $C '*' 100 / $T / 5`
 endif
-
-
-x = 13.5 y = 9.5 r = 75
-x = 13.5 y = 9.5 r = 60
-x = 13.5 y = 9.5 r = 45
-x = 13.5 y = 9.5 r = 30
-x = 13.3 y = 9.4 r = 30
-x = 13.3 y = 9.4 r = 15
-x = 13.1 y = 9.3 r = 15
-x = 13.1 y = 9.5 r = 15
-x = 13.1 y = 9.5 r = 0
-x = 13.1 y = 9.7 r = 0
-x = 12.9 y = 9.7 r = 0
-x = 12.9 y = 9.7 r = 0
-x = 12.7 y = 9.7 r = 0
-x = 12.5 y = 9.7 r = 0
-x = 12.3 y = 9.7 r = 0
-x = 12.1 y = 9.7 r = 0
-x = 11.9 y = 9.7 r = 0
-x = 11.7 y = 9.7 r = 0
-x = 11.5 y = 9.7 r = 0
-x = 11.3 y = 9.7 r = 0
-x = 11.1 y = 9.7 r = 0
-x = 10.9 y = 9.7 r = 0
