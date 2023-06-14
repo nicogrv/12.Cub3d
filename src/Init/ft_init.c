@@ -6,7 +6,7 @@
 /*   By: ngriveau <ngriveau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 14:23:20 by ngriveau          #+#    #+#             */
-/*   Updated: 2023/06/14 12:00:32 by ngriveau         ###   ########.fr       */
+/*   Updated: 2023/06/14 14:21:09 by ngriveau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,6 @@ void	ft_init_2(t_data *data)
 
 void	ft_initmlx(t_data *d)
 {
-	d->mlx.mlx = mlx_init();
 	d->mlx.mlx_win = mlx_new_window(d->mlx.mlx, d->mlx.winx, \
 		d->mlx.winy, "Cub3d");
 	d->mlx.i = mlx_new_image(d->mlx.mlx, d->mlx.winx, d->mlx.winy);
